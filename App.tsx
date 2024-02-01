@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Navigator from './src/Navigation/Navigator'
+import Navigator from './src/navigation/stackNavigation/Navigator'
 import Toast from 'react-native-toast-message';
 import SplashScreen from 'react-native-splash-screen';
 
