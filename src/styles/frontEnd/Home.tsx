@@ -24,7 +24,7 @@ export const styleHome = StyleSheet.create({
     height: 48,
     borderRadius: 20,
     padding: 10,
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     position: 'absolute',
   },
   searchB: {
@@ -70,7 +70,7 @@ export const styleHome = StyleSheet.create({
     marginHorizontal:22,
     alignItems:'center',
     justifyContent:'center',
-     marginTop:20,
+     marginTop:40,
    
   }
 });

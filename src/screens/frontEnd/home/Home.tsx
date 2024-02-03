@@ -4,16 +4,22 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
 import {styleHome} from '../../../styles/frontEnd/Home';
 import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import DrawerNavigator, { RootDrawerParamsList } from '../../../navigation/drawerNavigation/DrawerNavigator';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'home'>;
 }
 
+
+
+
+
 export default function Home({navigation}: HomeScreenProps) {
   const navigations = useNavigation();
   const openDrawer = () => {
-    navigations.dispatch(DrawerActions.openDrawer());
+    navigation.dispatch(DrawerActions.openDrawer());
   };
   return (
     <View>
@@ -35,19 +41,19 @@ export default function Home({navigation}: HomeScreenProps) {
         </TouchableOpacity>
       </View>
       <ScrollView
-        horizontal={true} // Enable horizontal scrolling
+        horizontal={true}  
         contentContainerStyle={styleHome.scrollImage}>
-        <View>
+        <View style={{marginHorizontal:4}}>
           <Image
             source={require('../../../assests/scrlImage.png')}
           />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
-        <View>
+        <View style={{marginHorizontal:3}}>
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
-        <View>
+        <View style={{marginHorizontal:3}}>
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>

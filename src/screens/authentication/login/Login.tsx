@@ -34,7 +34,7 @@ export default function Login({navigation}: LoginScreenProps) {
         })
       setEmail('')
       setPassword('')
-      navigation.navigate('home')
+      // navigation.navigate('home')
       })
       .catch(error => {
         Toast.show({

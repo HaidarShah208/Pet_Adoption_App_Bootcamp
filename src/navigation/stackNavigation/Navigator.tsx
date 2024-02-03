@@ -18,11 +18,10 @@ export default function Navigator() {
   return (
     <NavigationContainer>
     <Stack.Navigator >
-
 <Stack.Screen options={{ headerShown: false }} name='signup' component={SignUp}/>
 <Stack.Screen options={{ headerShown: false }} name='login' component={Login}/>
 <Stack.Screen name='home' component={Home}/>
-<Stack.Screen name='forgot' component={ForgetPassword}/>
+<Stack.Screen name='forgot' component={ForgetPassword} options={{ headerTitle: '' }} />
     </Stack.Navigator>
   </NavigationContainer>
   )

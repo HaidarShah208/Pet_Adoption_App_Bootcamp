@@ -1,4 +1,7 @@
 import { StyleSheet } from "react-native";
+import { FONTS } from "../../constants/fonts/AllFonts";
+ 
+
 
 export const styles = StyleSheet.create({
     flexContainer: {
@@ -12,13 +15,17 @@ export const styles = StyleSheet.create({
       color:'black',
       fontSize: 40,
       marginTop:108,
-   fontWeight:'bold'
+   fontWeight:'bold',
+   fontFamily:FONTS.BOLD
 
     },
     mail:{
       fontSize:21,
       color:'black',
       marginTop:50,    
+   fontFamily:FONTS.BOLD
+
+      
     }, input: {
       height: 40,
       color:'black',
