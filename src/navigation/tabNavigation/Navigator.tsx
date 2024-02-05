@@ -15,7 +15,6 @@ export type RootTabParamsList = {
   home: undefined;
   user: undefined;
 };
-
 const Tab = createBottomTabNavigator<RootTabParamsList>();
 export default function TabNavigator() {
   return (

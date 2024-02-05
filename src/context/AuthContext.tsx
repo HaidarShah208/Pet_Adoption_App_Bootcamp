@@ -1,34 +1,62 @@
-import React, { createContext, ReactNode, useEffect, useState } from 'react';
-import auth,{FirebaseAuthTypes } from '@react-native-firebase/auth';
+// AuthContextProvider.ts
 
-interface AuthContextType {
-  isLoggedIn: boolean;
-  user?:  FirebaseAuthTypes.User ;
-}
+import React, { createContext, useContext, useEffect, useReducer, useState } from 'react';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import {
+  AuthContextProps,
+  AuthState,
+  AuthAction,
+  FirebaseUser,
+  UserProfileData,
+} from '../constants/allTypes/AllTypes';
 
-const AuthContext = createContext<AuthContextType>({
-  isLoggedIn: false,
-  user: undefined,
-});
+const AuthContext = createContext({} as AuthContextProps);
+const initialState: AuthState = { isAuth: false, user: {} };
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState< FirebaseAuthTypes.User  | null>(null);
-
-  useEffect(() => {
-    const unsubscribe = auth().onAuthStateChanged((authUser) => {
-      setIsLoggedIn(!!authUser);
-      setUser(authUser);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  return (
-    <AuthContext.Provider value={{ isLoggedIn,user: user || undefined }}>
-      {children}
-    </AuthContext.Provider>
-  );
+const reducer = (state: AuthState, action: AuthAction): AuthState => {
+  switch (action.type) {
+    case "Login":
+      return { isAuth: true, user: action.payload.userData || {} };
+    case "Logout":
+      return { isAuth: false, user: {} };
+    default:
+      return state;
+  }
 };
 
-export default AuthContext;
+export default function AuthContextProvider(props: { children: React.ReactNode }) {
+  const [isAppLoading, setIsAppLoading] = useState(true);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    auth().onAuthStateChanged((user: FirebaseUser | null) => {
+      if (user) {
+        readUserProfile(user);
+      } else {
+        setIsAppLoading(false);
+      }
+    });
+  }, [auth]);
+
+  const readUserProfile = (user: FirebaseUser) => {
+    firestore()
+      .collection('users')
+      .doc(user.uid)
+      .onSnapshot((documentSnapshot) => {
+        const userData: UserProfileData | undefined = documentSnapshot.data() as UserProfileData;
+        dispatch({ type: "Login", payload: { userData } });
+      });
+    setTimeout(() => {
+      setIsAppLoading(false);
+    }, 2000)
+  };
+
+  return (
+    <AuthContext.Provider value={{ ...state, dispatch, isAppLoading }}>
+      {props.children}
+    </AuthContext.Provider>
+  );
+}
+
+export const useAuthContext = () => useContext(AuthContext);

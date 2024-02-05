@@ -5,6 +5,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
+import { Svg } from 'react-native-svg';
 
 interface SignupScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'signup'>;
@@ -78,6 +79,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
         value={passowrd}
         onChangeText={passowrd => setPassword(passowrd)}
       />
+      {/* <Svg /> */}
       <View style={styles.privacyText}>
         <Image  source={require('../../../assests/tick.png')} style={styles.imageContainer} />
         <Text style={styles.LinkContainer}>
@@ -90,7 +92,6 @@ export default function SignUp({navigation}: SignupScreenProps) {
           </View>
         </Text>
       </View>
-
       <TouchableOpacity
         style={{marginTop: 30, alignItems: 'center'}}
         onPress={() => {

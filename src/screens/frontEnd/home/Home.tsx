@@ -7,19 +7,38 @@ import {ScrollView, TextInput} from 'react-native-gesture-handler';
 import DrawerNavigator, { RootDrawerParamsList } from '../../../navigation/drawerNavigation/DrawerNavigator';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import auth from '@react-native-firebase/auth';
+import { useAuthContext } from '../../../context/AuthContext';
+import Toast from 'react-native-toast-message';
 
 interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'home'>;
 }
 
-
-
-
-
 export default function Home({navigation}: HomeScreenProps) {
   const navigations = useNavigation();
   const openDrawer = () => {
     navigation.dispatch(DrawerActions.openDrawer());
+  };
+
+  const {dispatch}=useAuthContext()
+
+  const handleLogout = async () => {
+    try {
+      await auth().signOut();
+      dispatch({ type: 'Logout' }); // Dispatch "Logout" action
+      Toast.show({
+        type: 'success',
+        text1: 'Logged out successfully',
+      });
+      navigation.navigate('login'); // Redirect to login screen
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to log out',
+      });
+      console.error('Logout error:', error);
+    }
   };
   return (
     <View>
@@ -32,6 +51,7 @@ export default function Home({navigation}: HomeScreenProps) {
       <Text style={styleHome.tesxt}>
         Find an {'\n'}Awesome {'\n'}pets for you{' '}
       </Text>
+      <Button title='lgoout' onPress={handleLogout}/>
       <View style={{flexDirection: 'row'}}>
         <TextInput placeholder="pet search" style={styleHome.input} />
         <TouchableOpacity onPress={() => console.log('Button pressed')}>

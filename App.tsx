@@ -5,7 +5,7 @@ import SplashScreen from 'react-native-splash-screen';
 import TabNavigator from './src/navigation/tabNavigation/Navigator';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import DrawerNavigator from './src/navigation/drawerNavigation/DrawerNavigator';
-import AuthContext, {AuthProvider} from './src/context/AuthContext';
+import AuthContextProvider, { useAuthContext } from './src/context/AuthContext';
 export default function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
@@ -17,14 +17,14 @@ export default function App() {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const {isLoggedIn} = useContext(AuthContext);
+  const {user}=useAuthContext()
   return (
-    <AuthProvider>
+    <AuthContextProvider>
+
       <GestureHandlerRootView style={{flex: 1}}>
-        {/* {isLoggedIn ? <TabNavigator /> : <Navigator />} */}
-        <TabNavigator/>
+        {user ? <TabNavigator /> : <Navigator />}
         <Toast />
       </GestureHandlerRootView>
-    </AuthProvider>
+    </AuthContextProvider>
   );
 }
