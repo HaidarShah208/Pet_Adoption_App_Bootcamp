@@ -18,3 +18,12 @@ export const IMAGES = {
     focusSearch: fSearch,
     focusProfile: fProfile
 }
+
+
+
+// search pages
+import rectangle from '../../assests/Rectangle 24.svg'
+
+export const SrchIMAGES = {
+    Rectangle: rectangle
+}

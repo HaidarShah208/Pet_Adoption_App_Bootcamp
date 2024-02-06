@@ -7,7 +7,7 @@ import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 import { FirebaseUser, UserProfileData } from '../../../constants/allTypes/AllTypes';
 import { useAuthContext } from '../../../context/AuthContext';
-import ss from '../../../assests/sws.svg'
+import Sws from '../../../assests/sws.svg'
 
 interface LoginScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'login'>;
@@ -84,7 +84,7 @@ export default function Login({navigation}: LoginScreenProps) {
           </View>
         </Text>
       </View>
-
+{/* <Sws width={90} height={80}/> */}
       </TouchableOpacity>
       <TouchableOpacity style={{marginTop: 30, alignItems: 'center'}}  onPress={() => {handleSubmit()}}>
         <Text style={styles.button}>Login</Text>

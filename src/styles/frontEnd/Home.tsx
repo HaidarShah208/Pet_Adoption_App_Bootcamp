@@ -71,6 +71,11 @@ export const styleHome = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
      marginTop:40,
+     height:'auto',
+    overflow: 'scroll',
+    display:'flex',
+    flexDirection:'column'
+
    
   }
 });

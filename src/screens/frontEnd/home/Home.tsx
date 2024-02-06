@@ -1,4 +1,4 @@
-import {View, Text, Image, Button, TouchableOpacity} from 'react-native';
+import {View, Text, Image, Button, TouchableOpacity, Dimensions} from 'react-native';
 import React from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
@@ -23,23 +23,25 @@ export default function Home({navigation}: HomeScreenProps) {
 
   const {dispatch}=useAuthContext()
 
-  const handleLogout = async () => {
-    try {
-      await auth().signOut();
-      dispatch({ type: 'Logout' }); // Dispatch "Logout" action
-      Toast.show({
-        type: 'success',
-        text1: 'Logged out successfully',
-      });
-      navigation.navigate('login'); // Redirect to login screen
-    } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Failed to log out',
-      });
-      console.error('Logout error:', error);
-    }
-  };
+  // const handleLogout = async () => {
+  //   try {
+  //     await auth().signOut();
+  //     dispatch({ type: 'Logout' }); // Dispatch "Logout" action
+  //     Toast.show({
+  //       type: 'success',
+  //       text1: 'Logged out successfully',
+  //     });
+  //     navigation.navigate('login'); // Redirect to login screen
+  //   } catch (error) {
+  //     Toast.show({
+  //       type: 'error',
+  //       text1: 'Failed to log out',
+  //     });
+  //     console.error('Logout error:', error);
+  //   }
+  // };
+
+  const width=Dimensions.get("window").width
   return (
     <View>
       <View style={styleHome.header}>
@@ -51,7 +53,7 @@ export default function Home({navigation}: HomeScreenProps) {
       <Text style={styleHome.tesxt}>
         Find an {'\n'}Awesome {'\n'}pets for you{' '}
       </Text>
-      <Button title='lgoout' onPress={handleLogout}/>
+      {/* <Button title='lgoout' onPress={handleLogout}/> */}
       <View style={{flexDirection: 'row'}}>
         <TextInput placeholder="pet search" style={styleHome.input} />
         <TouchableOpacity onPress={() => console.log('Button pressed')}>
@@ -60,8 +62,9 @@ export default function Home({navigation}: HomeScreenProps) {
           </View>
         </TouchableOpacity>
       </View>
-      <ScrollView
-        horizontal={true}  
+<View style={{flexDirection:'row'}}>
+<ScrollView 
+        horizontal showsHorizontalScrollIndicator={false}
         contentContainerStyle={styleHome.scrollImage}>
         <View style={{marginHorizontal:4}}>
           <Image
@@ -77,49 +80,50 @@ export default function Home({navigation}: HomeScreenProps) {
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
-        <View>
+        <View style={{marginHorizontal:3}}>
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
-        <View>
+        <View style={{marginHorizontal:3}}>
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
-        <View>
+        <View style={{marginHorizontal:3}}>
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
-        <View>
+        <View style={{marginHorizontal:3}}>
+          <Image source={require('../../../assests/scrlImage.png')} />
+          <Text style={styleHome.tsxt}>cats</Text>
+        </View >
+        <View style={{marginHorizontal:3}}>
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
-        <View>
+        <View style={{marginHorizontal:3}}>
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
-        <View>
+        <View style={{marginHorizontal:3}}>
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
-        <View>
-          <Image source={require('../../../assests/scrlImage.png')} />
-          <Text style={styleHome.tsxt}>cats</Text>
-        </View>
-        <View>
+        <View style={{marginHorizontal:3}}>
           <Image source={require('../../../assests/scrlImage.png')} />
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
       </ScrollView>
+</View>
 <View >
 <Text style={styleHome.homeHeading}>For You</Text>
 </View>
-      <ScrollView contentContainerStyle={styleHome.largeImages}>
+    <ScrollView contentContainerStyle={styleHome.largeImages}>
         <View >
           <Image source={require('../../../assests/largeImage.png')} />
         </View>
         <View >
           <Image source={require('../../../assests/largeImage.png')} />
-        </View>
+        </View >
         <View >
           <Image source={require('../../../assests/largeImage.png')} />
         </View>
@@ -130,6 +134,7 @@ export default function Home({navigation}: HomeScreenProps) {
           <Image source={require('../../../assests/largeImage.png')} />
         </View>
       </ScrollView>
+
     </View>
   );
 }

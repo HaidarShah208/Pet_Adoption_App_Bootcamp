@@ -17,12 +17,14 @@ export default function App() {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const {user}=useAuthContext()
+  const {isAuth}=useAuthContext()
   return (
     <AuthContextProvider>
 
       <GestureHandlerRootView style={{flex: 1}}>
-        {user ? <TabNavigator /> : <Navigator />}
+        {/* {user ? <TabNavigator /> : <Navigator />} */}
+        <TabNavigator/>
+        {/* <Navigator/> */}
         <Toast />
       </GestureHandlerRootView>
     </AuthContextProvider>
