@@ -1,4 +1,4 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text,} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -8,6 +8,7 @@ import Home from '../../screens/frontEnd/home/Home';
 import {IMAGES} from '../../constants/assessts/NavigationAssessts';
 import User from '../../screens/frontEnd/user/User';
 import { navs, tabBarIconStyles } from '../../styles/navigation/TabNavigation';
+import { Svg } from 'react-native-svg';
 
 export type RootTabParamsList = {
   search: undefined;
@@ -28,10 +29,7 @@ export default function TabNavigator() {
           options={{
             tabBarIcon: ({focused}) => (
               <View style={[navs.tabIconContainer, focused ? navs.tabIconFocused : navs.tabIconUnfocused]}>
-              <Image
-                source={focused ? IMAGES.focusHome:IMAGES.homeBottom}
-                style={tabBarIconStyles}
-              />
+                {focused ?<IMAGES.focusHome/>:<IMAGES.homeBottom/>}
             </View>
             ),
           }}
@@ -42,10 +40,9 @@ export default function TabNavigator() {
           options={{
             tabBarIcon: ({focused}) => (
               <View style={[navs.tabIconContainer, focused ? navs.tabIconFocused : navs.tabIconUnfocused]}>
-              <Image
-                source={focused ? IMAGES.focusSearch:IMAGES.searchBottom}
-                style={tabBarIconStyles}
-              />
+              
+               {focused ? <IMAGES.focusSearch/>:<IMAGES.searchBottom/>}
+              
             </View>
             ),
           }}
@@ -56,10 +53,8 @@ export default function TabNavigator() {
           options={{
             tabBarIcon: ({focused}) => (
               <View style={[navs.tabIconContainer, focused ? navs.tabIconFocused : navs.tabIconUnfocused]}>
-              <Image
-                source={focused ? IMAGES.focusHeart:IMAGES.favouriteBottom}
-                style={tabBarIconStyles}
-              />
+              {focused ? <IMAGES.focusHeart/>:<IMAGES.favouriteBottom/>}
+              
             </View>
             ),
           }}
@@ -70,10 +65,7 @@ export default function TabNavigator() {
           options={{
             tabBarIcon: ({focused}) => (
               <View style={[navs.tabIconContainer, focused ? navs.tabIconFocused : navs.tabIconUnfocused]}>
-              <Image
-                source={focused ? IMAGES.focusProfile:IMAGES.userBottom}
-                style={tabBarIconStyles}
-              />
+               {focused ? <IMAGES.focusProfile/>:<IMAGES.userBottom/>}
             </View>
             ),
           }}

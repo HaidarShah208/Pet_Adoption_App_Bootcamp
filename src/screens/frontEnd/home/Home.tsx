@@ -10,6 +10,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import auth from '@react-native-firebase/auth';
 import { useAuthContext } from '../../../context/AuthContext';
 import Toast from 'react-native-toast-message';
+import { HOME, IMAGES } from '../../../constants/assessts/NavigationAssessts';
 
 interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'home'>;
@@ -46,9 +47,9 @@ export default function Home({navigation}: HomeScreenProps) {
     <View>
       <View style={styleHome.header}>
       <TouchableOpacity onPress={openDrawer}>
-          <Image source={require('../../../assests/nav.png')} />
+        <HOME.NavImg/>
         </TouchableOpacity>
-        <Image source={require('../../../assests/user.png')} />
+        <HOME.Profile/>
       </View>
       <Text style={styleHome.tesxt}>
         Find an {'\n'}Awesome {'\n'}pets for you{' '}
@@ -58,7 +59,7 @@ export default function Home({navigation}: HomeScreenProps) {
         <TextInput placeholder="pet search" style={styleHome.input} />
         <TouchableOpacity onPress={() => console.log('Button pressed')}>
           <View style={styleHome.searchB}>
-            <Image source={require('../../../assests/focusSearch.png')} />
+            <HOME.FocusImg/>
           </View>
         </TouchableOpacity>
       </View>
@@ -67,49 +68,47 @@ export default function Home({navigation}: HomeScreenProps) {
         horizontal showsHorizontalScrollIndicator={false}
         contentContainerStyle={styleHome.scrollImage}>
         <View style={{marginHorizontal:4}}>
-          <Image
-            source={require('../../../assests/scrlImage.png')}
-          />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View >
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
         <View style={{marginHorizontal:3}}>
-          <Image source={require('../../../assests/scrlImage.png')} />
+         <HOME.ScrlImage/>
           <Text style={styleHome.tsxt}>cats</Text>
         </View>
       </ScrollView>
@@ -118,20 +117,25 @@ export default function Home({navigation}: HomeScreenProps) {
 <Text style={styleHome.homeHeading}>For You</Text>
 </View>
     <ScrollView contentContainerStyle={styleHome.largeImages}>
-        <View >
-          <Image source={require('../../../assests/largeImage.png')} />
+        <View style={{marginVertical:10}}>
+         <HOME.LargeImg/>
+      
         </View>
-        <View >
-          <Image source={require('../../../assests/largeImage.png')} />
+        <View style={{marginVertical:10}}>
+         <HOME.LargeImg/>
+      
         </View >
-        <View >
-          <Image source={require('../../../assests/largeImage.png')} />
+        <View style={{marginVertical:10}}>
+         <HOME.LargeImg/>
+      
         </View>
-        <View >
-          <Image source={require('../../../assests/largeImage.png')} />
+        <View style={{marginVertical:10}}>
+         <HOME.LargeImg/>
+      
         </View>
-        <View >
-          <Image source={require('../../../assests/largeImage.png')} />
+        <View style={{marginVertical:10}}>
+         <HOME.LargeImg/>
+      
         </View>
       </ScrollView>
 

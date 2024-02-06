@@ -60,21 +60,21 @@ export const styleHome = StyleSheet.create({
     flexDirection: 'column',
   },
   homeHeading:{
-    marginTop:12,
     paddingLeft:22,
     fontSize:18,
     color:'black',
     fontWeight:'bold'
   },
   largeImages:{
-    marginHorizontal:22,
+    // marginHorizontal:22,
     alignItems:'center',
     justifyContent:'center',
-     marginTop:40,
-     height:'auto',
-    overflow: 'scroll',
-    display:'flex',
-    flexDirection:'column'
+     marginTop:20,
+    //  paddingBottom:90
+    //  height:'auto',
+    // overflow: 'scroll',
+    // display:'flex',
+    // flexDirection:'column'
 
    
   }
