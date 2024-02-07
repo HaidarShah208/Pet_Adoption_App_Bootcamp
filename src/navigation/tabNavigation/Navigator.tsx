@@ -9,6 +9,7 @@ import {IMAGES} from '../../constants/assessts/NavigationAssessts';
 import User from '../../screens/frontEnd/user/User';
 import { navs, tabBarIconStyles } from '../../styles/navigation/TabNavigation';
 import { Svg } from 'react-native-svg';
+import Details from '../../screens/frontEnd/details/Details';
 
 export type RootTabParamsList = {
   search: undefined;
@@ -61,7 +62,7 @@ export default function TabNavigator() {
         />
         <Tab.Screen
           name="user"
-          component={User}
+          component={Details}
           options={{
             tabBarIcon: ({focused}) => (
               <View style={[navs.tabIconContainer, focused ? navs.tabIconFocused : navs.tabIconUnfocused]}>

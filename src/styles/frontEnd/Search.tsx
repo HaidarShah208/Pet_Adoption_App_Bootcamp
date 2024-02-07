@@ -112,6 +112,5 @@ export const searchSt = StyleSheet.create({
   marginTop:5,
   justifyContent:'space-between',
   paddingRight:22,
-
 }
 });

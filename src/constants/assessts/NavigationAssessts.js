@@ -47,3 +47,18 @@ export const SrchIMAGES = {
     Location: Location,
     Heart: Heart
 }
+
+
+
+// favrourite
+import Add from '../../assests/Add.svg'
+export const FAVOURITE = {
+    ADD: Add
+}
+
+
+// favrourite
+import mainImg from '../../assests/details.svg'
+export const DETAILS = {
+    MainIMG: mainImg
+}

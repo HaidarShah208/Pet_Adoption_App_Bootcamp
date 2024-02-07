@@ -24,6 +24,7 @@ export default function App() {
       <GestureHandlerRootView style={{flex: 1}}>
         {/* {user ? <TabNavigator /> : <Navigator />} */}
         <TabNavigator/>
+        {/* <DrawerNavigator/> */}
         {/* <Navigator/> */}
         <Toast />
       </GestureHandlerRootView>

@@ -3,6 +3,7 @@ import MyDonation from '../../screens/frontEnd/myDonation/MyDonation';
 import Favourite from '../../screens/frontEnd/favourite/Favourite';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from '../../screens/frontEnd/home/Home';
+import SideMenue from './SideMenue';
 
 
 
@@ -16,7 +17,7 @@ const Drawer = createDrawerNavigator<RootDrawerParamsList>();
 export default function  DrawerNavigator() {
   return (
     <NavigationContainer>
-<Drawer.Navigator initialRouteName="mydonation">
+<Drawer.Navigator initialRouteName="home">
       <Drawer.Screen name="home" component={Home} />
       <Drawer.Screen name="mydonation" component={MyDonation} />
       <Drawer.Screen name="messsage" component={Favourite} />
