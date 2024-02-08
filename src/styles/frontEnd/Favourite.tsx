@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { FONTS } from '../../constants/fonts/AllFonts';
 
 export const searchSt = StyleSheet.create({
   header: {
@@ -11,9 +12,9 @@ export const searchSt = StyleSheet.create({
   },
   heading: {
     fontSize: 24,
-    fontFamily: 'Monsterrat',
-    color: 'red',
-    fontWeight: 'bold',
+    fontFamily:FONTS.BOLD,
+    color: 'black',
+    // fontWeight: 'bold',
   },
   MainContainer: {
     marginTop: 30,
@@ -42,6 +43,7 @@ export const searchSt = StyleSheet.create({
     fontWeight: 'bold',
     paddingTop: 10,
     paddingBottom: 5,
+    color:'black'
   },
 
   locator: {

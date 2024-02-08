@@ -33,18 +33,10 @@ export const styles = StyleSheet.create({
     marginLeft: 'auto',
     paddingRight: 32,
     marginTop: 20,
-  },
-  button: {
-    backgroundColor: 'black',
-    color: 'white',
-    width: 150,
-    borderRadius: 30,
-    lineHeight: 60,
-    textAlign: 'center',
-    
-    height: 60,
-    fontSize: 20,
-  },navigate:{
+  },buttonStyle:{
+     alignItems: 'center'
+  }
+  ,navigate:{
     color:'black',
     textAlign:'center',
     paddingTop:20,

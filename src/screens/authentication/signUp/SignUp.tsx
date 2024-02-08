@@ -5,7 +5,9 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
-import { Svg } from 'react-native-svg';
+import {Svg} from 'react-native-svg';
+import {IMAGES} from '../../../constants/assessts/NavigationAssessts';
+import Button from '../../../components/button/Button';
 
 interface SignupScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'signup'>;
@@ -81,9 +83,10 @@ export default function SignUp({navigation}: SignupScreenProps) {
       />
       {/* <Svg /> */}
       <View style={styles.privacyText}>
-        <Image  source={require('../../../assests/tick.png')} style={styles.imageContainer} />
+        <IMAGES.Tick  />
         <Text style={styles.LinkContainer}>
-          I agree to the<View >
+          I agree to the 
+          <View>
             <Text style={styles.linkText}>Terms of service</Text>
           </View>
           and
@@ -92,13 +95,9 @@ export default function SignUp({navigation}: SignupScreenProps) {
           </View>
         </Text>
       </View>
-      <TouchableOpacity
-        style={{marginTop: 30, alignItems: 'center'}}
-        onPress={() => {
-          handleSubmit();
-        }}>
-        <Text style={styles.button}>Sign up</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonStyle}>
+<Button title={'Sign up'} onPress={handleSubmit}/>
+      </View>
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {

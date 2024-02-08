@@ -38,17 +38,9 @@ export const styles = StyleSheet.create({
       marginLeft:'auto',
       paddingRight:8,
       marginTop:20
-    },button:{
-      backgroundColor:'black',
-      color:'white',
-      width:150,
-    borderRadius:30,
-  lineHeight:70,
-   alignItems:'center',
-   textAlign:'center',
-      height:70,
-      fontSize:20
-    },navigate:{
+    },buttonStyle:{
+      alignItems: 'center'
+   },navigate:{
       color:'black',
       textAlign:'center',
       paddingTop:20,

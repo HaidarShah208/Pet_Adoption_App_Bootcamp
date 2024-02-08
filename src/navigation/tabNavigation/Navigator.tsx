@@ -6,7 +6,7 @@ import Search from '../../screens/frontEnd/search/Search';
 import Favourite from '../../screens/frontEnd/favourite/Favourite';
 import Home from '../../screens/frontEnd/home/Home';
 import {IMAGES} from '../../constants/assessts/NavigationAssessts';
-import User from '../../screens/frontEnd/user/User';
+import User from '../../screens/frontEnd/user/ProfileSetting';
 import { navs, tabBarIconStyles } from '../../styles/navigation/TabNavigation';
 import { Svg } from 'react-native-svg';
 import Details from '../../screens/frontEnd/details/Details';
@@ -62,7 +62,7 @@ export default function TabNavigator() {
         />
         <Tab.Screen
           name="user"
-          component={Details}
+          component={User}
           options={{
             tabBarIcon: ({focused}) => (
               <View style={[navs.tabIconContainer, focused ? navs.tabIconFocused : navs.tabIconUnfocused]}>

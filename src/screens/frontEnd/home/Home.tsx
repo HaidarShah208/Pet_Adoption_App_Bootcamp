@@ -18,9 +18,9 @@ interface HomeScreenProps {
 
 export default function Home({navigation}: HomeScreenProps) {
   const navigations = useNavigation();
-  const openDrawer = () => {
-    navigation.dispatch(DrawerActions.openDrawer());
-  };
+  // const openDrawer = () => {
+  //   navigation.dispatch(DrawerActions.openDrawer());
+  // };
 
   const {dispatch}=useAuthContext()
 
@@ -42,11 +42,11 @@ export default function Home({navigation}: HomeScreenProps) {
   //   }
   // };
 
-  const width=Dimensions.get("window").width
+ 
   return (
     <View>
       <View style={styleHome.header}>
-      <TouchableOpacity onPress={openDrawer}>
+      <TouchableOpacity >
         <HOME.NavImg/>
         </TouchableOpacity>
         <HOME.Profile/>

@@ -6,6 +6,9 @@ import TabNavigator from './src/navigation/tabNavigation/Navigator';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import DrawerNavigator from './src/navigation/drawerNavigation/DrawerNavigator';
 import AuthContextProvider, { useAuthContext } from './src/context/AuthContext';
+import Details from './src/screens/frontEnd/details/Details';
+import UpdateProfile from './src/screens/frontEnd/updatePassword/UpdatePassword';
+import UpdatePassword from './src/screens/frontEnd/updatePassword/UpdatePassword';
 export default function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
@@ -24,8 +27,10 @@ export default function App() {
       <GestureHandlerRootView style={{flex: 1}}>
         {/* {user ? <TabNavigator /> : <Navigator />} */}
         <TabNavigator/>
-        {/* <DrawerNavigator/> */}
         {/* <Navigator/> */}
+        {/* <DrawerNavigator/> */}
+        {/* <Details/> */}
+        {/* <UpdatePassword/> */}
         <Toast />
       </GestureHandlerRootView>
     </AuthContextProvider>

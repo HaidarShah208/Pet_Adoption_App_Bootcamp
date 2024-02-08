@@ -6,12 +6,16 @@ import fHome from '../../assests/focusHome.svg'
 import fHeart from '../../assests/focusHeart.svg'
 import fSearch from '../../assests/focusSearch.svg'
 import fProfile from '../../assests/focusProfile.svg'
+import Tick from '../../assests/tick.svg'
+import userImg from '../../assests/userIImg.svg'
 
 export const IMAGES = {
     homeBottom: home,
     searchBottom: search,
     userBottom: user,
     favouriteBottom: favourite,
+    Tick: Tick,
+    userImg: userImg,
     //focus section
     focusHeart: fHeart,
     focusHome: fHome,
@@ -57,8 +61,14 @@ export const FAVOURITE = {
 }
 
 
-// favrourite
+// Details 
 import mainImg from '../../assests/details.svg'
+import Users from '../../assests/user.svg'
+import Locations from '../../assests/location.svg'
+
+
 export const DETAILS = {
-    MainIMG: mainImg
+    MainIMG: mainImg,
+    User: Users,
+    Location: Locations,
 }

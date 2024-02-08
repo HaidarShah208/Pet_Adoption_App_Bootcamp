@@ -1,5 +1,8 @@
 
 
 export const FONTS={
-    BOLD:'Montserrat-Bold'
+    BOLD:'Montserrat-Bold',
+    REGULER:'Montserrat-Regular',
+    SemiBold:'Montserrat-SemiBold'
+
 }

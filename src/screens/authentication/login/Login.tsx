@@ -1,4 +1,4 @@
-import {View, Text, TextInput, TouchableOpacity, Button, Image} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import React, { useState } from 'react';
 import {styles} from '../../../styles/authentication/Login';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
@@ -8,6 +8,8 @@ import Toast from 'react-native-toast-message';
 import { FirebaseUser, UserProfileData } from '../../../constants/allTypes/AllTypes';
 import { useAuthContext } from '../../../context/AuthContext';
 import Sws from '../../../assests/sws.svg'
+import { IMAGES } from '../../../constants/assessts/NavigationAssessts';
+import Button from '../../../components/button/Button';
 
 interface LoginScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'login'>;
@@ -23,7 +25,7 @@ export default function Login({navigation}: LoginScreenProps) {
       if(!email.trim() || !passowrd.trim()){
         Toast.show({
           type:'error',
-          text1:'enter email or passowrd'
+          text1:'Enter Email or Passowrd'
         })
         console.log('enter email and password')
         return;
@@ -43,7 +45,7 @@ export default function Login({navigation}: LoginScreenProps) {
         }
         Toast.show({
           type:'success',
-          text1:'signed In successfully'
+          text1:'Signed In Successfully'
         })
       setEmail('')
       setPassword('')
@@ -73,7 +75,7 @@ export default function Login({navigation}: LoginScreenProps) {
         <Text style={styles.forgot}>Forgot Passowrd ?</Text>
 
         <View style={styles.privacyText}>
-        <Image  source={require('../../../assests/tick.png')} style={styles.imageContainer} />
+<IMAGES.Tick/>
         <Text style={styles.LinkContainer}>
           I agree to the<View >
             <Text style={styles.linkText}>Terms of service</Text>
@@ -84,11 +86,10 @@ export default function Login({navigation}: LoginScreenProps) {
           </View>
         </Text>
       </View>
-{/* <Sws width={90} height={80}/> */}
       </TouchableOpacity>
-      <TouchableOpacity style={{marginTop: 30, alignItems: 'center'}}  onPress={() => {handleSubmit()}}>
-        <Text style={styles.button}>Login</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonStyle}>
+<Button title={'Log in'} onPress={handleSubmit}/>
+      </View>
       <TouchableOpacity activeOpacity={1}
         onPress={() => {
           navigation.navigate('signup');
