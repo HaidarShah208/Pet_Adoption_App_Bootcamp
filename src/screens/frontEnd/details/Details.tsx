@@ -3,8 +3,13 @@ import React from 'react'
 import { DETAILS } from '../../../constants/assessts/NavigationAssessts'
 import { DetialsStyle } from '../../../styles/frontEnd/Details'
 import Button from '../../../components/button/Button'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootStackParamsList } from '../../../navigation/stackNavigation/Navigator'
 
-export default function Details() {
+interface LoginScreenProps {
+  navigation: StackNavigationProp<RootStackParamsList, 'details'>;
+}
+export default function Details({navigation}:LoginScreenProps) {
   return (
     <View style={DetialsStyle.MainConaier}>
      <View style={DetialsStyle.ImgView}>

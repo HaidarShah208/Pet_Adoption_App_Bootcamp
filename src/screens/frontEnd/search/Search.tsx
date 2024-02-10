@@ -14,9 +14,10 @@ import {
   IMAGES,
   SrchIMAGES,
 } from '../../../constants/assessts/NavigationAssessts';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 interface SearchScreenProps {
-  navigation: StackNavigationProp<RootTabParamsList, 'search'>;
+  navigation:  BottomTabNavigationProp<RootTabParamsList, 'search'>;
 }
 
 const Search = ({navigation}: SearchScreenProps) => {
@@ -31,6 +32,7 @@ const Search = ({navigation}: SearchScreenProps) => {
   const handleItemClick = (item: any) => {
     setSelectedItem(item.key === selectedItem ? null : item.key);
   };
+
 
   return (
     <View>

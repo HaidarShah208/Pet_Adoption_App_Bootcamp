@@ -9,16 +9,15 @@ import Toast from 'react-native-toast-message'
 export default function UpdatePassword() {
     const [passowrd, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleSubmit = () => {
       console.log('submit');
-      if(!passowrd.trim() || !newPassword.trim() || !confirmPassword.trim()){
+      if(!passowrd.trim() || !newPassword.trim()){
         Toast.show({
           type:'error',
-          text1:'Enter Email or Passowrd'
+          text1:'Enter Current or New Password'
         })
-        console.log('enter email and password')
+        console.log('Enter Current or New Password')
         return;
       }
     }
@@ -35,14 +34,16 @@ export default function UpdatePassword() {
       <Text style={userStyle.mail}>New Password</Text>
       <TextInput
         style={userStyle.input}
-        value={passowrd}
+        value={newPassword}
+        secureTextEntry={true}
         onChangeText={newPassword => setNewPassword(newPassword)}
       />
       <Text style={userStyle.mail}>Confirm Password</Text>
       <TextInput
         style={userStyle.input}
-        value={passowrd}
-        onChangeText={confirmPassword => setConfirmPassword(confirmPassword)}
+        value={newPassword}
+        secureTextEntry={true}
+        onChangeText={newPassword => setNewPassword(newPassword)}
       />
     </View>
     <View style={userStyle.btnsContainer}>

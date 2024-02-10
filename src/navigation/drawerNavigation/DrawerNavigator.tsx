@@ -4,24 +4,27 @@ import Favourite from '../../screens/frontEnd/favourite/Favourite';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from '../../screens/frontEnd/home/Home';
 import SideMenue from './SideMenue';
-
-
+import TabNavigator from '../tabNavigation/Navigator';
+import Message from '../../screens/frontEnd/message/Message';
 
 export type RootDrawerParamsList = {
-    home:undefined
+ home:undefined;
     messsage: undefined;
     mydonation: undefined;
+  tabNavigator:undefined;
+    favroutite:undefined
   };
 const Drawer = createDrawerNavigator<RootDrawerParamsList>();
 
 export default function  DrawerNavigator() {
   return (
-    <NavigationContainer>
-<Drawer.Navigator initialRouteName="home">
+    
+<Drawer.Navigator  screenOptions={{headerShown:false}}>
       <Drawer.Screen name="home" component={Home} />
+      <Drawer.Screen name="messsage" component={Message} />
       <Drawer.Screen name="mydonation" component={MyDonation} />
-      <Drawer.Screen name="messsage" component={Favourite} />
+      <Drawer.Screen name="favroutite" component={Favourite} />
+
     </Drawer.Navigator>
-    </NavigationContainer>
   );
 }

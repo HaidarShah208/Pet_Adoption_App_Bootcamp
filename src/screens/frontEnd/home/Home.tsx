@@ -11,16 +11,20 @@ import auth from '@react-native-firebase/auth';
 import { useAuthContext } from '../../../context/AuthContext';
 import Toast from 'react-native-toast-message';
 import { HOME, IMAGES } from '../../../constants/assessts/NavigationAssessts';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { RootTabParamsList } from '../../../navigation/tabNavigation/Navigator';
 
 interface HomeScreenProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'home'>;
+  navigation:  BottomTabNavigationProp<RootTabParamsList, 'home'>;
 }
+
 
 export default function Home({navigation}: HomeScreenProps) {
   const navigations = useNavigation();
-  // const openDrawer = () => {
-  //   navigation.dispatch(DrawerActions.openDrawer());
-  // };
+
+  const openDrawer = () => {
+      navigations.dispatch(DrawerActions.openDrawer());
+  };
 
   const {dispatch}=useAuthContext()
 
@@ -46,18 +50,18 @@ export default function Home({navigation}: HomeScreenProps) {
   return (
     <View>
       <View style={styleHome.header}>
-      <TouchableOpacity >
+      <TouchableOpacity onPress={openDrawer} >
         <HOME.NavImg/>
         </TouchableOpacity>
         <HOME.Profile/>
       </View>
       <Text style={styleHome.tesxt}>
-        Find an {'\n'}Awesome {'\n'}pets for you{' '}
+      {`Find an \nAwesome \npets for you`}
       </Text>
       {/* <Button title='lgoout' onPress={handleLogout}/> */}
       <View style={{flexDirection: 'row'}}>
         <TextInput placeholder="pet search" style={styleHome.input} />
-        <TouchableOpacity onPress={() => console.log('Button pressed')}>
+        <TouchableOpacity  >
           <View style={styleHome.searchB}>
             <HOME.FocusImg/>
           </View>

@@ -5,10 +5,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { searchSt } from '../../../styles/frontEnd/Favourite';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FAVOURITE, IMAGES, SrchIMAGES } from '../../../constants/assessts/NavigationAssessts';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 
 interface favrouriteScreenProps {
-  navigation: StackNavigationProp<RootTabParamsList, 'favourite'>;
+  navigation:  BottomTabNavigationProp<RootTabParamsList, 'favourite'>;
 }
  
  

@@ -7,9 +7,10 @@ import {userStyle} from '../../../styles/frontEnd/User';
 import {TextInput} from 'react-native-gesture-handler';
 import Button from '../../../components/button/Button';
 import Toast from 'react-native-toast-message';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 interface userScreenProps {
-  navigation: StackNavigationProp<RootTabParamsList, 'user'>;
+  navigation:  BottomTabNavigationProp<RootTabParamsList, 'user'>;
 }
 export default function User({navigation}: userScreenProps) {
   const [passowrd, setPassword] = useState('');
