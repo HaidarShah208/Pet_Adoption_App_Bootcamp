@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Search from '../../screens/frontEnd/search/Search';
 import Favourite from '../../screens/frontEnd/favourite/Favourite';
 import Home from '../../screens/frontEnd/home/Home';
-import {IMAGES} from '../../constants/assessts/NavigationAssessts';
+import {IMAGES} from '../../constants/assessts/AllAssessts';
 import User from '../../screens/frontEnd/user/ProfileSetting';
 import {navs, tabBarIconStyles} from '../../styles/navigation/TabNavigation';
 import {Svg} from 'react-native-svg';

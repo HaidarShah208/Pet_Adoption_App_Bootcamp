@@ -6,7 +6,7 @@ import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 import {Svg} from 'react-native-svg';
-import {IMAGES} from '../../../constants/assessts/NavigationAssessts';
+import {IMAGES} from '../../../constants/assessts/AllAssessts';
 import Button from '../../../components/button/Button';
 
 interface SignupScreenProps {

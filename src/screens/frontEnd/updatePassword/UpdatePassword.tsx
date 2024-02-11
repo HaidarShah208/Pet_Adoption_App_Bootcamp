@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React, { useState } from 'react'
 import { userStyle } from '../../../styles/frontEnd/User'
-import { IMAGES } from '../../../constants/assessts/NavigationAssessts'
+import { IMAGES } from '../../../constants/assessts/AllAssessts'
 import { TextInput } from 'react-native-gesture-handler'
 import Button from '../../../components/button/Button'
 import Toast from 'react-native-toast-message'

@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { DETAILS } from '../../../constants/assessts/NavigationAssessts'
+import { DETAILS } from '../../../constants/assessts/AllAssessts'
 import { DetialsStyle } from '../../../styles/frontEnd/Details'
 import Button from '../../../components/button/Button'
 import { StackNavigationProp } from '@react-navigation/stack'

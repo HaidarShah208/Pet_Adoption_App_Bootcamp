@@ -4,7 +4,7 @@ import { RootTabParamsList } from '../../../navigation/tabNavigation/Navigator';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { searchSt } from '../../../styles/frontEnd/Favourite';
 import { ScrollView } from 'react-native-gesture-handler';
-import { FAVOURITE, IMAGES, SrchIMAGES } from '../../../constants/assessts/NavigationAssessts';
+import { FAVOURITE, IMAGES, SrchIMAGES } from '../../../constants/assessts/AllAssessts';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 

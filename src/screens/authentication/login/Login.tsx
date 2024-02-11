@@ -7,8 +7,7 @@ import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 import { FirebaseUser, UserProfileData } from '../../../constants/allTypes/AllTypes';
 import { useAuthContext } from '../../../context/AuthContext';
-import Sws from '../../../assests/sws.svg'
-import { IMAGES } from '../../../constants/assessts/NavigationAssessts';
+import { IMAGES } from '../../../constants/assessts/AllAssessts';
 import Button from '../../../components/button/Button';
 
 interface LoginScreenProps {

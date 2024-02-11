@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {IMAGES} from '../../../constants/assessts/NavigationAssessts';
+import {IMAGES} from '../../../constants/assessts/AllAssessts';
 import {userStyle} from '../../../styles/frontEnd/User';
 import {TextInput} from 'react-native-gesture-handler';
 import Button from '../../../components/button/Button';

@@ -13,7 +13,7 @@ import {searchSt} from '../../../styles/frontEnd/Search';
 import {
   IMAGES,
   SrchIMAGES,
-} from '../../../constants/assessts/NavigationAssessts';
+} from '../../../constants/assessts/AllAssessts';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 interface SearchScreenProps {

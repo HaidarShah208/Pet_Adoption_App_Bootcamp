@@ -1,10 +1,11 @@
-import {View, Text, TextInput, TouchableOpacity, Button} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import React, { useState } from 'react';
 import {styles} from '../../../styles/authentication/Login';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
 import {StackNavigationProp} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
+import Button from '../../../components/button/Button';
 
 interface ForgotScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'forgot'>;
@@ -49,9 +50,7 @@ export default function ForgetPassword({navigation}: ForgotScreenProps) {
       <Text style={styles.mail}>Email</Text>
       <TextInput style={styles.input} value={email} onChangeText={email => setEmail(email)} />  
       <Text style={styles.recovery}>Put your email above to get recovery URL</Text>
-      <TouchableOpacity style={{marginTop: 30, alignItems: 'center'}}  onPress={() => {handleSubmit()}}>
-        <Text style={styles.button}>Recover</Text>
-      </TouchableOpacity>
+      <Button title={'Log in'} onPress={handleSubmit}/>
     </View>
   );
 }
