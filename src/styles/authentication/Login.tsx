@@ -15,7 +15,6 @@ export const styles = StyleSheet.create({
       color:'black',
       fontSize: 40,
       marginTop:108,
-   fontWeight:'bold',
    fontFamily:FONTS.BOLD
 
     },
@@ -23,21 +22,21 @@ export const styles = StyleSheet.create({
       fontSize:21,
       color:'black',
       marginTop:50,    
-   fontFamily:FONTS.BOLD
-
-      
+   fontFamily:FONTS.SemiBold
     }, input: {
       height: 40,
       color:'black',
       fontSize: 16,
       borderBottomWidth:2,
       minWidth:302,
-      minHeight:40
+      minHeight:40,
+    fontFamily:FONTS.SemiBold,
     },forgot:{
       color:'black',
       marginLeft:'auto',
       paddingRight:8,
-      marginTop:20
+      marginTop:20,
+    fontFamily:FONTS.SemiBold,
     },buttonStyle:{
       alignItems: 'center'
    },navigate:{
@@ -45,7 +44,7 @@ export const styles = StyleSheet.create({
       textAlign:'center',
       paddingTop:20,
       fontSize:18,
-      fontWeight:'bold'
+      fontFamily:FONTS.SemiBold,
     },
     recovery:{
       color:'black',
@@ -60,17 +59,20 @@ export const styles = StyleSheet.create({
       borderBottomWidth:1,
       marginBottom:-5,
       marginHorizontal:6,
-      lineHeight:21
+      lineHeight:21,
+    fontFamily:FONTS.SemiBold,
+
     },
     privacyText: {
       flexDirection: 'row',  
       alignItems: 'center',  
       paddingLeft:5,
       paddingTop:10,
-      fontWeight:'bold',
+      fontFamily:FONTS.SemiBold,
       color: 'black',
     },LinkContainer:{
       paddingLeft:12,
+    fontFamily:FONTS.SemiBold,
       color: 'black',
     },imageContainer:{
       marginBottom:5

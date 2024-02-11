@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { FONTS } from '../../constants/fonts/AllFonts';
 
 export const styles = StyleSheet.create({
   flexContainer: {
@@ -6,17 +7,17 @@ export const styles = StyleSheet.create({
     height: '100%',
     paddingHorizontal: 25,
     color: 'black',
-    fontFamily: 'Monsterrat',
   },
   heading: {
     color: 'black',
     fontSize: 40,
     marginTop: 100,
-    fontWeight: 'bold',
+    fontFamily:FONTS.BOLD,
+
   },
   mail: {
     fontSize: 21,
-    
+    fontFamily:FONTS.SemiBold,
     color: 'black',
     marginTop: 40,
   },
@@ -34,14 +35,14 @@ export const styles = StyleSheet.create({
     paddingRight: 32,
     marginTop: 20,
   },buttonStyle:{
-     alignItems: 'center'
+     alignItems: 'center',
   }
   ,navigate:{
     color:'black',
     textAlign:'center',
     paddingTop:20,
     fontSize:18,
-    fontWeight:'bold'
+    fontFamily:FONTS.SemiBold,
   },
     linkText: {
       color: 'black',
@@ -49,7 +50,9 @@ export const styles = StyleSheet.create({
       borderBottomWidth:1,
       marginBottom:-5,
       marginHorizontal:6,
-      lineHeight:21
+      lineHeight:21,
+    fontFamily:FONTS.SemiBold,
+
     },
     privacyText: {
       flexDirection: 'row',  
@@ -57,10 +60,11 @@ export const styles = StyleSheet.create({
       paddingTop:10,
       fontWeight:'bold',
       paddingLeft:5,
-      color: 'black',
     },LinkContainer:{
       paddingLeft:12,
       color: 'black',
+      fontFamily:FONTS.SemiBold,
+ 
     },imageContainer:{
       marginBottom:5
     }

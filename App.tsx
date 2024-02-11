@@ -13,6 +13,7 @@ import Parent from './src/navigation/parentNavigator/Parent';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { Screen } from 'react-native-screens';
+import DonateScreen from './src/screens/frontEnd/donate/DonateScreen';
 export default function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
@@ -27,20 +28,19 @@ export default function App() {
   const {isAuth}=useAuthContext()
   return (
     
-      // <GestureHandlerRootView style={{flex: 1}}>
-
-          <NavigationContainer>
+      <GestureHandlerRootView style={{flex: 1}}>
+          {/* // <NavigationContainer> */}
         {/* {user ? <TabNavigator /> : <Navigator />} */}
         {/* <TabNavigator navigation={undefined as unknown as DrawerNavigationProp<RootDrawerParamsList, "tabNavigator">}/> */}
         {/* <Parent/> */}
+        <DonateScreen/>
         {/* <Navigator/> */}
         {/* <Details/> */}
         {/* <UpdatePassword/> */}
-    <DrawerNavigator />
+    {/* <DrawerNavigator /> */}
         <Toast />
-          </NavigationContainer>
- 
-//  </GestureHandlerRootView>
+          {/* </NavigationContainer> */}
+ </GestureHandlerRootView>
      
  
   );

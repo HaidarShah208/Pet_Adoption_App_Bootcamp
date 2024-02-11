@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
+import { FONTS } from '../../constants/fonts/AllFonts';
 
 interface ButtonProps {
   title: string;
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 70,
     textAlign: 'center',
+    fontFamily:FONTS.SemiBold,
   },
 });
 
