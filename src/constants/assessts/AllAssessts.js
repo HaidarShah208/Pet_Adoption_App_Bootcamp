@@ -9,6 +9,8 @@ import fProfile from '../../assests/focusProfile.svg'
 import Tick from '../../assests/tick.svg'
 import userImg from '../../assests/userIImg.svg'
 import cross from '../../assests/cross.svg'
+import up from '../../assests/up-arrow.svg'
+import down from '../../assests/down-arrow.svg'
 
 export const IMAGES = {
     homeBottom: home,
@@ -17,6 +19,8 @@ export const IMAGES = {
     favouriteBottom: favourite,
     Tick: Tick,
     userImg: userImg,
+    upArrow: up,
+    downArrow: down,
     Cross: cross,
     //focus section
     focusHeart: fHeart,

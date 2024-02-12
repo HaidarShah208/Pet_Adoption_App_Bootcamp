@@ -29,18 +29,19 @@ export default function App() {
   return (
     
       <GestureHandlerRootView style={{flex: 1}}>
-          {/* // <NavigationContainer> */}
+           <NavigationContainer> 
         {/* {user ? <TabNavigator /> : <Navigator />} */}
-        {/* <TabNavigator navigation={undefined as unknown as DrawerNavigationProp<RootDrawerParamsList, "tabNavigator">}/> */}
+        <TabNavigator  navigation={undefined as unknown as DrawerNavigationProp<RootDrawerParamsList, "tabNavigator">}/>
         {/* <Parent/> */}
-        <DonateScreen/>
+        {/* <DonateScreen/> */}
         {/* <Navigator/> */}
         {/* <Details/> */}
+        {/* <DonateScreen/> */}
         {/* <UpdatePassword/> */}
     {/* <DrawerNavigator /> */}
         <Toast />
-          {/* </NavigationContainer> */}
- </GestureHandlerRootView>
+           </NavigationContainer> 
+   </GestureHandlerRootView>
      
  
   );

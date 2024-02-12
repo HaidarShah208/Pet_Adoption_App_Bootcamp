@@ -11,7 +11,7 @@ import {navs, tabBarIconStyles} from '../../styles/navigation/TabNavigation';
 import {Svg} from 'react-native-svg';
 import Details from '../../screens/frontEnd/details/Details';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { RootDrawerParamsList } from '../drawerNavigation/DrawerNavigator';
+import DrawerNavigator, { RootDrawerParamsList } from '../drawerNavigation/DrawerNavigator';
 
 export type RootTabParamsList = {
   home: undefined;
@@ -19,6 +19,7 @@ export type RootTabParamsList = {
   favourite: undefined;
   user: undefined;
   details: undefined;
+  drawar:undefined
 };
 
 interface  DonationScreenProps {
@@ -27,7 +28,7 @@ interface  DonationScreenProps {
 const Tab = createBottomTabNavigator<RootTabParamsList>();
 export default function TabNavigator({navigation}:DonationScreenProps) {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
 
       <Tab.Navigator
         screenOptions={{
@@ -95,8 +96,23 @@ export default function TabNavigator({navigation}:DonationScreenProps) {
             ),
           }}
         />
+        <Tab.Screen
+          name="drawar"
+          component={DrawerNavigator}
+          options={{
+            tabBarIcon: ({focused}) => (
+              <View
+                style={[
+                  navs.tabIconContainer,
+                  focused ? navs.tabIconFocused : navs.tabIconUnfocused,
+                ]}>
+                {focused ? <IMAGES.focusProfile /> : <IMAGES.userBottom />}
+              </View>
+            ),
+          }}
+        />
       
       </Tab.Navigator>
-              </NavigationContainer>
+              // </NavigationContainer>
   );
 }

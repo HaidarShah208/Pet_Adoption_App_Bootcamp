@@ -3,14 +3,14 @@ import {
   Text,
   Image,
   Button,
-  TouchableOpacity,
-  Dimensions,
+  TouchableOpacity,ScrollView,
+  Dimensions,TextInput
 } from 'react-native';
 import React from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
 import {styleHome} from '../../../styles/frontEnd/Home';
-import {ScrollView, TextInput} from 'react-native-gesture-handler';
+import { } from 'react-native-gesture-handler';
 import DrawerNavigator, {
   RootDrawerParamsList,
 } from '../../../navigation/drawerNavigation/DrawerNavigator';

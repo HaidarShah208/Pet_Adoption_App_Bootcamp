@@ -37,6 +37,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
           text1: 'accout created successfully',
         });
         console.log('User account created');
+        
         setEmail('');
         setPassword('');
         setUserName('');
