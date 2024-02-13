@@ -30,11 +30,12 @@ fontFamily:FONTS.BOLD,
 
       }, input: {
         height: 40,
-        color:'black',
+        color:'#101C1D',
         fontSize: 16,
         borderBottomWidth:2,
         minWidth:302,
-        minHeight:40
+        minHeight:40,
+        fontFamily:FONTS.SemiBold
       },btnsContainer:{
         justifyContent: 'center',
         alignItems: 'center',

@@ -5,60 +5,123 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
-import {Svg} from 'react-native-svg';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
 import Button from '../../../components/button/Button';
+import { useAuthContext } from '../../../context/AuthContext';
+import firestore from '@react-native-firebase/firestore';
 
 interface SignupScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'signup'>;
 }
+
+const initialState = {
+  userName: '',
+  email: '',
+  password: '',
+};
+type UserData = {
+  userName: string;
+  email: string;
+  password: string;
+  uid?: string;
+  photoURL?: string | null;
+  creationTime?: string;
+  status?: string;
+};
 export default function SignUp({navigation}: SignupScreenProps) {
-  const [email, setEmail] = useState('');
-  const [passowrd, setPassword] = useState('');
-  const [username, setUserName] = useState('');
+  const {dispatch} = useAuthContext();
+  const [loading, setisloading] = useState(false);
+  const [state, setState] = useState(initialState);
+
+  const handleChange = (name: string, value: string): void => {
+    setState((prev) => ({ ...prev, [name]: value }));
+  };
 
   // firebasAuth
 
-  const handleSubmit = () => {
-    console.log('submit');
-    if (!email.trim() || !passowrd.trim()) {
-      Toast.show({
-        type: 'error',
-        text1: 'enter email or passowrd',
-      });
-      console.log('enter email and password');
-      return;
+  const handleRegister = () => {
+    const {userName, email, password} = state;
+    if (!userName.trim() || !email.trim() || !password.trim){
+    return  Toast.show({
+        type:'error',
+        text1:'Enter UserName or Email or Passowrd'
+      })
     }
-     auth()
-      .createUserWithEmailAndPassword(email, passowrd)
-      .then(() => {
-        Toast.show({
-          type: 'success',
-          text1: 'accout created successfully',
-        });
-        console.log('User account created');
-        
-        setEmail('');
-        setPassword('');
-        setUserName('');
+    let validRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (userName.length < 3) {
+      return      Toast.show({
+        type:'error',
+        text1:'User name at least 3 characters'
+      })
+    }
+    if (!email) {
+      return       Toast.show({
+        type:'error',
+        text1:'Email format is xyz@gmail.com'
+      })
+    }
+    if (!validRegex.test(email)) {
+      return  Toast.show({
+        type:'error',
+        text1:'Email format is xyz@gmail.com'
+      })
+    }
+
+    if (password.length < 6) {
+      return  Toast.show({
+        type:'error',
+        text1:'Password at least 6 characters required'
+      })
+    }
+    let userData: UserData = {userName, email, password};
+    setisloading(true);
+    createUser(userData);
+    setState(initialState);
+    setisloading(false);
+  };
+
+  const  createUser = (userData: UserData): void => {
+    auth()
+      .createUserWithEmailAndPassword(userData.email, userData.password)
+      .then(userCredential => {
+        const user = userCredential.user;
+
+        userData.uid = user.uid;
+        userData.photoURL = user.photoURL;
+        userData.creationTime = user.metadata.creationTime;
+        userData.status = 'active';
+        firestore()
+          .collection('users')
+          .doc(userData.uid)
+          .set(userData)
+          .then(() => {
+            Toast.show({
+              type:'success',
+              text1:'Sign Up successfully'
+            })
+            setisloading(false);
+          })
+          .catch((error: any) => {
+            console.error('Error adding user data to Firestore: ', error);
+          });
       })
 
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
-          Toast.show({
-            type: 'error',
-            text1: 'user already exist',
-          });
-          console.log('That email address is already in use!');
+          setisloading(false);
+          return   Toast.show({
+            type:'error',
+            text1:'User already in use'
+          })
         }
+
         if (error.code === 'auth/invalid-email') {
-          Toast.show({
-            type: 'error',
-            text1: 'invalid email or password',
-          });
-          console.log('That email address is invalid!');
+          setisloading(false);
+          return console.log('Email|Password Error', 'plz try again', 'error');
         }
-        console.error(error);
+        setisloading(false);
+        return console.log('Email|Password Error', 'plz try again', 'error');
       });
   };
   return (
@@ -67,20 +130,20 @@ export default function SignUp({navigation}: SignupScreenProps) {
       <Text style={styles.mail}>Username</Text>
       <TextInput
         style={styles.input}
-        value={username}
-        onChangeText={username => setUserName(username)}
+        value={state.userName}
+        onChangeText={(value: string) => handleChange('userName', value)}
       />
       <Text style={styles.mail}>Email</Text>
       <TextInput
         style={styles.input}
-        value={email}
-        onChangeText={email => setEmail(email)}
+        value={state.email}
+        onChangeText={(value: string) => handleChange('email', value)}
       />
       <Text style={styles.mail}>Password</Text>
       <TextInput
         style={styles.input}
-        value={passowrd}
-        onChangeText={passowrd => setPassword(passowrd)}
+        value={state.password}
+        onChangeText={(value: string) => handleChange('password', value)}
       />
       {/* <Svg /> */}
       <View style={styles.privacyText}>
@@ -97,7 +160,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
         </Text>
       </View>
       <View style={styles.buttonStyle}>
-<Button title={'Sign up'} onPress={handleSubmit}/>
+<Button title={'Sign up'} onPress={handleRegister}/>
       </View>
       <TouchableOpacity
         activeOpacity={1}
@@ -109,3 +172,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
     </View>
   );
 }
+function createUser(userData: UserData) {
+  throw new Error('Function not implemented.');
+}
+

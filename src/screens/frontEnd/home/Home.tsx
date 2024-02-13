@@ -30,7 +30,7 @@ interface HomeScreenProps {
 
 export default function Home({navigation}: HomeScreenProps) {
   const navigations = useNavigation();
-
+  const {user}=useAuthContext()
   const openDrawer = () => {
     navigations.dispatch(DrawerActions.openDrawer());
   };
@@ -61,7 +61,13 @@ export default function Home({navigation}: HomeScreenProps) {
         <TouchableOpacity onPress={openDrawer}>
           <HOME.NavImg />
         </TouchableOpacity>
-        <HOME.Profile />
+        {
+        user.photoURL == null ? (
+          <HOME.Profile />
+        ):(
+          <Image source={{uri:user.photoURL}} />
+        )
+      }
       </View>
       <Text style={styleHome.tesxt}>{`Find an \nAwesome \npets for you`}</Text>
       <Input/>
@@ -120,8 +126,9 @@ export default function Home({navigation}: HomeScreenProps) {
       <View>
         <Text style={styleHome.homeHeading}>For You</Text>
       </View>
-      <ScrollView contentContainerStyle={styleHome.largeImages}>
-        <View style={{marginVertical: 10}}>
+      <ScrollView>
+      <View  style={styleHome.largeImages}>
+      <View style={{marginVertical: 10}}>
           <HOME.LargeImg />
         </View>
         <View style={{marginVertical: 10}}>
@@ -136,6 +143,7 @@ export default function Home({navigation}: HomeScreenProps) {
         <View style={{marginVertical: 10}}>
           <HOME.LargeImg />
         </View>
+      </View>
       </ScrollView>
     </View>
   );

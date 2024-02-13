@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { FONTS } from '../../constants/fonts/AllFonts';
 
 export const styleHome = StyleSheet.create({
   header: {
@@ -8,14 +9,16 @@ export const styleHome = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 22,
     marginTop: 10,
+    
   },
   tesxt: {
-    color: 'black',
+    color: '#101C1D',
     fontWeight: '800',
     fontSize: 36,
     paddingHorizontal: 22,
     lineHeight: 40,
     top: 30,
+    fontFamily:FONTS.SemiBold
   },
   scrollImage: {
     marginTop: 30,
@@ -29,10 +32,11 @@ export const styleHome = StyleSheet.create({
     
   },
   tsxt: {
-    color: 'black',
+    color: '#101C1D',
     textAlign: 'center',
     paddingTop: 5,
     fontSize: 14,
+    fontFamily:FONTS.SemiBold
   },
   ImageText: {
     display: 'flex',
@@ -42,19 +46,13 @@ export const styleHome = StyleSheet.create({
     paddingLeft:22,
     fontSize:18,
     color:'black',
-    fontWeight:'bold'
+    fontFamily:FONTS.SemiBold
+
   },
   largeImages:{
     // marginHorizontal:22,
     alignItems:'center',
     justifyContent:'center',
      marginTop:20,
-    //  paddingBottom:90
-    //  height:'auto',
-    // overflow: 'scroll',
-    // display:'flex',
-    // flexDirection:'column'
-
-   
   }
 });

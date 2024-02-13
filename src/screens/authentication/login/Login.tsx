@@ -40,7 +40,6 @@ export default function Login({navigation}: LoginScreenProps) {
             email:userEmail
           }
           dispatch({type:'Login',payload:{userData}})
-          // navigation.navigate('home')
         }
         Toast.show({
           type:'success',

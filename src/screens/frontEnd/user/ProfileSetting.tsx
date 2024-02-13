@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -18,9 +18,7 @@ export default function User({navigation}: userScreenProps) {
   const [passowrd, setPassword] = useState('');
   const [name, setName] = useState('');
   const {user}=useAuthContext()
-  useEffect(() => {
-    console.log('User Email:', user.email);
-  }, [user]);
+  
   console.log('userEamil',user)
 
   const handleSubmit = () => {
@@ -38,11 +36,17 @@ export default function User({navigation}: userScreenProps) {
     <View style={userStyle.mainContainer}>
       <View style={userStyle.main}>
         <Text style={userStyle.heading}>Profile Setting</Text>
-        <IMAGES.userImg />
+      {
+        user.photoURL == null ? (
+          <IMAGES.userImg />
+        ):(
+          <Image source={{uri:user.photoURL}} />
+        )
+      }
         <Text style={userStyle.mail}>Username</Text>
         <TextInput
           style={userStyle.input}
-          value={passowrd}
+          value={user.userName}
           onChangeText={name => setName(name)}
         />
         <Text style={userStyle.mail}>Email</Text>

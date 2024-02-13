@@ -37,6 +37,7 @@ export default function AuthContextProvider(props: { children: React.ReactNode }
         setIsAppLoading(false);
       }
     });
+    return
   }, [auth]);
 
   const readUserProfile = (user: FirebaseUser) => {
