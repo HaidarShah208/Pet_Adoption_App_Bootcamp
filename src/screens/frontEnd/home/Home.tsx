@@ -64,7 +64,6 @@ export default function Home({navigation}: HomeScreenProps) {
         <HOME.Profile />
       </View>
       <Text style={styleHome.tesxt}>{`Find an \nAwesome \npets for you`}</Text>
-      
       <Input/>
       
       <View style={{flexDirection: 'row'}}>

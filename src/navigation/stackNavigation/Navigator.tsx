@@ -17,13 +17,13 @@ export type RootStackParamsList={
 const Stack = createStackNavigator<RootStackParamsList>();
 export default function Navigator() {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
     <Stack.Navigator >
 <Stack.Screen options={{ headerShown: false }} name='signup' component={SignUp}/>
 <Stack.Screen options={{ headerShown: false }} name='login' component={Login}/>
 <Stack.Screen name='details' component={Details}/>
 <Stack.Screen name='forgot' component={ForgetPassword} options={{ headerTitle: '' }} />
     </Stack.Navigator>
-  </NavigationContainer>
+  // </NavigationContainer>
   )
 }

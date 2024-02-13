@@ -1,9 +1,9 @@
-import {View,TextInput, Text, StyleSheet,TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import {View, TextInput, Text, TouchableOpacity, ScrollView, Platform, PermissionsAndroid} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
 import {FlatList} from 'react-native';
-import {FONTS} from '../../../constants/fonts/AllFonts';
-import Input from '../../../components/input/Input';
+import {styles} from '../../../styles/frontEnd/DonateScreen';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const datas = [
   {dog: 'puppy', location: 'pakistan'},
@@ -12,21 +12,101 @@ const datas = [
   {dog: 'afda', location: 'pakistan'},
   {dog: 'as', location: 'pakistan'},
 ];
+
+
+
+
+interface YourState {
+  petType: string;
+  petBreed: string;
+  amount: string;
+  vaccinated: string;
+  petGender: string;
+  petWeight: string;
+  petLocation: string;
+  description: string;
+  // selectedImage: { uri: string } | null;
+}
 export default function DonateScreen() {
   const [selectedItem, setSelectedItem] = useState('select pet');
   const [isClicked, setIsClicked] = useState(false);
+  const [isClick, setIsClick] = useState(false);
+  const [isClik, setIsClik] = useState(false);
   const [allData, setAllData] = useState(datas);
-  const [email, setEmail] = useState('');
-  const [passowrd, setPassword] = useState('');
+  const [filePath, setFilePath] = useState({});
 
-  const handleChange=()=>{
+  // const chooseFile = () => {
+  //   let options = {
+  //     title: 'Select Image',
+  //     customButtons: [
+  //       {
+  //         name: 'customOptionKey',
+  //         title: 'Choose Photo from Custom Option'
+  //       },
+  //     ],
+  //     storageOptions: {
+  //       skipBackup: true,
+  //       path: 'images',
+  //     },
+  //   };
+  //   launchCamera(options, (response:any) => {
+  //     console.log('Response = ', response);
 
-  }
+  //     if (response.didCancel) {
+  //       console.log('User cancelled image picker');
+  //     } else if (response.error) {
+  //       console.log('ImagePicker Error: ', response.error);
+  //     } else if (response.customButton) {
+  //       console.log(
+  //         'User tapped custom button: ',
+  //         response.customButton
+  //       );
+  //     } else {
+  //       let source = response;
+  //       // You can also display the image using data:
+  //       // let source = {
+  //       //   uri: 'data:image/jpeg;base64,' + response.data
+  //       // };
+  //       setFilePath(source);
+  //     }
+  //   });
+  // };
 
+  const [state, setState] = useState<YourState>({
+    petType:'',
+    petBreed:'',
+    amount:'',
+    vaccinated:'',
+    petGender:'',
+    petWeight:'',
+    petLocation:'',
+    description:'',
+  });
+
+  const handleChange = (name: string, value: string): void => {
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handlePress = () => {
     setIsClicked(!isClicked);
     console.log('clicked');
+  };
+  const handlePresss = () => {
+    setIsClick(!isClick);
+    console.log('clicked');
+  };
+  const handlePres = () => {
+    setIsClik(!isClik);
+    console.log('clicked');
+  };
+
+  const [amount, setamount] = useState('');
+
+  const handleWeightChange = (txt: any) => {
+    setamount(txt);
   };
 
   const onSearch = (text: any) => {
@@ -40,6 +120,7 @@ export default function DonateScreen() {
     } else setAllData(datas);
   };
   return (
+<ScrollView>
     <View style={styles.container}>
       <Text style={styles.heading}>Pet Type</Text>
       <TouchableOpacity style={styles.dorpdown} onPress={handlePress}>
@@ -74,85 +155,98 @@ export default function DonateScreen() {
         </View>
       ) : null}
       <Text style={styles.mail}>Peet Breed</Text>
-      <TextInput style={styles.input} value={email} onChangeText={email => setEmail(email)} />
-    
+      <TextInput
+        style={styles.input}
+        value={state.petBreed}
+        onChangeText={(text) => handleChange('petBreed', text)}
+      />
+      <Text style={styles.mail}>Amount</Text>
+      <TextInput
+        style={styles.input}
+        value={`${state.amount} $ `}
+        onChangeText={(text) => handleChange('amount', text)}
+      />
+
+      <Text style={styles.heading}>Vaccinated</Text>
+      <TouchableOpacity style={styles.dorpdown} onPress={handlePresss}>
+        <Text>{selectedItem}</Text>
+        {isClick ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
+      </TouchableOpacity>
+      {isClick ? (
+        <View style={styles.dropdownArea}>
+          <TextInput
+            placeholder="search"
+            style={styles.searchInput}
+            onChangeText={text => {
+              onSearch(text);
+            }}
+          />
+          <FlatList
+            data={allData}
+            renderItem={({item, index}) => {
+              return (
+                <TouchableOpacity
+                  style={styles.Item}
+                  onPress={() => {
+                    setSelectedItem(item.dog);
+                    onSearch('');
+                    setIsClick(false);
+                  }}>
+                  <Text style={styles.ItemText}>{item.dog}</Text>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
+      ) : null}
+      <Text style={styles.heading}>Gender</Text>
+      <TouchableOpacity style={styles.dorpdown} onPress={handlePres}>
+        <Text>{selectedItem}</Text>
+        {isClik ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
+      </TouchableOpacity>
+      {isClik ? (
+        <View style={styles.dropdownArea}>
+          <TextInput
+            placeholder="search"
+            style={styles.searchInput}
+            onChangeText={text => {
+              onSearch(text);
+            }}
+          />
+          <FlatList
+            data={allData}
+            renderItem={({item, index}) => {
+              return (
+                <TouchableOpacity
+                  style={styles.Item}
+                  onPress={() => {
+                    setSelectedItem(item.dog);
+                    onSearch('');
+                    setIsClik(false);
+                  }}>
+                  <Text style={styles.ItemText}>{item.dog}</Text>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
+      ) : null}
+
+      <Text style={styles.mail}>Weight</Text>
+      <TextInput
+        style={styles.input}
+        value={`${state.petWeight} KG `}
+        onChangeText={ (text) =>   handleChange('petWeight',text)}
+      />
+      <Text style={styles.mail}>Loacation</Text>
+      <TextInput style={styles.input} value={state.petLocation} onChangeText={(text) =>   handleChange('petLocation',text)} />
+      <Text style={styles.mail}>Descriptin</Text>
+      <TextInput style={styles.input} value={state.description} onChangeText={(text) =>   handleChange('description',text)} />
+      <Text style={styles.heading}>Image</Text>
+      <TouchableOpacity style={styles.img}  >
+        <IMAGES.ImagePicker/>
+      </TouchableOpacity>
     </View>
+</ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container:{
-    flexDirection: 'column',
-    justifyContent: 'center',  
-    alignItems: 'center', 
-  },
-  heading: {
-    fontSize: 18,
-    fontFamily: FONTS.SemiBold,
-    color: '#101C1D',
-    alignSelf:'flex-start',
-    marginStart:55,
-    marginTop:30
-  },
-  dorpdown: {
-    fontFamily: FONTS.SemiBold,
-    color: '#101C1D',
-    width: 303,
-    height: 50,
-    borderRadius: 10,
-    borderBottomWidth: 2,
-    alignSelf: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 15,
-    paddingRight: 15,
-    justifyContent: 'space-between',
-  },
-  Icon: {
-    width: 12,
-    height: 12,
-  },
-  dropdownArea: {
-    width: '90%',
-    height: 300,
-    borderRadius: 10,
-    marginTop: 10,
-    backgroundColor: '#FFFFFF',
-    elevation: 5,
-    alignSelf: 'center',
-  },
-  searchInput: {
-    width: '90%',
-    height: 50,
-    borderRadius: 10,
-    borderWidth: 0.5,
-    marginTop: 10,
-    alignSelf: 'center',
-  },
-  Item: {
-    width: '85%',
-    height: 50,
-    marginTop: 5,
-    borderBottomWidth: 0.2,
-    borderBottomColor: 'black',
-    alignSelf: 'center',
-  },ItemText:{
-    fontFamily: FONTS.SemiBold,
-    color: '#101C1D',
-  },  mail: {
-    fontSize: 21,
-    fontFamily:FONTS.SemiBold,
-    color: '#101C1D',
-    marginTop: 20,
-    alignSelf:'flex-start',
-    marginStart:55,
-  },
-  input: {
-    height: 40,
-    color: 'black',
-    fontSize: 16,
-    borderBottomWidth: 2,
-    minWidth: 302,
-    minHeight: 40,
-  },
-});

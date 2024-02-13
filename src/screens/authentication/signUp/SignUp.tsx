@@ -29,7 +29,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
       console.log('enter email and password');
       return;
     }
-    auth()
+     auth()
       .createUserWithEmailAndPassword(email, passowrd)
       .then(() => {
         Toast.show({

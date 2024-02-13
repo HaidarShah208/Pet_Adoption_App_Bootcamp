@@ -11,6 +11,7 @@ import userImg from '../../assests/userIImg.svg'
 import cross from '../../assests/cross.svg'
 import up from '../../assests/up-arrow.svg'
 import down from '../../assests/down-arrow.svg'
+import imagePicker from '../../assests/imagePicker.svg'
 
 export const IMAGES = {
     homeBottom: home,
@@ -22,6 +23,7 @@ export const IMAGES = {
     upArrow: up,
     downArrow: down,
     Cross: cross,
+    ImagePicker: imagePicker,
     //focus section
     focusHeart: fHeart,
     focusHome: fHome,

@@ -6,11 +6,15 @@ import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawe
 import { drawarSide } from '../../styles/navigation/DrawarSideMenue'
 import Input from '../../components/input/Input'
 import { TextInput } from 'react-native-gesture-handler'
+import { useAuthContext } from '../../context/AuthContext'
+
 
  const SideMenue=(props:any)=> {
   const closeDrawer = () => {
     props.navigation.closeDrawer();
   };
+
+  const {logout}=useAuthContext()
   return (
     <View style={{flex:1}}>
     <DrawerContentScrollView {...props}  >
@@ -33,7 +37,7 @@ import { TextInput } from 'react-native-gesture-handler'
    </DrawerContentScrollView>
    
       <TouchableOpacity >
-        <Text style={drawarSide.Lgout}>Log out</Text>
+        <Text style={drawarSide.Lgout} onPress={logout}>Log out</Text>
       </TouchableOpacity>
     
     </View>

@@ -4,6 +4,7 @@ export interface AuthContextProps {
     user: Record<string, any>;
     dispatch: React.Dispatch<AuthAction>;
     isAppLoading:boolean
+    logout:()=>void
   }
   
   

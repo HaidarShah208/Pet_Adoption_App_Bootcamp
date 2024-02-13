@@ -37,8 +37,8 @@ export default function TabNavigator({navigation}:DonationScreenProps) {
           tabBarStyle: navs.navigation,
         }}>
         <Tab.Screen
-          name="home"
-          component={Home}
+          name="drawar"
+          component={DrawerNavigator}
           options={{
             tabBarIcon: ({focused}) => (
               <View
@@ -96,21 +96,7 @@ export default function TabNavigator({navigation}:DonationScreenProps) {
             ),
           }}
         />
-        <Tab.Screen
-          name="drawar"
-          component={DrawerNavigator}
-          options={{
-            tabBarIcon: ({focused}) => (
-              <View
-                style={[
-                  navs.tabIconContainer,
-                  focused ? navs.tabIconFocused : navs.tabIconUnfocused,
-                ]}>
-                {focused ? <IMAGES.focusProfile /> : <IMAGES.userBottom />}
-              </View>
-            ),
-          }}
-        />
+   
       
       </Tab.Navigator>
               // </NavigationContainer>

@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
@@ -8,14 +8,20 @@ import {TextInput} from 'react-native-gesture-handler';
 import Button from '../../../components/button/Button';
 import Toast from 'react-native-toast-message';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { useAuthContext } from '../../../context/AuthContext';
 
 interface userScreenProps {
   navigation:  BottomTabNavigationProp<RootTabParamsList, 'user'>;
 }
+
 export default function User({navigation}: userScreenProps) {
   const [passowrd, setPassword] = useState('');
   const [name, setName] = useState('');
-
+  const {user}=useAuthContext()
+  useEffect(() => {
+    console.log('User Email:', user.email);
+  }, [user]);
+  console.log('userEamil',user)
 
   const handleSubmit = () => {
     console.log('submit');
@@ -42,7 +48,7 @@ export default function User({navigation}: userScreenProps) {
         <Text style={userStyle.mail}>Email</Text>
         <TextInput
           style={userStyle.input}
-          value={passowrd}
+          value={user.email}
           onChangeText={passowrd => setPassword(passowrd)}
         />
       </View>

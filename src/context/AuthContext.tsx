@@ -52,11 +52,18 @@ export default function AuthContextProvider(props: { children: React.ReactNode }
     }, 2000)
   };
 
+  const logout=()=>{
+    auth().signOut()
+   dispatch({type: 'Logout'})
+  }
+
   return (
-    <AuthContext.Provider value={{ ...state, dispatch, isAppLoading }}>
+    <AuthContext.Provider value={{ ...state, dispatch,logout, isAppLoading }}>
       {props.children}
     </AuthContext.Provider>
   );
 }
 
 export const useAuthContext = () => useContext(AuthContext);
+ 
+
