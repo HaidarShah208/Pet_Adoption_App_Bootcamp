@@ -33,7 +33,6 @@ export default function Login({navigation}: LoginScreenProps) {
       .signInWithEmailAndPassword(email, passowrd)
       .then((userCredential) => {
         const user:FirebaseUser | null =userCredential.user
-        console.log('user',user)
         if(user){
           const userEmail:string | undefined=user.email ||undefined
           const userData:UserProfileData={
@@ -47,7 +46,6 @@ export default function Login({navigation}: LoginScreenProps) {
         })
       setEmail('')
       setPassword('')
-      // navigation.navigate('home')
       })
       .catch(error => {
         Toast.show({

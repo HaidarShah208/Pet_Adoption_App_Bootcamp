@@ -2,6 +2,10 @@ import { StyleSheet } from "react-native";
 import { FONTS } from "../../constants/fonts/AllFonts";
 
 export const styles = StyleSheet.create({
+  iMg:{
+paddingHorizontal:50,
+marginTop:30
+  },
     container:{
       flexDirection: 'column',
       justifyContent: 'center',  

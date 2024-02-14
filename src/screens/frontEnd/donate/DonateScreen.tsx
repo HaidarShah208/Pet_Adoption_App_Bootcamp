@@ -4,6 +4,7 @@ import {IMAGES} from '../../../constants/assessts/AllAssessts';
 import {FlatList} from 'react-native';
 import {styles} from '../../../styles/frontEnd/DonateScreen';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import { useNavigation } from '@react-navigation/native';
 
 const datas = [
   {dog: 'puppy', location: 'pakistan'},
@@ -12,8 +13,6 @@ const datas = [
   {dog: 'afda', location: 'pakistan'},
   {dog: 'as', location: 'pakistan'},
 ];
-
-
 
 
 interface YourState {
@@ -34,44 +33,7 @@ export default function DonateScreen() {
   const [isClik, setIsClik] = useState(false);
   const [allData, setAllData] = useState(datas);
   const [filePath, setFilePath] = useState({});
-
-  // const chooseFile = () => {
-  //   let options = {
-  //     title: 'Select Image',
-  //     customButtons: [
-  //       {
-  //         name: 'customOptionKey',
-  //         title: 'Choose Photo from Custom Option'
-  //       },
-  //     ],
-  //     storageOptions: {
-  //       skipBackup: true,
-  //       path: 'images',
-  //     },
-  //   };
-  //   launchCamera(options, (response:any) => {
-  //     console.log('Response = ', response);
-
-  //     if (response.didCancel) {
-  //       console.log('User cancelled image picker');
-  //     } else if (response.error) {
-  //       console.log('ImagePicker Error: ', response.error);
-  //     } else if (response.customButton) {
-  //       console.log(
-  //         'User tapped custom button: ',
-  //         response.customButton
-  //       );
-  //     } else {
-  //       let source = response;
-  //       // You can also display the image using data:
-  //       // let source = {
-  //       //   uri: 'data:image/jpeg;base64,' + response.data
-  //       // };
-  //       setFilePath(source);
-  //     }
-  //   });
-  // };
-
+  const navigation = useNavigation();
   const [state, setState] = useState<YourState>({
     petType:'',
     petBreed:'',
@@ -121,6 +83,11 @@ export default function DonateScreen() {
   };
   return (
 <ScrollView>
+  <TouchableOpacity onPress={() => {
+        navigation.goBack();
+      }}>
+  <IMAGES.BACK width={25} height={25} style={styles.iMg} />
+  </TouchableOpacity>
     <View style={styles.container}>
       <Text style={styles.heading}>Pet Type</Text>
       <TouchableOpacity style={styles.dorpdown} onPress={handlePress}>

@@ -15,12 +15,12 @@ interface SignupScreenProps {
 }
 
 const initialState = {
-  userName: '',
+  username: '',
   email: '',
   password: '',
 };
 type UserData = {
-  userName: string;
+  username: string;
   email: string;
   password: string;
   uid?: string;
@@ -40,8 +40,8 @@ export default function SignUp({navigation}: SignupScreenProps) {
   // firebasAuth
 
   const handleRegister = () => {
-    const {userName, email, password} = state;
-    if (!userName.trim() || !email.trim() || !password.trim){
+    const {username, email, password} = state;
+    if (!username.trim() || !email.trim() || !password.trim){
     return  Toast.show({
         type:'error',
         text1:'Enter UserName or Email or Passowrd'
@@ -49,7 +49,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
     }
     let validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    if (userName.length < 3) {
+    if (username.length < 3) {
       return      Toast.show({
         type:'error',
         text1:'User name at least 3 characters'
@@ -74,7 +74,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
         text1:'Password at least 6 characters required'
       })
     }
-    let userData: UserData = {userName, email, password};
+    let userData: UserData = {username, email, password};
     setisloading(true);
     createUser(userData);
     setState(initialState);
@@ -130,8 +130,8 @@ export default function SignUp({navigation}: SignupScreenProps) {
       <Text style={styles.mail}>Username</Text>
       <TextInput
         style={styles.input}
-        value={state.userName}
-        onChangeText={(value: string) => handleChange('userName', value)}
+        value={state.username}
+        onChangeText={(value: string) => handleChange('username', value)}
       />
       <Text style={styles.mail}>Email</Text>
       <TextInput

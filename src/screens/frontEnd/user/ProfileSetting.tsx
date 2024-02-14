@@ -1,7 +1,6 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, Image, Alert} from 'react-native';
+import React, { useState} from 'react';
 import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
 import {userStyle} from '../../../styles/frontEnd/User';
 import {TextInput} from 'react-native-gesture-handler';
@@ -9,51 +8,81 @@ import Button from '../../../components/button/Button';
 import Toast from 'react-native-toast-message';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useAuthContext } from '../../../context/AuthContext';
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 
 interface userScreenProps {
   navigation:  BottomTabNavigationProp<RootTabParamsList, 'user'>;
 }
 
+ 
 export default function User({navigation}: userScreenProps) {
-  const [passowrd, setPassword] = useState('');
-  const [name, setName] = useState('');
   const {user}=useAuthContext()
-  
-  console.log('userEamil',user)
+  const [email, setEmai] = useState(user.email);
+  const [name, setName] = useState(user.username);
 
-  const handleSubmit = () => {
-    console.log('submit');
-    if(!passowrd.trim() || !name.trim()){
-      Toast.show({
-        type:'error',
-        text1:'Enter Email or Passowrd'
-      })
-      console.log('enter email and password')
-      return;
-    }
+  const currentUser=auth().currentUser
+  console.log('currentUser',currentUser)
+
+  // const handleSubmit = () => {
+  //   console.log('submit');
+ 
+  //   if(!passowrd.trim() || !name.trim()){
+  //     Toast.show({
+  //       type:'error',
+  //       text1:'Enter Name and Email'
+  //     })
+  //     console.log('enter email and password')
+  //     return;
+  //   }
+  // }
+
+  if(!currentUser){
+    Alert.alert('user not found')
+    return
   }
+  const  handleSubmit = () => {
+    currentUser.updateProfile({
+      displayName: name,
+    });
+    const userDocRef = firestore().collection('users').doc(user.uid);
+    userDocRef
+      .update({
+        username: name,
+        email: email,
+      })
+      .then(() => {
+        Alert.alert('Success', 'Profile updated successfully');
+      })
+      .catch(error => {
+        Alert.alert('Error', error.message);
+      });
+  };
   return (
     <View style={userStyle.mainContainer}>
       <View style={userStyle.main}>
         <Text style={userStyle.heading}>Profile Setting</Text>
-      {
+  <View>
+  {
         user.photoURL == null ? (
           <IMAGES.userImg />
         ):(
           <Image source={{uri:user.photoURL}} />
         )
       }
+  </View>
+
         <Text style={userStyle.mail}>Username</Text>
         <TextInput
           style={userStyle.input}
-          value={user.userName}
+          value={name}
           onChangeText={name => setName(name)}
         />
         <Text style={userStyle.mail}>Email</Text>
         <TextInput
           style={userStyle.input}
-          value={user.email}
-          onChangeText={passowrd => setPassword(passowrd)}
+          value={email}
+          onChangeText={ email =>  setEmai( email)}
         />
       </View>
       <View style={userStyle.btnsContainer}>

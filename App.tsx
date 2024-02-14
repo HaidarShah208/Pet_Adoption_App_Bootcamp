@@ -10,6 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import DonateScreen from './src/screens/frontEnd/donate/DonateScreen';
 import AuthNavigation from './src/navigation/AuthNavigation';
 import Navigator from './src/navigation/stackNavigation/Navigator';
+import ImagePickers from './src/screens/frontEnd/ImagePIcker';
 export default function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
@@ -31,6 +32,7 @@ export default function App() {
         {/* <Navigator/> */}
         {/* <DonateScreen/> */}
         {/* <UpdatePassword/> */}
+      {/* <ImagePickers/> */}
         <Toast />
            </NavigationContainer> 
    </GestureHandlerRootView>
