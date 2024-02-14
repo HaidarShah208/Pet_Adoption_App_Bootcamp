@@ -85,5 +85,11 @@ marginTop:30
     },img:{
       marginTop:20,
       marginBottom:20
-    }
+    },btns:{
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom:40,
+      fontFamily:FONTS.BOLD,
+      width:321,
+      height:74,}
   });

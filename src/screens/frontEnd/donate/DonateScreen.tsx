@@ -3,8 +3,10 @@ import React, {useEffect, useState} from 'react';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
 import {FlatList} from 'react-native';
 import {styles} from '../../../styles/frontEnd/DonateScreen';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import ImagePicker,{ImagePickerResponse, launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
+import Button from '../../../components/button/Button';
+import { userStyle } from '../../../styles/frontEnd/User';
 
 const datas = [
   {dog: 'puppy', location: 'pakistan'},
@@ -14,6 +16,10 @@ const datas = [
   {dog: 'as', location: 'pakistan'},
 ];
 
+interface Resource {
+  uri?: string;
+  data?: string;
+}
 
 interface YourState {
   petType: string;
@@ -66,7 +72,6 @@ export default function DonateScreen() {
   };
 
   const [amount, setamount] = useState('');
-
   const handleWeightChange = (txt: any) => {
     setamount(txt);
   };
@@ -80,6 +85,40 @@ export default function DonateScreen() {
       });
       setAllData(searchedData);
     } else setAllData(datas);
+  };
+
+
+  // image picker
+  const [resource, setResource] = useState<Resource>({});
+
+  const selectFile = async () => {
+    const options: ImagePicker.ImageLibraryOptions & { title: string ,customButtons:{},storageOptions:{}
+} = {
+        title: 'Select Image',
+        mediaType: 'photo' as ImagePicker.MediaType, // Explicitly set the type
+        customButtons: [
+          { name: 'customOptionKey', title: 'Choose File from Custom Option' },
+        ],
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+  
+    try {
+      const res: ImagePickerResponse | undefined = await launchImageLibrary(options);
+console.log('res', res.assets)
+      if (res.didCancel) {
+        setResource({
+          uri: res.uri,
+          data: res.data,
+        });
+      } else {
+        console.log('User cancelled image picker');
+      }
+    } catch (err) {
+      console.error('ImagePicker error:', err);
+    }
   };
   return (
 <ScrollView>
@@ -210,9 +249,16 @@ export default function DonateScreen() {
       <Text style={styles.mail}>Descriptin</Text>
       <TextInput style={styles.input} value={state.description} onChangeText={(text) =>   handleChange('description',text)} />
       <Text style={styles.heading}>Image</Text>
-      <TouchableOpacity style={styles.img}  >
+      <TouchableOpacity style={styles.img} onPress={selectFile} >
         <IMAGES.ImagePicker/>
       </TouchableOpacity>
+      <View style={styles.btns}>
+        <Button
+          title={'Donate'}
+          buttonStyle={styles.btns}
+          onPress={()=>console.log('pressed')}
+        />
+      </View>
     </View>
 </ScrollView>
   );

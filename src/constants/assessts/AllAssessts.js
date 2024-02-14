@@ -14,6 +14,8 @@ import down from '../../assests/down-arrow.svg'
 import imagePicker from '../../assests/imagePicker.svg'
 import Back from '../../assests/Back.svg'
 import Edit from '../../assests/Edit.svg'
+import pencil from '../../assests/pencil.svg'
+
 
 export const IMAGES = {
     homeBottom: home,
@@ -28,6 +30,7 @@ export const IMAGES = {
     ImagePicker: imagePicker,
     BACK: Back,
     Edit: Edit,
+    Pencil: pencil,
     //focus section
     focusHeart: fHeart,
     focusHome: fHome,

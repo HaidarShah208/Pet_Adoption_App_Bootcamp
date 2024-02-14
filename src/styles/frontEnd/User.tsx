@@ -42,6 +42,11 @@ fontFamily:FONTS.BOLD,
         fontFamily:FONTS.BOLD,
         width:321,
         height:74,
-
+      },profile:{
+      position:'absolute',
+      },profileEdit:{
+      position:'relative',
+      left:99,
+      bottom:25
       }
 })
