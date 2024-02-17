@@ -10,6 +10,9 @@ export const navs = StyleSheet.create({
     backgroundColor: 'white',
     height: 80,
     width: 'auto',
+    // top: 0,
+    bottom:0,
+    position: 'relative',
   },
 
   tabIconContainer: {

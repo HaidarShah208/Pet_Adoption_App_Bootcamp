@@ -35,6 +35,7 @@ export default function TabNavigator({navigation}:DonationScreenProps) {
           tabBarShowLabel: false,
           headerShown: false,
           tabBarStyle: navs.navigation,
+          
         }}>
         <Tab.Screen
           name="drawar"
