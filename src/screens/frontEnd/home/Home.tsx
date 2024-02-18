@@ -6,7 +6,7 @@ import {
   TouchableOpacity,ScrollView,
   Dimensions,TextInput
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
 import {styleHome} from '../../../styles/frontEnd/Home';
@@ -24,36 +24,27 @@ import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
 import Input from '../../../components/input/Input';
 
+
 interface HomeScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamsList, 'home'>;
 }
 
 export default function Home({navigation}: HomeScreenProps) {
   const navigations = useNavigation();
-  const {user}=useAuthContext()
+  const {user} = useAuthContext();
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  
+  const currentUser = auth().currentUser;
+  useEffect(() => {
+    if (user.photoURL) {
+      setProfileImage(user.photoURL);
+    }
+  }, [user.photoURL]);
   const openDrawer = () => {
     navigations.dispatch(DrawerActions.openDrawer());
   };
 
-  const {dispatch} = useAuthContext();
-
-  // const handleLogout = async () => {
-  //   try {
-  //     await auth().signOut();
-  //     dispatch({ type: 'Logout' }); // Dispatch "Logout" action
-  //     Toast.show({
-  //       type: 'success',
-  //       text1: 'Logged out successfully',
-  //     });
-  //     navigation.navigate('login'); // Redirect to login screen
-  //   } catch (error) {
-  //     Toast.show({
-  //       type: 'error',
-  //       text1: 'Failed to log out',
-  //     });
-  //     console.error('Logout error:', error);
-  //   }
-  // };
+ 
 
   return (
     <View>
@@ -61,13 +52,11 @@ export default function Home({navigation}: HomeScreenProps) {
         <TouchableOpacity onPress={openDrawer}>
           <HOME.NavImg />
         </TouchableOpacity>
-        {
-        user.photoURL == null ? (
-          <HOME.Profile />
-        ):(
-          <Image source={{uri:user.photoURL}} />
-        )
-      }
+        {currentUser && currentUser.photoURL ? (
+          <Image source={{ uri: currentUser.photoURL }} style={styleHome.userImage}/>
+        ) : (
+          <HOME.HomeUser height={48} width={48} style={{borderRadius:30}}/>
+        )}
       </View>
       <Text style={styleHome.tesxt}>{`Find an \nAwesome \npets for you`}</Text>
       <Input/>

@@ -24,7 +24,7 @@ marginTop:30
       fontFamily: FONTS.SemiBold,
       color: 'black',
       width: '100%',
-      height: 50,
+      height: 40,
       borderRadius: 10,
       borderBottomWidth: 2,
       alignSelf: 'center',
@@ -40,7 +40,7 @@ marginTop:30
     },
     dropdownArea: {
       width: '100%',
-      height: 300,
+      height: 200,
       borderRadius: 10,
       marginTop: 10,
       backgroundColor: '#FFFFFF',
@@ -57,7 +57,7 @@ marginTop:30
     },
     Item: {
       width: '85%',
-      height: 40,
+      height: 30,
       marginVertical:10,
       marginTop: 5,
       borderBottomWidth: 0.2,
@@ -67,7 +67,7 @@ marginTop:30
     },ItemText:{
       fontFamily: FONTS.SemiBold,
       color: '#101C1D',
-    },  mail: {
+    }, mail: {
       fontSize: 21,
       fontFamily:FONTS.SemiBold,
       color: '#101C1D',

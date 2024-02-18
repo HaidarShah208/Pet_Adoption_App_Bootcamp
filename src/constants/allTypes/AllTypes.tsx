@@ -34,4 +34,20 @@ export interface AuthContextProps {
   export type AuthAction =
     | { type: "Login"; payload: { userData?: UserProfileData } }
     | { type: "Logout" };
+
+   export interface Resource {
+      uri?: string;
+      data?: string;
+    }
+    
+ export   interface YourState {
+      petType: string;
+      petBreed: string;
+      amount: string;
+      vaccinated: string;
+      petGender: string;
+      petWeight: string;
+      petLocation: string;
+      description: string;
+    }
   

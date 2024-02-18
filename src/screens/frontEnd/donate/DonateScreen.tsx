@@ -4,105 +4,102 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  Platform,
-  PermissionsAndroid,
+  FlatList,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
-import {FlatList} from 'react-native';
-import {styles} from '../../../styles/frontEnd/DonateScreen';
 import ImagePicker, {
   ImagePickerResponse,
-  launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../../../components/button/Button';
-import {userStyle} from '../../../styles/frontEnd/User';
 import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
+import Toast from 'react-native-toast-message';
+import auth from '@react-native-firebase/auth';
+
+import {styles} from '../../../styles/frontEnd/DonateScreen';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { RootDrawerParamsList } from '../../../navigation/drawerNavigation/DrawerNavigator';
 
 const datas = [
-  {dog: 'puppy', location: 'pakistan'},
-  {dog: 'all', location: 'pakistan'},
-  {dog: 'afas', location: 'pakistan'},
-  {dog: 'afda', location: 'pakistan'},
-  {dog: 'as', location: 'pakistan'},
+  {dog: 'Cat'},
+  {dog: 'Dog'},
+  {dog: 'Sheep'},
 ];
 
-interface Resource {
-  uri?: string;
-  data?: string;
+const Gender = [
+  {gender: 'Male'},
+  {gender: 'Female'},
+];
+const Vaccinated = [
+  {isVaccinated: 'Yes'},
+  {isVaccinated: 'No'},
+];
+
+interface DonationScreenProps {
+  navigation: DrawerNavigationProp<RootDrawerParamsList, 'donateScren'>;
 }
 
-interface YourState {
-  petType: string;
-  petBreed: string;
-  amount: string;
-  vaccinated: string;
-  petGender: string;
-  petWeight: string;
-  petLocation: string;
-  description: string;
-  // selectedImage: { uri: string } | null;
-}
-export default function DonateScreen() {
-  const [selectedItem, setSelectedItem] = useState('select pet');
-  const [isClicked, setIsClicked] = useState(false);
-  const [isClick, setIsClick] = useState(false);
-  const [isClik, setIsClik] = useState(false);
+export default function DonateScreen({navigation}:DonationScreenProps) {
+  const [isPetTypeClicked, setIsPetTypeClicked] = useState(false);
+  const [isVaccinatedClick, setIsVaccinatedClick] = useState(false);
+  const [isGenderClick, setIsGenderClick] = useState(false);
   const [allData, setAllData] = useState(datas);
+  const [gender, setGender] = useState(Gender);
+  const [vaccinated, setVaccinated] = useState(Vaccinated);
   const [filePath, setFilePath] = useState('');
   const [fileName, setFileName] = useState('');
-  const navigation = useNavigation();
-  const [state, setState] = useState<YourState>({
+  const [loading, setisloading] = useState(false);
+
+  const navigations = useNavigation();
+
+  const [state, setState] = useState({
     petType: '',
     petBreed: '',
     amount: '',
-    vaccinated: '',
     petGender: '',
     petWeight: '',
     petLocation: '',
     description: '',
   });
 
+  const [selectedValues, setSelectedValues] = useState({
+    petType: 'select pet',
+    vaccinated: 'select vaccinated',
+    gender: 'select gender',
+  });
+
   const handleChange = (name: string, value: string): void => {
+    setSelectedValues(prevValues => ({
+      ...prevValues,
+      [name]: value,
+    }))
     setState(prevState => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handlePress = () => {
-    setIsClicked(!isClicked);
-    console.log('clicked');
+  const handlePressType = () => {
+    setIsPetTypeClicked(!isPetTypeClicked);
   };
-  const handlePresss = () => {
-    setIsClick(!isClick);
-    console.log('clicked');
+  const handlePressVaccinated = () => {
+    setIsVaccinatedClick(!isVaccinatedClick);
   };
-  const handlePres = () => {
-    setIsClik(!isClik);
-    console.log('clicked');
-  };
-
-  const [amount, setamount] = useState('');
-  const handleWeightChange = (txt: any) => {
-    setamount(txt);
+  const handlePressGender = () => {
+    setIsGenderClick(!isGenderClick);
   };
 
   const onSearch = (text: any) => {
-    if (text != '') {
+    if (text !== '') {
       let searchedData = datas.filter(item => {
-        return (
-          item.dog.toLocaleLowerCase().indexOf(text.toLocaleLowerCase()) > -1
-        );
+        return item.dog.toLowerCase().indexOf(text.toLowerCase()) > -1;
       });
       setAllData(searchedData);
     } else setAllData(datas);
   };
-
-  // image picker
-  const [resource, setResource] = useState<Resource>({});
 
   const selectFile = async () => {
     const options: ImagePicker.ImageLibraryOptions & {
@@ -111,7 +108,7 @@ export default function DonateScreen() {
       storageOptions: {};
     } = {
       title: 'Select Image',
-      mediaType: 'photo' as ImagePicker.MediaType, // Explicitly set the type
+      mediaType: 'photo' as ImagePicker.MediaType,
       customButtons: [
         {name: 'customOptionKey', title: 'Choose File from Custom Option'},
       ],
@@ -122,7 +119,6 @@ export default function DonateScreen() {
     };
 
     try {
-      type NewType = ImagePickerResponse;
       const res: ImagePickerResponse | undefined = await launchImageLibrary(
         options,
       );
@@ -143,12 +139,41 @@ export default function DonateScreen() {
   };
 
   const uploadImage = () => {
-    let imageType= fileName.split("/").pop();
-    console.log(imageType)
-let id = Math.random().toString(36).slice(2);
-    const reference = storage().ref(`images/${id}"."${imageType}`);
-    reference.putFile(filePath).then(snapshot => {});
+    let imageType = fileName.split('/').pop();
+    let id = Math.random().toString(36).slice(2);
+    const userUID = auth().currentUser?.uid;
+
+    if (userUID) {
+      const reference = storage().ref(`images/${id}.${imageType}`);
+      reference
+        .putFile(filePath)
+        .then(snapshot => {
+          firestore()
+            .collection('userDonation')
+            .doc(userUID)
+            .set({
+              ...state,
+              ...selectedValues,
+            })
+            .then(() => {
+              Toast.show({
+                type: 'success',
+                text1: 'Donation data saved successfully',
+              });
+              setisloading(false);
+            })
+            .catch((error: any) => {
+              console.error('Error adding donation data to Firestore: ', error);
+            });
+        })
+        .catch(error => {
+          console.error('Error uploading image to storage: ', error);
+        });
+    } else {
+      console.error('User not authenticated');
+    }
   };
+
   return (
     <ScrollView>
       <TouchableOpacity
@@ -159,11 +184,13 @@ let id = Math.random().toString(36).slice(2);
       </TouchableOpacity>
       <View style={styles.container}>
         <Text style={styles.heading}>Pet Type</Text>
-        <TouchableOpacity style={styles.dorpdown} onPress={handlePress}>
-          <Text>{selectedItem}</Text>
-          {isClicked ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
+        <TouchableOpacity
+          style={styles.dorpdown}
+          onPress={handlePressType}>
+          <Text>{selectedValues.petType}</Text>
+          {isPetTypeClicked ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
         </TouchableOpacity>
-        {isClicked ? (
+        {isPetTypeClicked ? (
           <View style={styles.dropdownArea}>
             <TextInput
               placeholder="search"
@@ -179,9 +206,9 @@ let id = Math.random().toString(36).slice(2);
                   <TouchableOpacity
                     style={styles.Item}
                     onPress={() => {
-                      setSelectedItem(item.dog);
+                      handleChange('petType', item.dog);
                       onSearch('');
-                      setIsClicked(false);
+                      setIsPetTypeClicked(false);
                     }}>
                     <Text style={styles.ItemText}>{item.dog}</Text>
                   </TouchableOpacity>
@@ -190,7 +217,7 @@ let id = Math.random().toString(36).slice(2);
             />
           </View>
         ) : null}
-        <Text style={styles.mail}>Peet Breed</Text>
+        <Text style={styles.mail}>Pet Breed</Text>
         <TextInput
           style={styles.input}
           value={state.petBreed}
@@ -204,11 +231,13 @@ let id = Math.random().toString(36).slice(2);
         />
 
         <Text style={styles.heading}>Vaccinated</Text>
-        <TouchableOpacity style={styles.dorpdown} onPress={handlePresss}>
-          <Text>{selectedItem}</Text>
-          {isClick ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
+        <TouchableOpacity
+          style={styles.dorpdown}
+          onPress={handlePressVaccinated}>
+          <Text>{selectedValues.vaccinated}</Text>
+          {isVaccinatedClick ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
         </TouchableOpacity>
-        {isClick ? (
+        {isVaccinatedClick ? (
           <View style={styles.dropdownArea}>
             <TextInput
               placeholder="search"
@@ -218,17 +247,17 @@ let id = Math.random().toString(36).slice(2);
               }}
             />
             <FlatList
-              data={allData}
+              data={vaccinated}
               renderItem={({item, index}) => {
                 return (
                   <TouchableOpacity
                     style={styles.Item}
                     onPress={() => {
-                      setSelectedItem(item.dog);
+                      handleChange('vaccinated', item.isVaccinated);
                       onSearch('');
-                      setIsClick(false);
+                      setIsVaccinatedClick(false);
                     }}>
-                    <Text style={styles.ItemText}>{item.dog}</Text>
+                    <Text style={styles.ItemText}>{item.isVaccinated}</Text>
                   </TouchableOpacity>
                 );
               }}
@@ -236,11 +265,13 @@ let id = Math.random().toString(36).slice(2);
           </View>
         ) : null}
         <Text style={styles.heading}>Gender</Text>
-        <TouchableOpacity style={styles.dorpdown} onPress={handlePres}>
-          <Text>{selectedItem}</Text>
-          {isClik ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
+        <TouchableOpacity
+          style={styles.dorpdown}
+          onPress={handlePressGender}>
+          <Text>{selectedValues.gender}</Text>
+          {isGenderClick ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
         </TouchableOpacity>
-        {isClik ? (
+        {isGenderClick ? (
           <View style={styles.dropdownArea}>
             <TextInput
               placeholder="search"
@@ -250,17 +281,17 @@ let id = Math.random().toString(36).slice(2);
               }}
             />
             <FlatList
-              data={allData}
+              data={gender}
               renderItem={({item, index}) => {
                 return (
                   <TouchableOpacity
                     style={styles.Item}
                     onPress={() => {
-                      setSelectedItem(item.dog);
+                      handleChange('gender', item.gender);
                       onSearch('');
-                      setIsClik(false);
+                      setIsGenderClick(false);
                     }}>
-                    <Text style={styles.ItemText}>{item.dog}</Text>
+                    <Text style={styles.ItemText}>{item.gender}</Text>
                   </TouchableOpacity>
                 );
               }}
@@ -273,13 +304,13 @@ let id = Math.random().toString(36).slice(2);
           value={`${state.petWeight} KG `}
           onChangeText={text => handleChange('petWeight', text)}
         />
-        <Text style={styles.mail}>Loacation</Text>
+        <Text style={styles.mail}>Location</Text>
         <TextInput
           style={styles.input}
           value={state.petLocation}
           onChangeText={text => handleChange('petLocation', text)}
         />
-        <Text style={styles.mail}>Descriptin</Text>
+        <Text style={styles.mail}>Description</Text>
         <TextInput
           style={styles.input}
           value={state.description}

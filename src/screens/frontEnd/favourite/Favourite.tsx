@@ -7,28 +7,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { FAVOURITE, IMAGES, SrchIMAGES } from '../../../constants/assessts/AllAssessts';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import storage from '@react-native-firebase/storage';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 
-interface favrouriteScreenProps {
-  navigation:  BottomTabNavigationProp<RootTabParamsList, 'favourite'>;
-}
+ 
 
-export default function Favourite({navigation}:favrouriteScreenProps) {
+export default function Favourite() {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
-  useEffect(() => {
-    const fetchImageURLs = async () => {
-      let imageType= __filename.split("/").pop();
-      console.log(imageType)
-  let id = Math.random().toString(36).slice(2);
-      const imagePaths = [`images/${id}"."${imageType}`];
-      const imageURLs = await Promise.all(
-        imagePaths.map(path => storage().ref(path).getDownloadURL())
-      );
-      setImageUrls(imageURLs);
-    };
-    fetchImageURLs();
-  }, []);
+ 
 
   return (
     <View>
@@ -39,7 +26,7 @@ export default function Favourite({navigation}:favrouriteScreenProps) {
          <ScrollView>
         <View>
           <View style={searchSt.MainContainer}>
-            <Image source={{uri:imageUrls[0]}} style={searchSt.mainImg} />
+            <FAVOURITE.FavRec style={searchSt.mainImg}/>
             <View style={searchSt.data}>
               <Text style={searchSt.heding}>Bobtail</Text>
               <Text>faislabad city</Text>

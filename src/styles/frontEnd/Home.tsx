@@ -54,5 +54,10 @@ export const styleHome = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
      marginTop:20,
+  },userImage:{
+    width:16,
+    height:16,
+    borderRadius:23
+
   }
 });

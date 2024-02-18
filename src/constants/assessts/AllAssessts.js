@@ -45,6 +45,7 @@ import User from '../../assests/user.svg'
 import fSearchs from '../../assests/focusSearch.svg'
 import scrlImage from '../../assests/scrlImage.svg'
 import largeImage from '../../assests/largeImage.svg'
+import homeUser from '../../assests/homeUser.svg'
 
 export const HOME = {
     NavImg: Navs,
@@ -52,6 +53,7 @@ export const HOME = {
     FocusImg: fSearchs,
     ScrlImage: scrlImage,
     LargeImg: largeImage,
+    HomeUser: homeUser
 
 }
 
@@ -71,8 +73,12 @@ export const SrchIMAGES = {
 
 // favrourite
 import Add from '../../assests/Add.svg'
+import FavRec from '../../assests/fvrRec.svg'
+import Delete from '../../assests/Delete.svg'
 export const FAVOURITE = {
-    ADD: Add
+    ADD: Add,
+    FavRec: FavRec,
+    Delete: Delete
 }
 
 

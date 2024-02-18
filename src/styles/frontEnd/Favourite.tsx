@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import { FONTS } from '../../constants/fonts/AllFonts';
+import { COLOR } from '../../constants/Colors/Colors';
 
 export const searchSt = StyleSheet.create({
   header: {
@@ -57,8 +58,10 @@ export const searchSt = StyleSheet.create({
   heartSty: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 5,
     justifyContent: 'space-between',
     paddingRight: 22,
-  },
+  },Color:{
+    color: 'black',
+
+  }
 });

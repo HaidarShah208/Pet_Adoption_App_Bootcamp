@@ -7,6 +7,7 @@ import Details from './src/screens/frontEnd/details/Details';
 import UpdatePassword from './src/screens/frontEnd/updatePassword/UpdatePassword';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigation from './src/navigation/AuthNavigation';
+import MyDonation from './src/screens/frontEnd/myDonation/MyDonation';
 export default function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
@@ -25,6 +26,7 @@ export default function App() {
         <AuthNavigation/>
         {/* <Details/> */}
         {/* <UpdatePassword/> */}
+        {/* <MyDonation/> */}
         <Toast />
            </NavigationContainer> 
    </GestureHandlerRootView>
