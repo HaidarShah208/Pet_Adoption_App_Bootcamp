@@ -27,12 +27,15 @@ export const searchSt = StyleSheet.create({
     position: 'relative',
     left: 20,
     zIndex: 1,
+    width:194,
+    height:141,
+    borderRadius:25
   },
 
   data: {
     position: 'absolute',
     left: 160,
-    top: 10,
+    top: 8,
     paddingLeft: 60,
     width: 206,
     height: 126,

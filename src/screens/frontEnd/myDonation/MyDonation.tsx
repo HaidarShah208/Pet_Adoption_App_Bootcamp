@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootDrawerParamsList} from '../../../navigation/drawerNavigation/DrawerNavigator';
@@ -48,6 +48,21 @@ export default function MyDonation({navigation}: DonationScreenProps) {
   const handleAddImageClick = () => {
     navigation.navigate('donateScren');
   };
+
+  const handleDeleteImageClick = async () => {
+    const userUID = auth().currentUser?.uid;
+
+    if (userUID) {
+      try {
+        // Delete the document from the Firestore collection
+        await firestore().collection('userDonation').doc(userUID).delete();
+        console.log('Document successfully deleted.');
+        setDonationData(null); // Clear the local state
+      } catch (error) {
+        console.error('Error deleting document: ', error);
+      }
+    }
+  }
   return (
     <View>
       <View style={searchSt.header}>
@@ -57,8 +72,9 @@ export default function MyDonation({navigation}: DonationScreenProps) {
       <ScrollView>
         <View>
           <View style={searchSt.MainContainer}>
-            <FAVOURITE.FavRec style={searchSt.mainImg} />
             {donationData ? (
+              <View>
+                <Image source={{uri:donationData.imageURL}} style={searchSt.mainImg}/>
               <View style={searchSt.data}>
                 <Text style={searchSt.heding}>{donationData.petType}</Text>
                 <Text>{donationData.description}</Text>
@@ -69,11 +85,14 @@ export default function MyDonation({navigation}: DonationScreenProps) {
                 </View>
                 <View style={searchSt.heartSty}>
                   <Text>{donationData.gender}</Text>
-                  <FAVOURITE.Delete />
+                  <TouchableOpacity onPress={handleDeleteImageClick}>
+                    <FAVOURITE.Delete />
+                  </TouchableOpacity>
                 </View>
               </View>
+              </View>
             ) : (
-              <Text>Loading...</Text>
+              <Text >Loading...</Text>
             )}
           </View>
         </View>

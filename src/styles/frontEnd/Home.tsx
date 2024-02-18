@@ -55,8 +55,8 @@ export const styleHome = StyleSheet.create({
     justifyContent:'center',
      marginTop:20,
   },userImage:{
-    width:16,
-    height:16,
+ width:46,
+ height:46,
     borderRadius:23
 
   }

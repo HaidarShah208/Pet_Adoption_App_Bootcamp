@@ -9,7 +9,10 @@ import Toast from 'react-native-toast-message';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {useAuthContext} from '../../../context/AuthContext';
 import auth from '@react-native-firebase/auth';
-import ImagePicker,{ImagePickerResponse, launchImageLibrary} from 'react-native-image-picker';
+import ImagePicker, {
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 
@@ -38,7 +41,6 @@ export default function User({navigation}: userScreenProps) {
     Alert.alert('Error', 'User not logged in');
     return;
   }
-
 
   const handleSubmit = () => {
     currentUser.updateProfile({
@@ -71,7 +73,10 @@ export default function User({navigation}: userScreenProps) {
         // status: status,
       })
       .then(() => {
-        Alert.alert('Success', 'Profile updated successfully');
+        Toast.show({
+          type: 'success',
+          text1: 'profile updated',
+        });
       })
       .catch(error => {
         Alert.alert('Error', error.message);
@@ -116,7 +121,8 @@ export default function User({navigation}: userScreenProps) {
       }
     } catch (err) {
       console.error('ImagePicker error:', err);
-    }};
+    }
+  };
   const uploadImageToFirebaseStorage = async (uri: string) => {
     try {
       const imageName = uri.substring(uri.lastIndexOf('/') + 1);
@@ -150,21 +156,21 @@ export default function User({navigation}: userScreenProps) {
       <View style={userStyle.main}>
         <Text style={userStyle.heading}>Profile Setting</Text>
         <View>
-        {currentUser.photoURL == null ? (
-<View style={{borderRadius:90,overflow: 'hidden'}}>
-<HOME.HomeUser height={120} width={120}  />
-
-</View>
-) : (
-              <Image
-                source={{uri: currentUser.photoURL}} style={userStyle.profile}
-              />
-            )}
-            <TouchableOpacity onPress={handlePicture}>
-              <View style={userStyle.profileEdit}>
-                <IMAGES.Pencil height={20} width={20}  />
-              </View>
-            </TouchableOpacity>
+          {currentUser.photoURL == null ? (
+            <View style={{borderRadius: 90, overflow: 'hidden'}}>
+              <HOME.HomeUser height={120} width={120} />
+            </View>
+          ) : (
+            <Image
+              source={{uri: currentUser.photoURL}}
+              style={userStyle.profile}
+            />
+          )}
+          <TouchableOpacity onPress={handlePicture}>
+            <View style={userStyle.profileEdit}>
+              <IMAGES.Pencil height={20} width={20} />
+            </View>
+          </TouchableOpacity>
         </View>
 
         <Text style={userStyle.mail}>Username</Text>

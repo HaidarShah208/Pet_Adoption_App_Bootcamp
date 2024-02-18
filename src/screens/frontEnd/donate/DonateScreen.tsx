@@ -138,42 +138,38 @@ export default function DonateScreen({navigation}:DonationScreenProps) {
     }
   };
 
-  const uploadImage = () => {
+  const uploadImage = async() => {
     let imageType = fileName.split('/').pop();
     let id = Math.random().toString(36).slice(2);
     const userUID = auth().currentUser?.uid;
 
     if (userUID) {
       const reference = storage().ref(`images/${id}.${imageType}`);
-      reference
-        .putFile(filePath)
-        .then(snapshot => {
-          firestore()
-            .collection('userDonation')
-            .doc(userUID)
-            .set({
-              ...state,
-              ...selectedValues,
-            })
-            .then(() => {
-              Toast.show({
-                type: 'success',
-                text1: 'Donation data saved successfully',
-              });
-              setisloading(false);
-            })
-            .catch((error: any) => {
-              console.error('Error adding donation data to Firestore: ', error);
-            });
-        })
-        .catch(error => {
-          console.error('Error uploading image to storage: ', error);
+      try {
+        const snapshot = await reference.putFile(filePath);
+        const downloadURL = await reference.getDownloadURL();
+  
+        // Update Firestore document with the image URL
+        await firestore()
+          .collection('userDonation')
+          .doc(userUID)
+          .set({
+            ...state,
+            ...selectedValues,
+            imageURL: downloadURL, // Add the image URL to the document
+          });
+        Toast.show({
+          type: 'success',
+          text1: 'Donation data saved successfully',
         });
+        setisloading(false);
+      } catch (error) {
+        console.error('Error uploading image to storage or updating Firestore:', error);
+      }
     } else {
       console.error('User not authenticated');
     }
   };
-
   return (
     <ScrollView>
       <TouchableOpacity
