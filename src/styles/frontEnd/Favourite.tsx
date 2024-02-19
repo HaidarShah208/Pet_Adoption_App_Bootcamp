@@ -65,6 +65,7 @@ export const searchSt = StyleSheet.create({
     paddingRight: 22,
   },Color:{
     color: 'black',
-
+  },discription:{
+    color:'#101C1D'
   }
 });

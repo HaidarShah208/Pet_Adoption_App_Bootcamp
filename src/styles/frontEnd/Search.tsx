@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { FONTS } from '../../constants/fonts/AllFonts';
 
 export const searchSt = StyleSheet.create({
   input: {
@@ -94,9 +95,11 @@ export const searchSt = StyleSheet.create({
   },
   heding: {
     fontSize: 18,
-    fontWeight: 'bold',
     paddingTop: 10,
-    paddingBottom:5
+    paddingBottom:5,
+    fontFamily:FONTS.SemiBold,
+    color:'#101C1D'
+
   },
 
   locator: {

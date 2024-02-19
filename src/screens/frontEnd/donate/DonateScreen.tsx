@@ -22,6 +22,8 @@ import auth from '@react-native-firebase/auth';
 import {styles} from '../../../styles/frontEnd/DonateScreen';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { RootDrawerParamsList } from '../../../navigation/drawerNavigation/DrawerNavigator';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamsDetailsList } from '../../../navigation/detailNavigation/DetailNavigation';
 
 const datas = [
   {dog: 'Cat'},
@@ -38,11 +40,11 @@ const Vaccinated = [
   {isVaccinated: 'No'},
 ];
 
-interface DonationScreenProps {
-  navigation: DrawerNavigationProp<RootDrawerParamsList, 'donateScren'>;
+interface donateScreenProps {
+  navigation: StackNavigationProp<RootStackParamsDetailsList, 'donate'>;
 }
 
-export default function DonateScreen({navigation}:DonationScreenProps) {
+export default function DonateScreen({navigation}:donateScreenProps) {
   const [isPetTypeClicked, setIsPetTypeClicked] = useState(false);
   const [isVaccinatedClick, setIsVaccinatedClick] = useState(false);
   const [isGenderClick, setIsGenderClick] = useState(false);
@@ -148,8 +150,7 @@ export default function DonateScreen({navigation}:DonationScreenProps) {
       try {
         const snapshot = await reference.putFile(filePath);
         const downloadURL = await reference.getDownloadURL();
-  
-        // Update Firestore document with the image URL
+        
         await firestore()
           .collection('userDonation')
           .doc(userUID)
@@ -183,7 +184,7 @@ export default function DonateScreen({navigation}:DonationScreenProps) {
         <TouchableOpacity
           style={styles.dorpdown}
           onPress={handlePressType}>
-          <Text>{selectedValues.petType}</Text>
+          <Text style={{color:'#101C1D'}}>{selectedValues.petType}</Text>
           {isPetTypeClicked ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
         </TouchableOpacity>
         {isPetTypeClicked ? (
@@ -230,7 +231,7 @@ export default function DonateScreen({navigation}:DonationScreenProps) {
         <TouchableOpacity
           style={styles.dorpdown}
           onPress={handlePressVaccinated}>
-          <Text>{selectedValues.vaccinated}</Text>
+          <Text style={{color:'#101C1D'}}>{selectedValues.vaccinated}</Text>
           {isVaccinatedClick ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
         </TouchableOpacity>
         {isVaccinatedClick ? (
@@ -264,7 +265,7 @@ export default function DonateScreen({navigation}:DonationScreenProps) {
         <TouchableOpacity
           style={styles.dorpdown}
           onPress={handlePressGender}>
-          <Text>{selectedValues.gender}</Text>
+          <Text style={{color:'#101C1D'}}>{selectedValues.gender}</Text>
           {isGenderClick ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
         </TouchableOpacity>
         {isGenderClick ? (

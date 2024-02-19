@@ -8,6 +8,8 @@ import UpdatePassword from './src/screens/frontEnd/updatePassword/UpdatePassword
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigation from './src/navigation/AuthNavigation';
 import MyDonation from './src/screens/frontEnd/myDonation/MyDonation';
+import { Provider } from 'react-redux';
+import store from './src/redux/store';
 export default function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
@@ -20,6 +22,8 @@ export default function App() {
   }, []);
 
   return (
+    <Provider store={store}>
+
     <AuthContextProvider>
       <GestureHandlerRootView style={{flex: 1}}>
            <NavigationContainer> 
@@ -31,7 +35,7 @@ export default function App() {
            </NavigationContainer> 
    </GestureHandlerRootView>
     </AuthContextProvider>
-     
+    </Provider>
  
   );
 }

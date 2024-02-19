@@ -80,81 +80,13 @@ const Search = ({navigation}: SearchScreenProps) => {
             <SrchIMAGES.Rectangle style={searchSt.mainImg} />
             <View style={searchSt.data}>
               <Text style={searchSt.heding}>Bobtail</Text>
-              <Text>faislabad city</Text>
+              <Text style={{color:'#101C1D'}}>age 9 month</Text>
               <View style={searchSt.locator}>
-                <Text>fsd</Text>
+                <Text style={{color:'#101C1D'}}>fsd</Text>
                 <SrchIMAGES.Location style={searchSt.locatorImg} />
               </View>
               <View style={searchSt.heartSty}>
-                <Text>Male</Text>
-                <SrchIMAGES.Heart />
-              </View>
-            </View>
-          </View>
-        </View>
-        <View>
-          <View style={searchSt.MainContainer}>
-            <SrchIMAGES.Rectangle style={searchSt.mainImg} />
-            <View style={searchSt.data}>
-              <Text style={searchSt.heding}>Bobtail</Text>
-              <Text>faislabad city</Text>
-              <View style={searchSt.locator}>
-                <Text>fsd</Text>
-                <SrchIMAGES.Location style={searchSt.locatorImg} />
-              </View>
-              <View style={searchSt.heartSty}>
-                <Text>Male</Text>
-                <SrchIMAGES.Heart />
-              </View>
-            </View>
-          </View>
-        </View>
-        <View>
-          <View style={searchSt.MainContainer}>
-            <SrchIMAGES.Rectangle style={searchSt.mainImg} />
-            <View style={searchSt.data}>
-              <Text style={searchSt.heding}>Bobtail</Text>
-              <Text>faislabad city</Text>
-              <View style={searchSt.locator}>
-                <Text>fsd</Text>
-                <SrchIMAGES.Location style={searchSt.locatorImg} />
-              </View>
-              <View style={searchSt.heartSty}>
-                <Text>Male</Text>
-                <SrchIMAGES.Heart />
-              </View>
-            </View>
-          </View>
-        </View>
-        <View>
-          <View style={searchSt.MainContainer}>
-            <SrchIMAGES.Rectangle style={searchSt.mainImg} />
-            <View style={searchSt.data}>
-              <Text style={searchSt.heding}>Bobtail</Text>
-              <Text>faislabad city</Text>
-              <View style={searchSt.locator}>
-                <Text>fsd</Text>
-                <SrchIMAGES.Location style={searchSt.locatorImg} />
-              </View>
-              <View style={searchSt.heartSty}>
-                <Text>Male</Text>
-                <SrchIMAGES.Heart />
-              </View>
-            </View>
-          </View>
-        </View>
-        <View>
-          <View style={searchSt.MainContainer}>
-            <SrchIMAGES.Rectangle style={searchSt.mainImg} />
-            <View style={searchSt.data}>
-              <Text style={searchSt.heding}>Bobtail</Text>
-              <Text>faislabad city</Text>
-              <View style={searchSt.locator}>
-                <Text>fsd</Text>
-                <SrchIMAGES.Location style={searchSt.locatorImg} />
-              </View>
-              <View style={searchSt.heartSty}>
-                <Text>Male</Text>
+                <Text style={{color:'#101C1D'}}>Male</Text>
                 <SrchIMAGES.Heart />
               </View>
             </View>

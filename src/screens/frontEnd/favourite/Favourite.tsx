@@ -29,13 +29,13 @@ export default function Favourite() {
             <FAVOURITE.FavRec style={searchSt.mainImg}/>
             <View style={searchSt.data}>
               <Text style={searchSt.heding}>Bobtail</Text>
-              <Text>faislabad city</Text>
+              <Text style={{color:'#101C1D'}}>age 2 month</Text>
               <View style={searchSt.locator}>
-                <Text>fsd</Text>
+                <Text style={{color:'#101C1D'}}>fsd</Text>
                 <SrchIMAGES.Location style={searchSt.locatorImg} />
               </View>
               <View style={searchSt.heartSty}>
-                <Text>Male</Text>
+                <Text style={{color:'#101C1D'}}>Male</Text>
                 <SrchIMAGES.Heart />
               </View>
             </View>

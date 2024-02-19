@@ -54,6 +54,7 @@ marginTop:30
       borderWidth: 0.5,
       marginTop: 10,
       alignSelf: 'center',
+      color:'#101C1D'
     },
     Item: {
       width: '85%',

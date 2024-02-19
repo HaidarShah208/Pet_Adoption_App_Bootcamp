@@ -30,7 +30,7 @@ export default function User({navigation}: userScreenProps) {
   const [name, setName] = useState(user.username);
   const [resource, setResource] = useState<Resource>({});
   const [profileImage, setProfileImage] = useState<string | null>(null);
-
+ 
   const currentUser = auth().currentUser;
   useEffect(() => {
     if (user.photoURL) {

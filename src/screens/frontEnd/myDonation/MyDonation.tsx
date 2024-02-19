@@ -1,21 +1,24 @@
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootDrawerParamsList} from '../../../navigation/drawerNavigation/DrawerNavigator';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
 import {ScrollView} from 'react-native-gesture-handler';
 import {FAVOURITE, SrchIMAGES} from '../../../constants/assessts/AllAssessts';
 import {searchSt} from '../../../styles/frontEnd/Favourite';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { RootStackParamsDetailsList } from '../../../navigation/detailNavigation/DetailNavigation';
 
+ 
 interface DonationScreenProps {
-  navigation: DrawerNavigationProp<RootDrawerParamsList, 'mydonation'>;
+  navigation: StackNavigationProp<RootStackParamsDetailsList, 'mydonation'>;
 }
 
-export default function MyDonation({navigation}: DonationScreenProps) {
+export default function MyDonation({navigation}:DonationScreenProps) {
   const [donationData, setDonationData] = useState<any>(null);
 
+  const handleMainContainerClick = () => {
+    navigation.navigate('details', {donationData});
+  }
   useEffect(() => {
     const fetchDataFromFirestore = async () => {
       const userUID = auth().currentUser?.uid;
@@ -36,6 +39,8 @@ export default function MyDonation({navigation}: DonationScreenProps) {
           }
         } catch (error) {
           console.error('Error fetching data from Firestore: ', error);
+        } finally {
+          setLoading(false);
         }
       } else {
         console.error('User not authenticated');
@@ -46,7 +51,7 @@ export default function MyDonation({navigation}: DonationScreenProps) {
   }, []);
 
   const handleAddImageClick = () => {
-    navigation.navigate('donateScren');
+    navigation.navigate('donate');
   };
 
   const handleDeleteImageClick = async () => {
@@ -69,17 +74,17 @@ export default function MyDonation({navigation}: DonationScreenProps) {
         <Text style={searchSt.heading}>My Donation</Text>
         <FAVOURITE.ADD onPress={handleAddImageClick}/>
       </View>
-      <ScrollView>
-        <View>
+      <ScrollView >
+        <TouchableOpacity onPress={handleMainContainerClick}>
           <View style={searchSt.MainContainer}>
             {donationData ? (
               <View>
                 <Image source={{uri:donationData.imageURL}} style={searchSt.mainImg}/>
               <View style={searchSt.data}>
                 <Text style={searchSt.heding}>{donationData.petType}</Text>
-                <Text>{donationData.description}</Text>
+                {/* <Text style={searchSt.discription}>{donationData.description}</Text> */}
                 <View style={searchSt.locator}>
-                  <Text>{donationData.petLocation}</Text>
+                  <Text style={searchSt.discription}>{donationData.petLocation}</Text>
 
                   <SrchIMAGES.Location style={searchSt.locatorImg} />
                 </View>
@@ -95,8 +100,12 @@ export default function MyDonation({navigation}: DonationScreenProps) {
               <Text >Loading...</Text>
             )}
           </View>
-        </View>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
 }
+function setLoading(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+

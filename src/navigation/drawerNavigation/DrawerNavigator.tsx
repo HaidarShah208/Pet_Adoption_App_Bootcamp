@@ -8,11 +8,12 @@ import TabNavigator from '../tabNavigation/Navigator';
 import Message from '../../screens/frontEnd/message/Message';
 import { drawarSide } from '../../styles/navigation/DrawarSideMenue';
 import DonateScreen from '../../screens/frontEnd/donate/DonateScreen';
+import DetailNavigation from '../detailNavigation/DetailNavigation';
 
 export type RootDrawerParamsList = {
  home:undefined;
     messsage: undefined;
-    mydonation: undefined;
+    MyDonations: undefined;
   tabNavigator:undefined;
     favroutite:undefined;
     donateScren:undefined
@@ -26,9 +27,9 @@ export default function  DrawerNavigator() {
 <Drawer.Navigator  screenOptions={{headerShown:false,drawerLabelStyle:drawarSide.Items}} drawerContent={(props)=> <SideMenue {...props} />}  >
       <Drawer.Screen name="home"  component={Home} />
       <Drawer.Screen name="messsage" component={Message} />
-      <Drawer.Screen name="mydonation" component={MyDonation} />
+      <Drawer.Screen name="MyDonations" component={DetailNavigation} />
       <Drawer.Screen name="favroutite" component={Favourite} />
-      <Drawer.Screen name="donateScren" component={DonateScreen} />
+      <Drawer.Screen name="donateScren" component={DetailNavigation} />
 
     </Drawer.Navigator>
   );

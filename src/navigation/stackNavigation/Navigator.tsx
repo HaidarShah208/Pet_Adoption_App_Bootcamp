@@ -11,19 +11,15 @@ export type RootStackParamsList={
     signup:undefined,
     login:undefined,
     forgot:undefined
-    details: { item: any };
 }
 
 const Stack = createStackNavigator<RootStackParamsList>();
 export default function Navigator() {
   return (
-    // <NavigationContainer>
     <Stack.Navigator >
 <Stack.Screen options={{ headerShown: false }} name='signup' component={SignUp}/>
 <Stack.Screen options={{ headerShown: false }} name='login' component={Login}/>
-<Stack.Screen name='details' component={Details}/>
 <Stack.Screen name='forgot' component={ForgetPassword} options={{ headerTitle: '' }} />
     </Stack.Navigator>
-  // </NavigationContainer>
   )
 }
