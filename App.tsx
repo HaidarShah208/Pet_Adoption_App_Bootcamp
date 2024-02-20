@@ -3,13 +3,13 @@ import Toast from 'react-native-toast-message';
 import SplashScreen from 'react-native-splash-screen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import AuthContextProvider from './src/context/AuthContext';
-import Details from './src/screens/frontEnd/details/Details';
 import UpdatePassword from './src/screens/frontEnd/updatePassword/UpdatePassword';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthNavigation from './src/navigation/AuthNavigation';
-import MyDonation from './src/screens/frontEnd/myDonation/MyDonation';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
+import DonateScreen from './src/screens/frontEnd/donate/DonateScreen';
+import DonationRequests from './src/screens/frontEnd/donationRequests/DonationRequests';
 export default function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
@@ -27,10 +27,9 @@ export default function App() {
     <AuthContextProvider>
       <GestureHandlerRootView style={{flex: 1}}>
            <NavigationContainer> 
-        <AuthNavigation/>
-        {/* <Details/> */}
+        {/* <AuthNavigation/> */}
         {/* <UpdatePassword/> */}
-        {/* <MyDonation/> */}
+        <DonationRequests/>
         <Toast />
            </NavigationContainer> 
    </GestureHandlerRootView>
