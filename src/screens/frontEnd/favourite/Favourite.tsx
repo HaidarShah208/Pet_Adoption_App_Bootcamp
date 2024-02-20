@@ -6,22 +6,24 @@ import { searchSt } from '../../../styles/frontEnd/Favourite';
 import { ScrollView } from 'react-native-gesture-handler';
 import { FAVOURITE, IMAGES, SrchIMAGES } from '../../../constants/assessts/AllAssessts';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import storage from '@react-native-firebase/storage';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { useNavigation } from '@react-navigation/native';
 
-
+interface  FavrouriteScreenProps {
+  navigation: BottomTabNavigationProp<RootTabParamsList, 'search'>;
+}
  
 
-export default function Favourite() {
+export default function Favourite({navigation}:FavrouriteScreenProps) {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
-
- 
+  const moveToFav=()=>{
+    navigation.navigate('search')
+  }
 
   return (
     <View>
       <View style={searchSt.header}>
         <Text style={searchSt.heading}>Favourite</Text>
-        <FAVOURITE.ADD/>
+        <FAVOURITE.ADD onPress={moveToFav}/>
       </View>
          <ScrollView>
         <View>

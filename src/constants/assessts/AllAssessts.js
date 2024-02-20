@@ -15,6 +15,8 @@ import imagePicker from '../../assests/imagePicker.svg'
 import Back from '../../assests/Back.svg'
 import Edit from '../../assests/Edit.svg'
 import pencil from '../../assests/pencil.svg'
+import detailBack from '../../assests/detailBack.svg'
+
 
 
 export const IMAGES = {
@@ -31,6 +33,7 @@ export const IMAGES = {
     BACK: Back,
     Edit: Edit,
     Pencil: pencil,
+    DetailBack: detailBack,
     //focus section
     focusHeart: fHeart,
     focusHome: fHome,

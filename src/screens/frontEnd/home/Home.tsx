@@ -1,21 +1,8 @@
-import {
-  View,
-  Text,
-  Image,
-  Button,
-  TouchableOpacity,ScrollView,
-  Dimensions,TextInput
+import {View,Text,Image,TouchableOpacity,ScrollView, ImageBackground
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
 import {styleHome} from '../../../styles/frontEnd/Home';
-import { } from 'react-native-gesture-handler';
-import DrawerNavigator, {
-  RootDrawerParamsList,
-} from '../../../navigation/drawerNavigation/DrawerNavigator';
 import {DrawerActions, useNavigation} from '@react-navigation/native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
 import auth from '@react-native-firebase/auth';
 import {useAuthContext} from '../../../context/AuthContext';
 import Toast from 'react-native-toast-message';
@@ -23,11 +10,16 @@ import {HOME, IMAGES} from '../../../constants/assessts/AllAssessts';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
 import Input from '../../../components/input/Input';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { fetchDonationData } from '../../../redux/donationSlice';
 
 
 interface HomeScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamsList, 'home'>;
 }
+
+
 
 export default function Home({navigation}: HomeScreenProps) {
   const navigations = useNavigation();
@@ -40,11 +32,17 @@ export default function Home({navigation}: HomeScreenProps) {
       setProfileImage(user.photoURL);
     }
   }, [user.photoURL]);
+
+  const dispatch = useDispatch();
+  const donationData = useSelector((state: RootState) => state.donation.donationData);
+  const loading = useSelector((state: RootState) => state.donation.loading);
+
+  useEffect(() => {
+    dispatch(fetchDonationData() as any);
+  }, [dispatch]);
   const openDrawer = () => {
     navigations.dispatch(DrawerActions.openDrawer());
   };
-
- 
 
   return (
     <View>
@@ -60,15 +58,14 @@ export default function Home({navigation}: HomeScreenProps) {
       </View>
       <Text style={styleHome.tesxt}>{`Find an \nAwesome \npets for you`}</Text>
       <Input/>
-      
       <View style={{flexDirection: 'row'}}>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styleHome.scrollImage}>
           <View style={{marginHorizontal: 4}}>
-            <HOME.ScrlImage />
-            <Text style={styleHome.tsxt}>cats</Text>
+             <Image source={{uri:donationData?.imageURL}} style={styleHome.imageSize}/>
+            <Text style={styleHome.tsxt}>{donationData?.petType}</Text>
           </View>
           <View style={{marginHorizontal: 3}}>
             <HOME.ScrlImage />
@@ -116,21 +113,15 @@ export default function Home({navigation}: HomeScreenProps) {
         <Text style={styleHome.homeHeading}>For You</Text>
       </View>
       <ScrollView>
-      <View  style={styleHome.largeImages}>
-      <View style={{marginVertical: 10}}>
-          <HOME.LargeImg />
-        </View>
-        <View style={{marginVertical: 10}}>
-          <HOME.LargeImg />
-        </View>
-        <View style={{marginVertical: 10}}>
-          <HOME.LargeImg />
-        </View>
-        <View style={{marginVertical: 10}}>
-          <HOME.LargeImg />
-        </View>
-        <View style={{marginVertical: 10}}>
-          <HOME.LargeImg />
+      <View>
+      <View >
+        <ImageBackground source={{uri:donationData?.imageURL}} style={styleHome.largeImages} >
+        <View style={{paddingStart:15,paddingTop:10}} >
+      <Text style={styleHome.Imagetext}>{donationData?.petBreed}</Text>
+      <Text style={styleHome.Imagetext}>{donationData?.petType}</Text>
+      <Text style={styleHome.imageAmount}>{donationData?.amount}</Text>
+    </View>
+        </ImageBackground>
         </View>
       </View>
       </ScrollView>

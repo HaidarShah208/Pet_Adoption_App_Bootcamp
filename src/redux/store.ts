@@ -1,9 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import donationSlice from './donationSlice';
-const store = configureStore({
+// store.ts
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import donationReducer from './donationSlice';
+
+export const store = configureStore({
   reducer: {
-    donation: donationSlice,
+    donation: donationReducer,
   },
 });
 
-export default store;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;

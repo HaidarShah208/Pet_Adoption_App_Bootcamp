@@ -1,6 +1,6 @@
 import { View, Text, Image } from 'react-native'
 import React from 'react'
-import { DETAILS } from '../../../constants/assessts/AllAssessts'
+import { DETAILS, IMAGES } from '../../../constants/assessts/AllAssessts'
 import { DetialsStyle } from '../../../styles/frontEnd/Details'
 import Button from '../../../components/button/Button'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -12,11 +12,15 @@ interface DetailsProps {
 }
 export default function Details({ navigation, route }: DetailsProps) {
   const { donationData } = route.params;
-  console.log('donationAllData',donationData)
+
+  const Back=()=>{
+    navigation.goBack()
+  }
   return (
     <View style={DetialsStyle.MainConaier}>
      <View style={DetialsStyle.ImgView}>
     <Image source={{uri:donationData.imageURL}} style={{width:370,height:370}}/>
+      <IMAGES.DetailBack style={{position:'absolute',top:60,width:20,height:20,left:20}} onPress={Back}/>
      </View>
       <View style={DetialsStyle.InfoContainer}>
         <View style={DetialsStyle.InfoHeading}>

@@ -29,7 +29,10 @@ export const styleHome = StyleSheet.create({
     overflow: 'scroll',
     paddingLeft:22,
     height:190
-    
+  },imageSize:{
+width:72,
+height:72,
+borderRadius:50
   },
   tsxt: {
     color: '#101C1D',
@@ -50,14 +53,23 @@ export const styleHome = StyleSheet.create({
 
   },
   largeImages:{
-    // marginHorizontal:22,
-    alignItems:'center',
-    justifyContent:'center',
+    alignSelf: 'center',
      marginTop:20,
+     width:321,
+     height:161,
+     borderRadius: 20 , overflow: 'hidden',
+  },Imagetext:{
+    fontSize:25,
+color:'#FFFFFF',
+paddingBottom:1,
+fontFamily:FONTS.BOLD,
+  },imageAmount:{
+    fontSize:25,
+ color:'#101C1D',
+fontFamily:FONTS.BOLD,
   },userImage:{
  width:46,
  height:46,
     borderRadius:23
-
   }
 });

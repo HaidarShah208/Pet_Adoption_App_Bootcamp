@@ -7,6 +7,9 @@ import {searchSt} from '../../../styles/frontEnd/Favourite';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import { RootStackParamsDetailsList } from '../../../navigation/detailNavigation/DetailNavigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
+import { fetchDonationData, setDonationData } from '../../../redux/donationSlice';
 
  
 interface DonationScreenProps {
@@ -14,41 +17,19 @@ interface DonationScreenProps {
 }
 
 export default function MyDonation({navigation}:DonationScreenProps) {
-  const [donationData, setDonationData] = useState<any>(null);
+  // const [donationData, setDonationData] = useState<any>(null);
 
   const handleMainContainerClick = () => {
-    navigation.navigate('details', {donationData});
+    navigation.navigate('details', {donationData:donationData});
   }
+  
+  const dispatch = useDispatch();
+  const donationData = useSelector((state: RootState) => state.donation.donationData);
+  const loading = useSelector((state: RootState) => state.donation.loading);
+
   useEffect(() => {
-    const fetchDataFromFirestore = async () => {
-      const userUID = auth().currentUser?.uid;
-
-      if (userUID) {
-        try {
-          const donationData = await firestore()
-            .collection('userDonation')
-            .doc(userUID)
-            .get();
-
-          if (donationData.exists) {
-            const data = donationData.data();
-            console.log('Data from Firestore:', data);
-            setDonationData(data);
-          } else {
-            console.log('No data found in Firestore');
-          }
-        } catch (error) {
-          console.error('Error fetching data from Firestore: ', error);
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        console.error('User not authenticated');
-      }
-    };
-
-    fetchDataFromFirestore();
-  }, []);
+    dispatch(fetchDonationData() as any);
+  }, [dispatch]);
 
   const handleAddImageClick = () => {
     navigation.navigate('donate');
@@ -59,10 +40,9 @@ export default function MyDonation({navigation}:DonationScreenProps) {
 
     if (userUID) {
       try {
-        // Delete the document from the Firestore collection
         await firestore().collection('userDonation').doc(userUID).delete();
         console.log('Document successfully deleted.');
-        setDonationData(null); // Clear the local state
+        setDonationData(null);  
       } catch (error) {
         console.error('Error deleting document: ', error);
       }
