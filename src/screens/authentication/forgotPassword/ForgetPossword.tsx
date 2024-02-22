@@ -6,9 +6,10 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 import Button from '../../../components/button/Button';
+import { IMAGES } from '../../../constants/assessts/AllAssessts';
 
 interface ForgotScreenProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'forgot'>;
+  navigation: StackNavigationProp<RootStackParamsList, 'FORGOT_PASSWORD'>;
 }
 export default function ForgetPassword({navigation}: ForgotScreenProps) {
   const [email, setEmail] = useState('');
@@ -44,13 +45,18 @@ export default function ForgetPassword({navigation}: ForgotScreenProps) {
         console.error(error);
       });
     };
+
+    const backMove=()=>{
+      navigation.goBack();
+    }
   return (
     <View style={styles.flexContainer}>
+      <IMAGES.RecoverBack style={{marginTop:30}} onPress={backMove}/>
       <Text style={styles.heading}>Recover {'\n'}Password</Text>
       <Text style={styles.mail}>Email</Text>
       <TextInput style={styles.input} value={email} onChangeText={email => setEmail(email)} />  
       <Text style={styles.recovery}>Put your email above to get recovery URL</Text>
-      <Button title={'Log in'} onPress={handleSubmit}/>
+      <Button title={'Recover'} onPress={handleSubmit}/>
     </View>
   );
 }

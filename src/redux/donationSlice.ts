@@ -1,19 +1,29 @@
 // donationSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AppThunk, } from './store'; // Import RootState and AppThunk from your store
+import { AppThunk } from './store';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { ReactNode } from 'react';
 
-interface DonationData {
+interface Donation {
+  id:string;
   imageURL: string;
   petType: string;
   petLocation: string;
   gender: string;
-  amount:number;
+  amount: number;
   description: string;
   petBreed: string;
   petWeight: number;
   vaccinated: boolean;
+}
+
+export interface DonationData {
+  petType: ReactNode;
+  petLocation: ReactNode;
+  gender: ReactNode;
+  imageURL: string ;
+  donations: Donation[];
 }
 
 export interface DonationState {
@@ -42,26 +52,34 @@ const donationSlice = createSlice({
 
 export const { setDonationData, setLoading } = donationSlice.actions;
 
-// Async thunk to fetch data from Firestore
 export const fetchDonationData = (): AppThunk => async (dispatch) => {
   const userUID = auth().currentUser?.uid;
 
   if (userUID) {
     try {
-      const donationData = await firestore()
+      const donationsCollection = await firestore()
         .collection('userDonation')
         .doc(userUID)
+        .collection('donations')
         .get();
 
-      if (donationData.exists) {
-        const data = donationData.data();
-        console.log('Data from Firestore:', data);
-        dispatch(setDonationData(data as DonationData));
+      if (!donationsCollection.empty) {
+        const donationData: DonationData = {
+          petType: '', // Modify this based on how you want to aggregate data from the sub-collection
+          petLocation: '',
+          gender: '',
+          imageURL: '', // You may want to set this to something meaningful
+          donations: donationsCollection.docs.map((doc) => doc.data() as Donation),
+        };
+
+        console.log('Donations from Firestore:', donationData);
+
+        dispatch(setDonationData(donationData));
       } else {
-        console.log('No data found in Firestore');
+        console.log('No data found in the donations sub-collection');
       }
     } catch (error) {
-      console.error('Error fetching data from Firestore: ', error);
+      console.error('Error fetching donation data from Firestores: ', error);
     } finally {
       dispatch(setLoading(false));
     }

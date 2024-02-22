@@ -11,7 +11,7 @@ import { useAuthContext } from '../../../context/AuthContext';
 import firestore from '@react-native-firebase/firestore';
 
 interface SignupScreenProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'signup'>;
+  navigation: StackNavigationProp<RootStackParamsList, 'SIGNUP'>;
 }
 
 const initialState = {
@@ -165,7 +165,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
-          navigation.navigate('login');
+          navigation.navigate('LOGIN');
         }}>
         <Text style={styles.navigate}>Log in</Text>
       </TouchableOpacity>

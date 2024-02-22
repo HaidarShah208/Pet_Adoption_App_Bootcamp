@@ -27,7 +27,7 @@ interface Resource {
 export default function User({navigation}: userScreenProps) {
   const {user} = useAuthContext();
   const [email, setEmai] = useState(user.email);
-  const [name, setName] = useState(user.username);
+  const [name, setName] = useState(user.userName);
   const [resource, setResource] = useState<Resource>({});
   const [profileImage, setProfileImage] = useState<string | null>(null);
  
@@ -65,7 +65,6 @@ export default function User({navigation}: userScreenProps) {
     currentUser.updateProfile({
       displayName: name,
     });
-    // Update user profile information in Firestore
     const userDocRef = firestore().collection('users').doc(user.uid);
     userDocRef
       .update({

@@ -27,9 +27,8 @@ export default function App() {
     <AuthContextProvider>
       <GestureHandlerRootView style={{flex: 1}}>
            <NavigationContainer> 
-        {/* <AuthNavigation/> */}
-        {/* <UpdatePassword/> */}
-        <DonationRequests/>
+        <AuthNavigation/>
+     
         <Toast />
            </NavigationContainer> 
    </GestureHandlerRootView>

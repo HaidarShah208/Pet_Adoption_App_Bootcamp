@@ -81,6 +81,9 @@ export const searchSt = StyleSheet.create({
     position: 'relative',
     left: 20,
     zIndex: 1,
+    width:194,
+    height:171,
+  borderRadius:25
   },
 
   data: {

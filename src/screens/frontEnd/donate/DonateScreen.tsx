@@ -1,29 +1,17 @@
-import {
-  View,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  FlatList,
-} from 'react-native';
+import {View,TextInput,Text,TouchableOpacity,ScrollView,FlatList,} from 'react-native';
 import React, {useState} from 'react';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
-import ImagePicker, {
-  ImagePickerResponse,
-  launchImageLibrary,
-} from 'react-native-image-picker';
+import ImagePicker, {ImagePickerResponse,launchImageLibrary,} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../../../components/button/Button';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
-
 import {styles} from '../../../styles/frontEnd/DonateScreen';
-import { DrawerNavigationProp } from '@react-navigation/drawer';
-import { RootDrawerParamsList } from '../../../navigation/drawerNavigation/DrawerNavigator';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamsDetailsList } from '../../../navigation/detailNavigation/DetailNavigation';
+import { AppThunk } from '../../../redux/store';
 
 const datas = [
   {dog: 'Cat'},
@@ -144,6 +132,7 @@ export default function DonateScreen({navigation}:donateScreenProps) {
     let imageType = fileName.split('/').pop();
     let id = Math.random().toString(36).slice(2);
     const userUID = auth().currentUser?.uid;
+    // let donationID = Math.random().toString(36).slice(2);
 
     if (userUID) {
       const reference = storage().ref(`images/${id}.${imageType}`);
@@ -151,14 +140,17 @@ export default function DonateScreen({navigation}:donateScreenProps) {
         const snapshot = await reference.putFile(filePath);
         const downloadURL = await reference.getDownloadURL();
         
-        await firestore()
-          .collection('userDonation')
-          .doc(userUID)
-          .set({
-            ...state,
-            ...selectedValues,
-            imageURL: downloadURL, // Add the image URL to the document
-          });
+        const donationCollection = firestore()
+        .collection('userDonation')
+        .doc(userUID)
+        .collection(`donations`);
+
+      await donationCollection.doc().set({
+        ...state,
+        ...selectedValues,
+        imageURL: downloadURL,
+      });
+
         Toast.show({
           type: 'success',
           text1: 'Donation data saved successfully',
@@ -328,3 +320,9 @@ export default function DonateScreen({navigation}:donateScreenProps) {
     </ScrollView>
   );
 }
+  
+
+function dispatch(arg0: AppThunk) {
+  throw new Error('Function not implemented.');
+}
+

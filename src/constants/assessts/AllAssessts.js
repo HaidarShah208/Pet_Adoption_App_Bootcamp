@@ -16,6 +16,9 @@ import Back from '../../assests/Back.svg'
 import Edit from '../../assests/Edit.svg'
 import pencil from '../../assests/pencil.svg'
 import detailBack from '../../assests/detailBack.svg'
+import contact from '../../assests/contact.svg'
+import recoverBack from '../../assests/recoverBack.svg'
+
 
 
 
@@ -34,6 +37,8 @@ export const IMAGES = {
     Edit: Edit,
     Pencil: pencil,
     DetailBack: detailBack,
+    contact: contact,
+    RecoverBack: recoverBack,
     //focus section
     focusHeart: fHeart,
     focusHome: fHome,
@@ -65,11 +70,13 @@ export const HOME = {
 import Rectangle from '../../assests/Rectangle 24.svg'
 import Location from '../../assests/location.svg'
 import Heart from '../../assests/Heart.svg'
+import EmptyHeart from '../../assests/emptyHeart.svg'
 
 export const SrchIMAGES = {
     Rectangle: Rectangle,
     Location: Location,
-    Heart: Heart
+    Heart: Heart,
+    EmptyHeart
 }
 
 

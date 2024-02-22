@@ -1,17 +1,13 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Search from '../../screens/frontEnd/search/Search';
 import Favourite from '../../screens/frontEnd/favourite/Favourite';
-import Home from '../../screens/frontEnd/home/Home';
 import {IMAGES} from '../../constants/assessts/AllAssessts';
 import User from '../../screens/frontEnd/user/ProfileSetting';
-import {navs, tabBarIconStyles} from '../../styles/navigation/TabNavigation';
-import {Svg} from 'react-native-svg';
-import Details from '../../screens/frontEnd/details/Details';
+import {navs} from '../../styles/navigation/TabNavigation';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import DrawerNavigator, { RootDrawerParamsList } from '../drawerNavigation/DrawerNavigator';
+import DetailsNavigation from './DetailsNavigation';
 
 export type RootTabParamsList = {
   home: undefined;
@@ -28,7 +24,6 @@ interface  DonationScreenProps {
 const Tab = createBottomTabNavigator<RootTabParamsList>();
 export default function TabNavigator({navigation}:DonationScreenProps) {
   return (
-    // <NavigationContainer>
 
       <Tab.Navigator
         screenOptions={{
@@ -54,7 +49,7 @@ export default function TabNavigator({navigation}:DonationScreenProps) {
         />
         <Tab.Screen
           name="search"
-          component={Search}
+          component={DetailsNavigation}
           options={{
             tabBarIcon: ({focused}) => (
               <View
@@ -100,6 +95,5 @@ export default function TabNavigator({navigation}:DonationScreenProps) {
    
       
       </Tab.Navigator>
-              // </NavigationContainer>
   );
 }

@@ -11,7 +11,7 @@ import { IMAGES } from '../../../constants/assessts/AllAssessts';
 import Button from '../../../components/button/Button';
 
 interface LoginScreenProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'login'>;
+  navigation: StackNavigationProp<RootStackParamsList, 'LOGIN'>;
 }
 export default function Login({navigation}: LoginScreenProps) {
   const [email, setEmail] = useState('');
@@ -66,7 +66,7 @@ export default function Login({navigation}: LoginScreenProps) {
         onChangeText={passowrd => setPassword(passowrd)} />
           <TouchableOpacity activeOpacity={1}
         onPress={() => {
-          navigation.navigate('forgot');
+          navigation.navigate('FORGOT_PASSWORD');
         }}>
         <Text style={styles.forgot}>Forgot Passowrd ?</Text>
 
@@ -88,7 +88,7 @@ export default function Login({navigation}: LoginScreenProps) {
       </View>
       <TouchableOpacity activeOpacity={1}
         onPress={() => {
-          navigation.navigate('signup');
+          navigation.navigate('SIGNUP');
         }}>
         <Text style={styles.navigate}>Sign Up</Text>
       </TouchableOpacity>
