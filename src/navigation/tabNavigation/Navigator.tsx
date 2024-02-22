@@ -7,7 +7,7 @@ import User from '../../screens/frontEnd/user/ProfileSetting';
 import {navs} from '../../styles/navigation/TabNavigation';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
 import DrawerNavigator, { RootDrawerParamsList } from '../drawerNavigation/DrawerNavigator';
-import DetailsNavigation from './DetailsNavigation';
+import DetailsNavigation, { DetailsNavigations } from './DetailsNavigation';
 
 export type RootTabParamsList = {
   home: undefined;
@@ -64,7 +64,7 @@ export default function TabNavigator({navigation}:DonationScreenProps) {
         />
         <Tab.Screen
           name="favourite"
-          component={Favourite}
+          component={DetailsNavigations}
           options={{
             tabBarIcon: ({focused}) => (
               <View

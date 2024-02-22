@@ -8,6 +8,7 @@ import Favourite from '../../screens/frontEnd/favourite/Favourite';
 export type RootStackParamsDetailsList={
     search:undefined,
     details:undefined,
+    favourite:undefined
   
 }
 
@@ -20,3 +21,13 @@ export default function DetailsNavigation() {
     </Stack.Navigator>
   )
 }
+
+
+export const DetailsNavigations=()=> {
+  return (
+    <Stack.Navigator >
+    <Stack.Screen options={{ headerShown: false }} name='favourite' component={Favourite}/>
+    <Stack.Screen options={{ headerShown: false }} name='details' component={Details}/>
+    </Stack.Navigator>
+  )
+} 

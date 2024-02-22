@@ -15,12 +15,18 @@ import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../redux/store';
 import {fetchDonationData} from '../../../redux/donationSlice';
 import {RootStackParamsDetailsList} from '../../../navigation/tabNavigation/DetailsNavigation';
+import Toast from 'react-native-toast-message';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
 
 interface SearchScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'search'>;
 }
 
 const Search = ({navigation}: SearchScreenProps) => {
+  
+  const [selectedItem, setSelectedItem] = useState<string>('');
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const donationData = useSelector(
@@ -37,11 +43,41 @@ const Search = ({navigation}: SearchScreenProps) => {
     navigation.navigate('details', {donationData: donationItem});
   };
 
-  const [selectedItem, setSelectedItem] = useState<string>('');
-
   const handleItemClick = (petType: string) => {
     setSelectedItem(petType);
   };
+
+
+  const handleFavoriteClick = async (donationItem: any) => {
+    const userUID = auth().currentUser?.uid;
+
+    if (userUID) {
+      const favoriteCollection = firestore()
+        .collection('userDonation')
+        .doc(userUID)
+        .collection('favouriteDonations');
+
+      const existingFavorite = await favoriteCollection
+        .where('petType', '==', donationItem.petType)
+        .get();
+
+      if (existingFavorite.empty) {
+        await favoriteCollection.add(donationItem);
+        Toast.show({
+          type: 'success',
+          text1: 'Added to favorites!',
+        });
+      } else {
+        Toast.show({
+          type: 'info',
+          text1: 'Already in favorites!',
+        });
+      }
+    } else {
+      console.error('User not authenticated');
+    }
+  };
+
 
   return (
     <View>
@@ -109,7 +145,10 @@ const Search = ({navigation}: SearchScreenProps) => {
                     <Text style={{color: '#101C1D'}}>
                       {donationItem.gender}
                     </Text>
-                    <SrchIMAGES.EmptyHeart />
+                    <TouchableOpacity
+                  onPress={() => handleFavoriteClick(donationItem)}>
+                  <SrchIMAGES.EmptyHeart />
+                </TouchableOpacity>
                   </View>
                 </View>
               </View>

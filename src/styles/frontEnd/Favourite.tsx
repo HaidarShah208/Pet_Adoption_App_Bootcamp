@@ -29,7 +29,8 @@ export const searchSt = StyleSheet.create({
     zIndex: 1,
     width:194,
     height:141,
-    borderRadius:25
+    borderRadius:25,
+    
   },
 
   data: {
