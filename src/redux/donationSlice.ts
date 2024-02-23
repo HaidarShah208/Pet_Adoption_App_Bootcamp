@@ -6,7 +6,7 @@ import firestore from '@react-native-firebase/firestore';
 import { ReactNode } from 'react';
 
 interface Donation {
-  id: string;
+  donationId: string;
   imageURL: string;
   petType: string;
   petLocation: string;
@@ -74,11 +74,12 @@ export const fetchDonationData = (): AppThunk => async (dispatch) => {
           petLocation: '',
           gender: '',
           imageURL: '', // You may want to set this to something meaningful
-          donations: donationsCollection.docs.map((doc) => doc.data() as Donation),
+          donations: donationsCollection.docs.map((doc) => {
+            const data = doc.data() as Donation;
+            return { ...data, donationId: doc.id };
+          }),
+          
         };
-
-        console.log('Donations from Firestore:', donationData);
-
         dispatch(setDonationData(donationData));
       } else {
         console.log('No data found in the donations sub-collection');
@@ -108,6 +109,30 @@ export const fetchFavoriteDonations = (): AppThunk => async (dispatch) => {
       dispatch(setFavoriteDonations(favoriteDonations));
     } catch (error) {
       console.error('Error fetching favorite donations from Firestore: ', error);
+    }
+  } else {
+    console.error('User not authenticated');
+  }
+};
+
+
+export const deleteDonation = (donationId: string): AppThunk => async (dispatch) => {
+  const userUID = auth().currentUser?.uid;
+  console.log("Deleting donation with ID:", donationId);
+
+  if (userUID) {
+    try {
+      const donationRef = firestore()
+        .collection('userDonation')
+        .doc(userUID)
+        .collection('donations')
+        .doc(donationId);
+
+      await donationRef.delete();
+
+      dispatch(fetchDonationData());  
+    } catch (error) {
+      console.error('Error deleting donation from Firestore: ', error);
     }
   } else {
     console.error('User not authenticated');

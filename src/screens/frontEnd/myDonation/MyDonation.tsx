@@ -4,19 +4,21 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {ScrollView} from 'react-native-gesture-handler';
 import {FAVOURITE, SrchIMAGES} from '../../../constants/assessts/AllAssessts';
 import {searchSt} from '../../../styles/frontEnd/Favourite';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import {RootStackParamsDetailsList} from '../../../navigation/detailNavigation/DetailNavigation';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../redux/store';
-import {fetchDonationData, setDonationData} from '../../../redux/donationSlice';
+import {AppThunk, RootState} from '../../../redux/store';
+import {deleteDonation, fetchDonationData} from '../../../redux/donationSlice';
 import {useIsFocused} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 
 interface DonationScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'mydonation'>;
 }
 
 const MyDonation: React.FC<DonationScreenProps> = ({navigation}) => {
+  // const [loading, setLoading] = useState(false);
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const donationData = useSelector(
@@ -32,30 +34,28 @@ const MyDonation: React.FC<DonationScreenProps> = ({navigation}) => {
     navigation.navigate('donate');
   };
 
+  const handleDeleteClick = (donationItem: any) => {
+    
+    const donationId = donationItem.donationId;
+
+    if (donationId) {
+      console.log("Deleting donation with ID:", donationId);
+      dispatch(deleteDonation(donationId) as any);
+    } else {
+      console.error("Donation ID not found in the donationItem");
+    }
+  };
+
+
   useEffect(() => {
     if (isFocused) {
+
       dispatch(fetchDonationData() as any);
     }
   }, [dispatch, isFocused]);
 
-  const handleDeleteImageClick = async (donationId: string) => {
-    const userUID = auth().currentUser?.uid;
 
-    if (userUID) {
-      try {
-        await firestore()
-          .collection('userDonation')
-          .doc(userUID)
-          .collection('donations')
-          .doc(donationId)
-          .delete();
-
-        dispatch(fetchDonationData() as any);
-      } catch (error) {
-        console.error('Error deleting donation:', error);
-      }
-    }
-  };
+ 
   return (
     <View>
       <View style={searchSt.header}>
@@ -68,11 +68,11 @@ const MyDonation: React.FC<DonationScreenProps> = ({navigation}) => {
         ) : (
           donationData?.donations.map((donationItem: any, index: number) => (
             <TouchableOpacity
-              key={index}
+            key={index} 
               onPress={() => handleMainContainerClick(donationItem)}>
               <View style={searchSt.MainContainer}>
                 <Image
-                  source={{uri:donationItem.imageURL}}
+                  source={{uri: donationItem.imageURL}}
                   style={searchSt.mainImg}
                 />
                 <View style={searchSt.data}>
@@ -85,16 +85,14 @@ const MyDonation: React.FC<DonationScreenProps> = ({navigation}) => {
                   </View>
                   <View style={searchSt.heartSty}>
                     <Text>{donationItem.gender}</Text>
-                    <TouchableOpacity
-                      onPress={() => handleDeleteImageClick(donationItem.id)}>
+                    <TouchableOpacity onPress={() => handleDeleteClick(donationItem)}>
                       <FAVOURITE.Delete />
                     </TouchableOpacity>
                   </View>
                 </View>
               </View>
             </TouchableOpacity>
-          ))
-        )}
+          )))}
       </ScrollView>
     </View>
   );
