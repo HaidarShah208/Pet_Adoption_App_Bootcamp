@@ -50,4 +50,13 @@ export interface AuthContextProps {
       petLocation: string;
       description: string;
     }
-  
+
+export    type UserData = {
+      username: string;
+      email: string;
+      password: string;
+      uid?: string;
+      photoURL?: string | null;
+      creationTime?: string;
+      status?: string;
+    };

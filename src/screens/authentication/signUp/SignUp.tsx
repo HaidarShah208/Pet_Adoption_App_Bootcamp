@@ -7,8 +7,9 @@ import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
 import Button from '../../../components/button/Button';
-import { useAuthContext } from '../../../context/AuthContext';
+import {useAuthContext} from '../../../context/AuthContext';
 import firestore from '@react-native-firebase/firestore';
+import { UserData } from '../../../constants/allTypes/AllTypes';
 
 interface SignupScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'SIGNUP'>;
@@ -19,60 +20,52 @@ const initialState = {
   email: '',
   password: '',
 };
-type UserData = {
-  username: string;
-  email: string;
-  password: string;
-  uid?: string;
-  photoURL?: string | null;
-  creationTime?: string;
-  status?: string;
-};
+
 export default function SignUp({navigation}: SignupScreenProps) {
   const {dispatch} = useAuthContext();
   const [loading, setisloading] = useState(false);
   const [state, setState] = useState(initialState);
 
   const handleChange = (name: string, value: string): void => {
-    setState((prev) => ({ ...prev, [name]: value }));
+    setState(prev => ({...prev, [name]: value}));
   };
 
   // firebasAuth
 
   const handleRegister = () => {
     const {username, email, password} = state;
-    if (!username.trim() || !email.trim() || !password.trim){
-    return  Toast.show({
-        type:'error',
-        text1:'Enter UserName or Email or Passowrd'
-      })
+    if (!username.trim() || !email.trim() || !password.trim) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Enter UserName or Email or Passowrd',
+      });
     }
     let validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (username.length < 3) {
-      return      Toast.show({
-        type:'error',
-        text1:'User name at least 3 characters'
-      })
+      return Toast.show({
+        type: 'error',
+        text1: 'User name at least 3 characters',
+      });
     }
     if (!email) {
-      return       Toast.show({
-        type:'error',
-        text1:'Email format is xyz@gmail.com'
-      })
+      return Toast.show({
+        type: 'error',
+        text1: 'Email format is xyz@gmail.com',
+      });
     }
     if (!validRegex.test(email)) {
-      return  Toast.show({
-        type:'error',
-        text1:'Email format is xyz@gmail.com'
-      })
+      return Toast.show({
+        type: 'error',
+        text1: 'Email format is xyz@gmail.com',
+      });
     }
 
     if (password.length < 6) {
-      return  Toast.show({
-        type:'error',
-        text1:'Password at least 6 characters required'
-      })
+      return Toast.show({
+        type: 'error',
+        text1: 'Password at least 6 characters required',
+      });
     }
     let userData: UserData = {username, email, password};
     setisloading(true);
@@ -81,7 +74,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
     setisloading(false);
   };
 
-  const  createUser = (userData: UserData): void => {
+  const createUser = (userData: UserData): void => {
     auth()
       .createUserWithEmailAndPassword(userData.email, userData.password)
       .then(userCredential => {
@@ -97,23 +90,22 @@ export default function SignUp({navigation}: SignupScreenProps) {
           .set(userData)
           .then(() => {
             Toast.show({
-              type:'success',
-              text1:'Sign Up successfully'
-            })
+              type: 'success',
+              text1: 'Sign Up successfully',
+            });
             setisloading(false);
           })
           .catch((error: any) => {
             console.error('Error adding user data to Firestore: ', error);
           });
       })
-
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
           setisloading(false);
-          return   Toast.show({
-            type:'error',
-            text1:'User already in use'
-          })
+          return Toast.show({
+            type: 'error',
+            text1: 'User already in use',
+          });
         }
 
         if (error.code === 'auth/invalid-email') {
@@ -147,9 +139,9 @@ export default function SignUp({navigation}: SignupScreenProps) {
       />
       {/* <Svg /> */}
       <View style={styles.privacyText}>
-        <IMAGES.Tick  />
+        <IMAGES.Tick />
         <Text style={styles.LinkContainer}>
-          I agree to the 
+          I agree to the
           <View>
             <Text style={styles.linkText}>Terms of service</Text>
           </View>
@@ -160,7 +152,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
         </Text>
       </View>
       <View style={styles.buttonStyle}>
-<Button title={'Sign up'} onPress={handleRegister}/>
+        <Button title={'Sign up'} onPress={handleRegister} />
       </View>
       <TouchableOpacity
         activeOpacity={1}
@@ -175,4 +167,3 @@ export default function SignUp({navigation}: SignupScreenProps) {
 function createUser(userData: UserData) {
   throw new Error('Function not implemented.');
 }
-

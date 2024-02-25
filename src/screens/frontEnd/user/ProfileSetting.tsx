@@ -27,10 +27,9 @@ interface Resource {
 export default function User({navigation}: userScreenProps) {
   const {user} = useAuthContext();
   const [email, setEmai] = useState(user.email);
-  const [name, setName] = useState(user.userName);
+  const [name, setName] = useState(user.username);
   const [resource, setResource] = useState<Resource>({});
   const [profileImage, setProfileImage] = useState<string | null>(null);
- 
   const currentUser = auth().currentUser;
   useEffect(() => {
     if (user.photoURL) {
