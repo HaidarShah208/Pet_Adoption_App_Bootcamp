@@ -4,11 +4,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Search from '../../screens/frontEnd/search/Search';
 import Details from '../../screens/frontEnd/details/Details';
 import Favourite from '../../screens/frontEnd/favourite/Favourite';
+import Home from '../../screens/frontEnd/home/Home';
 
 export type RootStackParamsDetailsList={
     search:undefined,
     details:undefined,
-    favourite:undefined
+    favourite:undefined,
+    home:undefined
   
 }
 
@@ -27,6 +29,14 @@ export const DetailsNavigations=()=> {
   return (
     <Stack.Navigator >
     <Stack.Screen options={{ headerShown: false }} name='favourite' component={Favourite}/>
+    <Stack.Screen options={{ headerShown: false }} name='details' component={Details}/>
+    </Stack.Navigator>
+  )
+} 
+export const HomeDetailsNavigations=()=> {
+  return (
+    <Stack.Navigator >
+    <Stack.Screen options={{ headerShown: false }} name='home' component={Home}/>
     <Stack.Screen options={{ headerShown: false }} name='details' component={Details}/>
     </Stack.Navigator>
   )

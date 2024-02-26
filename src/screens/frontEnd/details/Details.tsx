@@ -1,30 +1,42 @@
-import { View, Text, Image } from 'react-native'
-import React from 'react'
-import { DETAILS, IMAGES } from '../../../constants/assessts/AllAssessts'
-import { DetialsStyle } from '../../../styles/frontEnd/Details'
-import Button from '../../../components/button/Button'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RootStackParamsDetailsList } from '../../../navigation/detailNavigation/DetailNavigation'
+import {View, Text, Image} from 'react-native';
+import React from 'react';
+import {DETAILS, IMAGES} from '../../../constants/assessts/AllAssessts';
+import {DetialsStyle} from '../../../styles/frontEnd/Details';
+import Button from '../../../components/button/Button';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamsDetailsList} from '../../../navigation/detailNavigation/DetailNavigation';
 
 interface DetailsProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'details'>;
-  route:any
+  route: any;
 }
-export default function Details({ navigation, route }: DetailsProps) {
-  const { donationData } = route.params;
+export default function Details({navigation, route}: DetailsProps) {
+  const {donationData} = route.params;
 
-  const Back=()=>{
-    navigation.goBack()
-  }
+  const Back = () => {
+    navigation.goBack();
+  };
   return (
     <View style={DetialsStyle.MainConaier}>
-     <View style={DetialsStyle.ImgView}>
-    <Image source={{uri:donationData.imageURL}} style={{width:370,height:370}}/>
-      <IMAGES.DetailBack style={{position:'absolute',top:60,width:20,height:20,left:20}} onPress={Back}/>
-     </View>
+      <View style={DetialsStyle.ImgView}>
+        <Image
+          source={{uri: donationData.imageURL}}
+          style={{width: 370, height: 370}}
+        />
+        <IMAGES.DetailBack
+          style={{
+            position: 'absolute',
+            top: 60,
+            width: 20,
+            height: 20,
+            left: 20,
+          }}
+          onPress={Back}
+        />
+      </View>
       <View style={DetialsStyle.InfoContainer}>
         <View style={DetialsStyle.InfoHeading}>
-          <View >
+          <View>
             <Text style={DetialsStyle.InfoText}>{donationData.petBreed}</Text>
             <Text style={DetialsStyle.InfoSub}>{donationData.petType}</Text>
           </View>
@@ -33,45 +45,53 @@ export default function Details({ navigation, route }: DetailsProps) {
           </View>
         </View>
         <View style={DetialsStyle.furthurConainer}>
-        <View style={DetialsStyle.furthurInfo}>
-          <Text style={DetialsStyle.inerTxt}>Age</Text>
-          <Text style={DetialsStyle.inerTxts}>{donationData.a}</Text>
-        </View>
-        <View style={DetialsStyle.furthurInfo}>
-          <Text style={DetialsStyle.inerTxt}>Gender</Text>
-          <Text style={DetialsStyle.inerTxts}>{donationData.gender}</Text>
-        </View>
-        <View style={DetialsStyle.furthurInfo}>
-          <Text style={DetialsStyle.inerTxt}>Weight</Text>
-          <Text style={DetialsStyle.inerTxts}>{donationData.petWeight}</Text>
-        </View>
-        <View style={DetialsStyle.furthurInfo}>
-          <Text style={DetialsStyle.inerTxt}>Vaccine</Text>
-          <Text style={DetialsStyle.inerTxts}>{donationData.vaccinated}</Text>
-        </View>
-      </View>
-
-      <View style={DetialsStyle.MainInfo}>
-        <View style={DetialsStyle.detailsInfo}>
-          <DETAILS.User/>
-          <View style={DetialsStyle.NameInfo}>
-            <Text style={DetialsStyle.Name}>Shin Ryin</Text>
-            <Text style={DetialsStyle.owner}>Owner</Text>
+          <View style={DetialsStyle.furthurInfo}>
+            <Text style={DetialsStyle.inerTxt}>Age</Text>
+            <Text style={DetialsStyle.inerTxts}>{donationData.a}</Text>
+          </View>
+          <View style={DetialsStyle.furthurInfo}>
+            <Text style={DetialsStyle.inerTxt}>Gender</Text>
+            <Text style={DetialsStyle.inerTxts}>{donationData.gender}</Text>
+          </View>
+          <View style={DetialsStyle.furthurInfo}>
+            <Text style={DetialsStyle.inerTxt}>Weight</Text>
+            <Text style={DetialsStyle.inerTxts}>{donationData.petWeight}</Text>
+          </View>
+          <View style={DetialsStyle.furthurInfo}>
+            <Text style={DetialsStyle.inerTxt}>Vaccine</Text>
+            <Text style={DetialsStyle.inerTxts}>{donationData.vaccinated}</Text>
           </View>
         </View>
-        <View style={DetialsStyle.locaiton}>
-          <Text style={DetialsStyle.loc}>{donationData.petLocation}</Text>
-          <DETAILS.Location width={11} height={17}/>
+
+        <View style={DetialsStyle.MainInfo}>
+          <View style={DetialsStyle.detailsInfo}>
+            <DETAILS.User />
+            <View style={DetialsStyle.NameInfo}>
+              <Text style={DetialsStyle.Name}>Shin Ryin</Text>
+              <Text style={DetialsStyle.owner}>Owner</Text>
+            </View>
+          </View>
+          <View style={DetialsStyle.locaiton}>
+            <Text style={DetialsStyle.loc}>{donationData.petLocation}</Text>
+            <DETAILS.Location width={11} height={17} />
+          </View>
+        </View>
+
+        <View style={DetialsStyle.DisContainer}>
+          <Text style={DetialsStyle.discription}>
+            {' '}
+            {donationData.description}...
+            <Text style={DetialsStyle.readMore}>Read more</Text>
+          </Text>
+        </View>
+        <View style={DetialsStyle.btnsContainer}>
+          <Button
+            title={'Adopt Now'}
+            buttonStyle={DetialsStyle.buttonStyle}
+            onPress={() => console.log('click')}
+          />
         </View>
       </View>
-
-      <View style={DetialsStyle.DisContainer}>
-        <Text style={DetialsStyle.discription} > {donationData.description}...<Text style={DetialsStyle.readMore}>Read more</Text></Text>
-      </View >
-<View style={DetialsStyle.btnsContainer}>
-<Button title={'Adopt Now'} buttonStyle={DetialsStyle.buttonStyle} onPress={()=>console.log('click')}/>
-</View>
-      </View>
     </View>
-  )
+  );
 }

@@ -9,6 +9,7 @@ import Message from '../../screens/frontEnd/message/Message';
 import { drawarSide } from '../../styles/navigation/DrawarSideMenue';
 import DonateScreen from '../../screens/frontEnd/donate/DonateScreen';
 import DetailNavigation from '../detailNavigation/DetailNavigation';
+import { HomeDetailsNavigations } from '../tabNavigation/DetailsNavigation';
 
 export type RootDrawerParamsList = {
  home:undefined;
@@ -25,7 +26,7 @@ export default function  DrawerNavigator() {
   return ( 
     
 <Drawer.Navigator  screenOptions={{headerShown:false,drawerLabelStyle:drawarSide.Items}} drawerContent={(props)=> <SideMenue {...props} />}  >
-      <Drawer.Screen name="home"  component={Home} />
+      <Drawer.Screen name="home"  component={HomeDetailsNavigations} />
       <Drawer.Screen name="messsage" component={Message} />
       <Drawer.Screen name="MyDonations" component={DetailNavigation} />
       <Drawer.Screen name="favroutite" component={Favourite} />
