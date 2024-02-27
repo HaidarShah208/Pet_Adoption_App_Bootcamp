@@ -45,7 +45,7 @@ export interface AuthContextProps {
       petBreed: string;
       amount: string;
       vaccinated: string;
-      petGender: string;
+      gender: string;
       petWeight: string;
       petLocation: string;
       description: string;

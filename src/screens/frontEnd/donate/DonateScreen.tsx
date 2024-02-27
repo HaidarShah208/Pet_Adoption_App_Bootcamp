@@ -43,7 +43,6 @@ export default function DonateScreen({navigation}:donateScreenProps) {
   const [fileName, setFileName] = useState('');
   const [loading, setisloading] = useState(false);
 
-  const navigations = useNavigation();
 
   const [state, setState] = useState({
     petType: '',
@@ -128,29 +127,35 @@ export default function DonateScreen({navigation}:donateScreenProps) {
     }
   };
 
-  const uploadImage = async() => {
+  const uploadImage = async () => {
     let imageType = fileName.split('/').pop();
     let id = Math.random().toString(36).slice(2);
     const userUID = auth().currentUser?.uid;
-    // let donationID = Math.random().toString(36).slice(2);
-
+  
     if (userUID) {
       const reference = storage().ref(`images/${id}.${imageType}`);
       try {
         const snapshot = await reference.putFile(filePath);
         const downloadURL = await reference.getDownloadURL();
-        
-        const donationCollection = firestore()
-        .collection('userDonation')
-        .doc(userUID)
-        .collection(`donations`);
+  
+        const donationCollection = firestore().collection('donations');
+  
+        const donationData = {
+          ...state,
+          ...selectedValues,
+          imageURL: downloadURL,
+          userId: userUID, // Include user ID in the donation document
+        };
+        await donationCollection.add(donationData);
+        const favoriteDonationsRef = firestore()
+        .collection('favoriteDonations')
+        .doc(userUID);
 
-      await donationCollection.doc().set({
-        ...state,
-        ...selectedValues,
-        imageURL: downloadURL,
-      });
-
+      // Check if the user's favoriteDonations document exists, create if not
+      const favoriteDoc = await favoriteDonationsRef.get();
+      if (!favoriteDoc.exists) {
+        await favoriteDonationsRef.set({ donations: [] });
+      }
         Toast.show({
           type: 'success',
           text1: 'Donation data saved successfully',
@@ -163,7 +168,7 @@ export default function DonateScreen({navigation}:donateScreenProps) {
       console.error('User not authenticated');
     }
   };
-  return (
+    return (
     <ScrollView>
       <TouchableOpacity
         onPress={() => {

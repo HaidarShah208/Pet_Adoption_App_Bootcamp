@@ -58,41 +58,64 @@ const donationSlice = createSlice({
 export const { setDonationData, setFavoriteDonations, setLoading } = donationSlice.actions;
 
 export const fetchDonationData = (): AppThunk => async (dispatch) => {
+  try {
+    const donationsCollection = await firestore().collection('donations').get();
+    
+    if (!donationsCollection.empty) {
+      const donationData: DonationData = {
+        petType: '',
+        petLocation: '',
+        gender: '',
+        imageURL: '',
+        donations: donationsCollection.docs.map((doc) => {
+          const data = doc.data() as Donation;
+          return { ...data, donationId: doc.id };
+        }),
+      };
+      
+      dispatch(setDonationData(donationData));
+    } else {
+      console.log('No data found in the donations collection');
+    }
+  } catch (error) {
+    console.error('Error fetching donation data from Firestore: ', error);
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
+
+export const fetchUserDonations = (): AppThunk => async (dispatch) => {
   const userUID = auth().currentUser?.uid;
 
   if (userUID) {
     try {
-      const donationsCollection = await firestore()
-        .collection('userDonation')
-        .doc(userUID)
+      const userDonationsCollection = await firestore()
         .collection('donations')
+        .where('userId', '==', userUID)
         .get();
 
-      if (!donationsCollection.empty) {
-        const donationData: DonationData = {
-          petType: '', // Modify this based on how you want to aggregate data from the sub-collection
-          petLocation: '',
-          gender: '',
-          imageURL: '', // You may want to set this to something meaningful
-          donations: donationsCollection.docs.map((doc) => {
-            const data = doc.data() as Donation;
-            return { ...data, donationId: doc.id };
-          }),
-          
-        };
-        dispatch(setDonationData(donationData));
-      } else {
-        console.log('No data found in the donations sub-collection');
-      }
+      const userDonations: Donation[] = userDonationsCollection.docs.map((doc) => {
+        const data = doc.data() as Donation;
+        return { ...data, donationId: doc.id };
+      });
+
+      const userDonationData: DonationData = {
+        petType: '',
+        petLocation: '',
+        gender: '',
+        imageURL: '',
+        donations: userDonations,
+      };
+
+      dispatch(setDonationData(userDonationData));
     } catch (error) {
-      console.error('Error fetching donation data from Firestores: ', error);
-    } finally {
-      dispatch(setLoading(false));
+      console.error('Error fetching user donations from Firestore: ', error);
     }
   } else {
     console.error('User not authenticated');
   }
 };
+
 
 export const fetchFavoriteDonations = (): AppThunk => async (dispatch) => {
   const userUID = auth().currentUser?.uid;
@@ -118,19 +141,16 @@ export const fetchFavoriteDonations = (): AppThunk => async (dispatch) => {
 
 export const deleteDonation = (donationId: string): AppThunk => async (dispatch) => {
   const userUID = auth().currentUser?.uid;
-  console.log("Deleting donation with ID:", donationId);
 
   if (userUID) {
     try {
       const donationRef = firestore()
-        .collection('userDonation')
-        .doc(userUID)
         .collection('donations')
         .doc(donationId);
 
       await donationRef.delete();
 
-      dispatch(fetchDonationData());  
+      dispatch(fetchUserDonations());
     } catch (error) {
       console.error('Error deleting donation from Firestore: ', error);
     }
