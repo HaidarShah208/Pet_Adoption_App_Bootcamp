@@ -34,7 +34,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
 
   const handleRegister = () => {
     const {username, email, password} = state;
-    if (!username.trim() || !email.trim() || !password.trim) {
+    if (!username.trim() || !email.trim() || !password.trim()) {
       return Toast.show({
         type: 'error',
         text1: 'Enter UserName or Email or Passowrd',

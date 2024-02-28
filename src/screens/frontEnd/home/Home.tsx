@@ -63,7 +63,7 @@ export default function Home({navigation}: HomeScreenProps) {
         {currentUser && currentUser.photoURL ? (
           <Image source={{uri:currentUser.photoURL}} style={styleHome.userImage}/>
         ) : (
-          <HOME.HomeUser height={48} width={48} style={{borderRadius:30}}/>
+          <HOME.DefaultHome height={48} width={48} style={{borderRadius:30}}/>
         )}
       </View>
       <Text style={styleHome.tesxt}>{`Find an \nAwesome \npets for you`}</Text>
@@ -90,7 +90,7 @@ export default function Home({navigation}: HomeScreenProps) {
       <View>
         <Text style={styleHome.homeHeading}>For You</Text>
       </View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
       {loading ? (
           <Text>Loading...</Text>
         ) : (

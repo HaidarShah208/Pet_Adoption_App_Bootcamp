@@ -118,7 +118,10 @@ export default function User({navigation}: userScreenProps) {
         console.log('User cancelled image picker');
       }
     } catch (err) {
-      console.error('ImagePicker error:', err);
+      Toast.show({
+        type: 'error',
+        text1: 'Not selected',
+      });
     }
   };
   const uploadImageToFirebaseStorage = async (uri: string) => {
@@ -156,7 +159,7 @@ export default function User({navigation}: userScreenProps) {
         <View>
           {currentUser.photoURL == null ? (
             <View style={{borderRadius: 90, overflow: 'hidden'}}>
-              <HOME.HomeUser height={120} width={120} />
+              <IMAGES.Defaults height={120} width={120} />
             </View>
           ) : (
             <Image

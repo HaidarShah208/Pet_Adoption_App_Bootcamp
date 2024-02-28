@@ -40,7 +40,7 @@ marginTop:30
     },
     dropdownArea: {
       width: '100%',
-      height: 200,
+      height: 'auto',
       borderRadius: 10,
       marginTop: 10,
       backgroundColor: '#FFFFFF',

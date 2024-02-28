@@ -9,7 +9,8 @@ import DonateScreen from '../../screens/frontEnd/donate/DonateScreen';
 export type RootStackParamsDetailsList={
     mydonation:undefined,
     details:undefined,
-    donate:undefined
+    donate:undefined,
+    AddPet:undefined
   
 }
 const Stack = createStackNavigator<RootStackParamsDetailsList>();
@@ -19,7 +20,15 @@ export default function DetailNavigation() {
     <Stack.Navigator >
     <Stack.Screen options={{ headerShown: false }} name='mydonation' component={MyDonation}/>
     <Stack.Screen options={{ headerShown: false }} name='details' component={Details}/>
-    <Stack.Screen options={{ headerShown: false }} name='donate' component={DonateScreen}/>
+    </Stack.Navigator>
+  )
+}
+
+export const AddPet=()=>{
+  return (
+    <Stack.Navigator >
+    <Stack.Screen options={{ headerShown: false }} name='AddPet' component={DonateScreen}/>
+    <Stack.Screen options={{ headerShown: false }} name='details' component={Details}/>
     </Stack.Navigator>
   )
 }

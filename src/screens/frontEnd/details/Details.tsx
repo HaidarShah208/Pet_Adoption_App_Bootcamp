@@ -1,21 +1,45 @@
 import {View, Text, Image} from 'react-native';
-import React from 'react';
-import {DETAILS, IMAGES} from '../../../constants/assessts/AllAssessts';
+import React, { useEffect, useState } from 'react';
+import {DETAILS, HOME, IMAGES} from '../../../constants/assessts/AllAssessts';
 import {DetialsStyle} from '../../../styles/frontEnd/Details';
 import Button from '../../../components/button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsDetailsList} from '../../../navigation/detailNavigation/DetailNavigation';
+import { styleHome } from '../../../styles/frontEnd/Home';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
+
 
 interface DetailsProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'details'>;
   route: any;
 }
 export default function Details({navigation, route}: DetailsProps) {
+  const currentUser = auth().currentUser;
   const {donationData} = route.params;
+  const [userData, setUserData] = useState<{ userName?: string } | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userDoc = await firestore().collection('users').doc(donationData.userId).get();
+        if (userDoc.exists && userDoc.data()) {
+          setUserData(userDoc.data() as any);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+  
+    fetchUserData();
+  }, [donationData.userId]);
+  
 
   const Back = () => {
     navigation.goBack();
   };
+console.log('userDAta',userData)
   return (
     <View style={DetialsStyle.MainConaier}>
       <View style={DetialsStyle.ImgView}>
@@ -65,9 +89,13 @@ export default function Details({navigation, route}: DetailsProps) {
 
         <View style={DetialsStyle.MainInfo}>
           <View style={DetialsStyle.detailsInfo}>
-            <DETAILS.User />
+          {currentUser && currentUser.photoURL ? (
+          <Image source={{uri:currentUser.photoURL}} style={styleHome.userImage}/>
+        ) : (
+          <HOME.DefaultHome height={48} width={48} style={{borderRadius:30}}/>
+        )}
             <View style={DetialsStyle.NameInfo}>
-              <Text style={DetialsStyle.Name}>Shin Ryin</Text>
+              <Text style={DetialsStyle.Name}>{userData?userData.userName:'unknown'}</Text>
               <Text style={DetialsStyle.owner}>Owner</Text>
             </View>
           </View>

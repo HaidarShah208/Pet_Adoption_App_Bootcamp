@@ -40,7 +40,7 @@ export interface AuthContextProps {
       data?: string;
     }
     
- export   interface YourState {
+ export interface YourState {
       petType: string;
       petBreed: string;
       amount: string;
@@ -51,7 +51,7 @@ export interface AuthContextProps {
       description: string;
     }
 
-export    type UserData = {
+export type UserData = {
       username: string;
       email: string;
       password: string;

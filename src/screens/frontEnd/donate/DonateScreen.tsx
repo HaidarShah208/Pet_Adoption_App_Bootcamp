@@ -1,7 +1,17 @@
-import {View,TextInput,Text,TouchableOpacity,ScrollView,FlatList,} from 'react-native';
+import {
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+} from 'react-native';
 import React, {useState} from 'react';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
-import ImagePicker, {ImagePickerResponse,launchImageLibrary,} from 'react-native-image-picker';
+import ImagePicker, {
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../../../components/button/Button';
 import storage from '@react-native-firebase/storage';
@@ -9,30 +19,20 @@ import firestore from '@react-native-firebase/firestore';
 import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 import {styles} from '../../../styles/frontEnd/DonateScreen';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamsDetailsList } from '../../../navigation/detailNavigation/DetailNavigation';
-import { AppThunk } from '../../../redux/store';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamsDetailsList} from '../../../navigation/detailNavigation/DetailNavigation';
+import {AppThunk} from '../../../redux/store';
 
-const datas = [
-  {dog: 'Cat'},
-  {dog: 'Dog'},
-  {dog: 'Sheep'},
-];
+const datas = [{dog: 'Cat'}, {dog: 'Dog'}, {dog: 'Sheep'}];
 
-const Gender = [
-  {gender: 'Male'},
-  {gender: 'Female'},
-];
-const Vaccinated = [
-  {isVaccinated: 'Yes'},
-  {isVaccinated: 'No'},
-];
+const Gender = [{gender: 'Male'}, {gender: 'Female'}];
+const Vaccinated = [{isVaccinated: 'Yes'}, {isVaccinated: 'No'}];
 
 interface donateScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'donate'>;
 }
 
-export default function DonateScreen({navigation}:donateScreenProps) {
+export default function DonateScreen({navigation}: donateScreenProps) {
   const [isPetTypeClicked, setIsPetTypeClicked] = useState(false);
   const [isVaccinatedClick, setIsVaccinatedClick] = useState(false);
   const [isGenderClick, setIsGenderClick] = useState(false);
@@ -42,7 +42,6 @@ export default function DonateScreen({navigation}:donateScreenProps) {
   const [filePath, setFilePath] = useState('');
   const [fileName, setFileName] = useState('');
   const [loading, setisloading] = useState(false);
-
 
   const [state, setState] = useState({
     petType: '',
@@ -64,7 +63,7 @@ export default function DonateScreen({navigation}:donateScreenProps) {
     setSelectedValues(prevValues => ({
       ...prevValues,
       [name]: value,
-    }))
+    }));
     setState(prevState => ({
       ...prevState,
       [name]: value,
@@ -131,15 +130,15 @@ export default function DonateScreen({navigation}:donateScreenProps) {
     let imageType = fileName.split('/').pop();
     let id = Math.random().toString(36).slice(2);
     const userUID = auth().currentUser?.uid;
-  
+
     if (userUID) {
       const reference = storage().ref(`images/${id}.${imageType}`);
       try {
         const snapshot = await reference.putFile(filePath);
         const downloadURL = await reference.getDownloadURL();
-  
+
         const donationCollection = firestore().collection('donations');
-  
+
         const donationData = {
           ...state,
           ...selectedValues,
@@ -148,27 +147,30 @@ export default function DonateScreen({navigation}:donateScreenProps) {
         };
         await donationCollection.add(donationData);
         const favoriteDonationsRef = firestore()
-        .collection('favoriteDonations')
-        .doc(userUID);
+          .collection('favoriteDonations')
+          .doc(userUID);
 
-      // Check if the user's favoriteDonations document exists, create if not
-      const favoriteDoc = await favoriteDonationsRef.get();
-      if (!favoriteDoc.exists) {
-        await favoriteDonationsRef.set({ donations: [] });
-      }
+        // Check if the user's favoriteDonations document exists, create if not
+        const favoriteDoc = await favoriteDonationsRef.get();
+        if (!favoriteDoc.exists) {
+          await favoriteDonationsRef.set({donations: []});
+        }
         Toast.show({
           type: 'success',
           text1: 'Donation data saved successfully',
         });
         setisloading(false);
       } catch (error) {
-        console.error('Error uploading image to storage or updating Firestore:', error);
+        console.error(
+          'Error uploading image to storage or updating Firestore:',
+          error,
+        );
       }
     } else {
       console.error('User not authenticated');
     }
   };
-    return (
+  return (
     <ScrollView>
       <TouchableOpacity
         onPress={() => {
@@ -178,10 +180,8 @@ export default function DonateScreen({navigation}:donateScreenProps) {
       </TouchableOpacity>
       <View style={styles.container}>
         <Text style={styles.heading}>Pet Type</Text>
-        <TouchableOpacity
-          style={styles.dorpdown}
-          onPress={handlePressType}>
-          <Text style={{color:'#101C1D'}}>{selectedValues.petType}</Text>
+        <TouchableOpacity style={styles.dorpdown} onPress={handlePressType}>
+          <Text style={{color: '#101C1D'}}>{selectedValues.petType}</Text>
           {isPetTypeClicked ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
         </TouchableOpacity>
         {isPetTypeClicked ? (
@@ -194,6 +194,7 @@ export default function DonateScreen({navigation}:donateScreenProps) {
               }}
             />
             <FlatList
+              scrollEnabled={false}
               data={allData}
               renderItem={({item, index}) => {
                 return (
@@ -220,15 +221,18 @@ export default function DonateScreen({navigation}:donateScreenProps) {
         <Text style={styles.mail}>Amount</Text>
         <TextInput
           style={styles.input}
-          value={`${state.amount} $ `}
-          onChangeText={text => handleChange('amount', text)}
+          value={`$ ${state.amount}`}
+          onChangeText={text =>
+            handleChange('amount', text.replace('$', '').trim())
+          }
+          keyboardType="numeric"
         />
 
         <Text style={styles.heading}>Vaccinated</Text>
         <TouchableOpacity
           style={styles.dorpdown}
           onPress={handlePressVaccinated}>
-          <Text style={{color:'#101C1D'}}>{selectedValues.vaccinated}</Text>
+          <Text style={{color: '#101C1D'}}>{selectedValues.vaccinated}</Text>
           {isVaccinatedClick ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
         </TouchableOpacity>
         {isVaccinatedClick ? (
@@ -240,7 +244,7 @@ export default function DonateScreen({navigation}:donateScreenProps) {
                 onSearch(text);
               }}
             />
-            <FlatList
+            <FlatList scrollEnabled={false}
               data={vaccinated}
               renderItem={({item, index}) => {
                 return (
@@ -259,10 +263,8 @@ export default function DonateScreen({navigation}:donateScreenProps) {
           </View>
         ) : null}
         <Text style={styles.heading}>Gender</Text>
-        <TouchableOpacity
-          style={styles.dorpdown}
-          onPress={handlePressGender}>
-          <Text style={{color:'#101C1D'}}>{selectedValues.gender}</Text>
+        <TouchableOpacity style={styles.dorpdown} onPress={handlePressGender}>
+          <Text style={{color: '#101C1D'}}>{selectedValues.gender}</Text>
           {isGenderClick ? <IMAGES.upArrow /> : <IMAGES.downArrow />}
         </TouchableOpacity>
         {isGenderClick ? (
@@ -274,7 +276,7 @@ export default function DonateScreen({navigation}:donateScreenProps) {
                 onSearch(text);
               }}
             />
-            <FlatList
+            <FlatList scrollEnabled={false}
               data={gender}
               renderItem={({item, index}) => {
                 return (
@@ -295,8 +297,11 @@ export default function DonateScreen({navigation}:donateScreenProps) {
         <Text style={styles.mail}>Weight</Text>
         <TextInput
           style={styles.input}
-          value={`${state.petWeight} KG `}
-          onChangeText={text => handleChange('petWeight', text)}
+          value={`KG ${state.petWeight}`}
+          onChangeText={text =>
+            handleChange('petWeight', text.replace('KG', '').trim())
+          }
+          keyboardType="numeric"
         />
         <Text style={styles.mail}>Location</Text>
         <TextInput
@@ -325,9 +330,7 @@ export default function DonateScreen({navigation}:donateScreenProps) {
     </ScrollView>
   );
 }
-  
 
 function dispatch(arg0: AppThunk) {
   throw new Error('Function not implemented.');
 }
-

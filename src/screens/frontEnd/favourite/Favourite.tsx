@@ -48,8 +48,7 @@ export default function Favourite({navigation}: FavrouriteScreenProps) {
         {favoriteDonations.map((donationItem: any, index: number) => (
           <TouchableOpacity 
           key={index}
-          onPress={() => handleMainContainerClick(donationItem)}
->
+          onPress={() => handleMainContainerClick(donationItem)}>
             <View style={searchSt.MainContainer}>
               <Image
                 source={{uri: donationItem.imageURL}}
