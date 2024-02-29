@@ -131,7 +131,7 @@ export default function DonateScreen({navigation}: donateScreenProps) {
     let imageType = fileName.split('/').pop();
     let id = Math.random().toString(36).slice(2);
     const userUID = auth().currentUser?.uid;
-
+    const user = auth().currentUser;
     if (userUID) {
       const reference = storage().ref(`images/${id}.${imageType}`);
       try {
@@ -144,14 +144,13 @@ export default function DonateScreen({navigation}: donateScreenProps) {
           ...state,
           ...selectedValues,
           imageURL: downloadURL,
-          userId: userUID, // Include user ID in the donation document
+          userId: userUID, 
         };
         await donationCollection.add(donationData);
         const favoriteDonationsRef = firestore()
           .collection('favoriteDonations')
           .doc(userUID);
 
-        // Check if the user's favoriteDonations document exists, create if not
         const favoriteDoc = await favoriteDonationsRef.get();
         if (!favoriteDoc.exists) {
           await favoriteDonationsRef.set({donations: []});

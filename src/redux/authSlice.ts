@@ -1,8 +1,11 @@
 // authSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState, UserProfileData } from '../constants/allTypes/AllTypes';
+import { UserProfileData } from '../constants/allTypes/AllTypes';
 
-
+interface AuthState {
+  isAuth: boolean;
+  user: UserProfileData;
+}
 
 const initialState: AuthState = {
   isAuth: false,

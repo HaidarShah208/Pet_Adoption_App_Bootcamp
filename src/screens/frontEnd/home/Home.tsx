@@ -58,7 +58,7 @@ export default function Home({navigation}: HomeScreenProps) {
   };
 
   const handleMainContainerClick = (donationItem: YourState) => {
-    navigation.navigate('details', {donationData: donationItem} as any);
+    navigation.navigate('details', {donationData: donationItem,} as any);
   };
   return (
     <>

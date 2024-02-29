@@ -1,13 +1,8 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import MyDonation from '../../screens/frontEnd/myDonation/MyDonation';
 import Favourite from '../../screens/frontEnd/favourite/Favourite';
-import { NavigationContainer } from '@react-navigation/native';
-import Home from '../../screens/frontEnd/home/Home';
 import SideMenue from './SideMenue';
-import TabNavigator from '../tabNavigation/Navigator';
 import Message from '../../screens/frontEnd/message/Message';
 import { drawarSide } from '../../styles/navigation/DrawarSideMenue';
-import DonateScreen from '../../screens/frontEnd/donate/DonateScreen';
 import DetailNavigation, { AddPet } from '../detailNavigation/DetailNavigation';
 import { HomeDetailsNavigations } from '../tabNavigation/DetailsNavigation';
 

@@ -17,8 +17,8 @@ interface DetailsProps {
 }
 export default function Details({navigation, route}: DetailsProps) {
   const currentUser = auth().currentUser;
-  const {donationData} = route.params;
-  const [userData, setUserData] = useState<{ username?: string } | null>(null);
+  const {donationData,} = route.params;
+  const [userData, setUserData] = useState<{ username?: string; photoURL?: string } | null>(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -39,6 +39,7 @@ export default function Details({navigation, route}: DetailsProps) {
   const Back = () => {
     navigation.goBack();
   };
+  console.log('donationsData',donationData.userId)
   return (
     <View style={DetialsStyle.MainConaier}>
       <View style={DetialsStyle.ImgView}>
@@ -88,8 +89,8 @@ export default function Details({navigation, route}: DetailsProps) {
 
         <View style={DetialsStyle.MainInfo}>
           <View style={DetialsStyle.detailsInfo}>
-          {currentUser && currentUser.photoURL ? (
-          <Image source={{uri:currentUser.photoURL}} style={styleHome.userImage}/>
+          {userData && userData.photoURL ?(
+          <Image source={{uri: userData.photoURL}} style={styleHome.userImage}/>
         ) : (
           <HOME.DefaultHome height={48} width={48} style={{borderRadius:30}}/>
         )}

@@ -1,18 +1,15 @@
-import {View, Text, TouchableOpacity, Image, Alert, ActivityIndicator} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
-import {HOME, IMAGES} from '../../../constants/assessts/AllAssessts';
-import {userStyle} from '../../../styles/frontEnd/User';
-import {TextInput} from 'react-native-gesture-handler';
+import { View, Text, TouchableOpacity, Image, Alert, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { RootTabParamsList } from '../../../navigation/tabNavigation/Navigator';
+import { HOME, IMAGES } from '../../../constants/assessts/AllAssessts';
+import { userStyle } from '../../../styles/frontEnd/User';
+import { TextInput } from 'react-native-gesture-handler';
 import Button from '../../../components/button/Button';
 import Toast from 'react-native-toast-message';
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
-import {useAuthContext} from '../../../context/AuthContext';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { useAuthContext } from '../../../context/AuthContext';
 import auth from '@react-native-firebase/auth';
-import ImagePicker, {
-  ImagePickerResponse,
-  launchImageLibrary,
-} from 'react-native-image-picker';
+import ImagePicker, { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import { Resource } from '../../../constants/allTypes/AllTypes';
@@ -21,34 +18,35 @@ interface userScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamsList, 'user'>;
 }
 
-
-export default function  Profile({navigation}: userScreenProps) {
-  const {user} = useAuthContext();
-  const [email, setEmai] = useState(user.email);
-  const [name, setName] = useState(user.username);
+export default function Profile({ navigation }: userScreenProps) {
+  const { user } = useAuthContext();
+  const [email, setEmail] = useState(user?.email || '');
+  const [name, setName] = useState(user?.username || '');
   const [loading, setLoading] = useState(false);
   const [resource, setResource] = useState<Resource>({});
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const currentUser = auth().currentUser;
+
   useEffect(() => {
-    if (user.photoURL) {
+    if (user?.photoURL) {
       setProfileImage(user.photoURL);
     }
-  }, [user.photoURL]);
+  }, [user?.photoURL]);
+
   if (!currentUser) {
     Alert.alert('Error', 'User not logged in');
-    return;
+    return null;
   }
 
   const handleSubmit = async () => {
- try {
+    try {
       setLoading(true);
 
       currentUser?.updateProfile({
         displayName: name,
       });
 
-      const userDocRef = firestore().collection('users').doc(user.uid);
+      const userDocRef = firestore().collection('users').doc(user?.uid);
       await userDocRef.update({
         username: name,
         email: email,
@@ -74,7 +72,7 @@ export default function  Profile({navigation}: userScreenProps) {
     currentUser.updateProfile({
       displayName: name,
     });
-    const userDocRef = firestore().collection('users').doc(user.uid);
+    const userDocRef = firestore().collection('users').doc(user?.uid);
     userDocRef
       .update({
         username: name,
@@ -89,6 +87,7 @@ export default function  Profile({navigation}: userScreenProps) {
         Alert.alert('Error', error.message);
       });
   };
+
   const handlePicture = async () => {
     const options: ImagePicker.ImageLibraryOptions & {
       title: string;
@@ -98,7 +97,7 @@ export default function  Profile({navigation}: userScreenProps) {
       title: 'Select Image',
       mediaType: 'photo' as ImagePicker.MediaType,
       customButtons: [
-        {name: 'customOptionKey', title: 'Choose File from Custom Option'},
+        { name: 'customOptionKey', title: 'Choose File from Custom Option' },
       ],
       storageOptions: {
         skipBackup: true,
@@ -133,6 +132,7 @@ export default function  Profile({navigation}: userScreenProps) {
       });
     }
   };
+
   const uploadImageToFirebaseStorage = async (uri: string) => {
     try {
       const imageName = uri.substring(uri.lastIndexOf('/') + 1);
@@ -141,7 +141,7 @@ export default function  Profile({navigation}: userScreenProps) {
       const ref = storage().ref().child(`profileImages/${imageName}`);
       await ref.put(blob);
       const downloadURL = await ref.getDownloadURL();
-      const userDocRef = firestore().collection('users').doc(user.uid);
+      const userDocRef = firestore().collection('users').doc(user?.uid);
       userDocRef
         .update({
           photoURL: downloadURL,
@@ -161,18 +161,19 @@ export default function  Profile({navigation}: userScreenProps) {
       console.error('Error uploading image to Firebase Storage:', error);
     }
   };
+// console.log('userDocRef',userDocRef)
   return (
     <View style={userStyle.mainContainer}>
       <View style={userStyle.main}>
         <Text style={userStyle.heading}>Profile Setting</Text>
         <View>
           {currentUser.photoURL == null ? (
-            <View style={{borderRadius: 90, overflow: 'hidden'}}>
+            <View style={{ borderRadius: 90, overflow: 'hidden' }}>
               <IMAGES.Defaults height={120} width={120} />
             </View>
           ) : (
             <Image
-              source={{uri: currentUser.photoURL}}
+              source={{ uri: currentUser.photoURL }}
               style={userStyle.profile}
             />
           )}
@@ -193,16 +194,16 @@ export default function  Profile({navigation}: userScreenProps) {
         <TextInput
           style={userStyle.input}
           value={email}
-          onChangeText={email => setEmai(email)}
+          onChangeText={email => setEmail(email)}
         />
       </View>
       <View style={userStyle.btnsContainer}>
-  <Button 
-    title={loading ? <ActivityIndicator size="large" color="white" />: 'Update profile'}
-    buttonStyle={userStyle.btnsContainer}
-    onPress={handleSubmit}
-  />
-</View>
+        <Button
+          title={loading ? <ActivityIndicator size="large" color="white" /> : 'Update profile'}
+          buttonStyle={userStyle.btnsContainer}
+          onPress={handleSubmit}
+        />
+      </View>
     </View>
   );
 }
