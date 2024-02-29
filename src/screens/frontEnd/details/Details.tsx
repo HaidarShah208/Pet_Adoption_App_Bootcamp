@@ -39,13 +39,12 @@ export default function Details({navigation, route}: DetailsProps) {
   const Back = () => {
     navigation.goBack();
   };
-console.log('userDAta',userData)
   return (
     <View style={DetialsStyle.MainConaier}>
       <View style={DetialsStyle.ImgView}>
         <Image
           source={{uri: donationData.imageURL}}
-          style={{width: 370, height: 370}}
+          style={{width: 400, height: 380}}
         />
         <IMAGES.DetailBack
           style={{

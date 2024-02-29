@@ -7,9 +7,7 @@ import {
 import {requesStyles} from '../../../styles/frontEnd/DonationRequests';
 
 export default function DonationRequests() {
-  const handlepress = () => {
-    console.log('press');
-  };
+ 
   return (
     <ScrollView>
       <View style={requesStyles.container}>

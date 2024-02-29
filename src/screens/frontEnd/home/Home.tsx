@@ -1,21 +1,31 @@
-import {View,Text,Image,TouchableOpacity,ScrollView, ImageBackground
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  ImageBackground,
+  ActivityIndicator,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {styleHome} from '../../../styles/frontEnd/Home';
-import {DrawerActions, useIsFocused, useNavigation} from '@react-navigation/native';
+import {
+  DrawerActions,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import {useAuthContext} from '../../../context/AuthContext';
 import {HOME} from '../../../constants/assessts/AllAssessts';
 import Input from '../../../components/input/Input';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store';
-import { fetchDonationData } from '../../../redux/getDonationSlice';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamsDetailsList } from '../../../navigation/tabNavigation/DetailsNavigation';
-import { YourState } from '../../../constants/allTypes/AllTypes';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../../redux/store';
+import {fetchDonationData} from '../../../redux/getDonationSlice';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamsDetailsList} from '../../../navigation/tabNavigation/DetailsNavigation';
+import {YourState} from '../../../constants/allTypes/AllTypes';
 
-
-interface  HomeScreenProps {
+interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'home'>;
 }
 
@@ -23,7 +33,7 @@ export default function Home({navigation}: HomeScreenProps) {
   const navigations = useNavigation();
   const {user} = useAuthContext();
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  
+
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const donationData = useSelector(
@@ -43,14 +53,12 @@ export default function Home({navigation}: HomeScreenProps) {
     }
   }, [user.photoURL]);
 
- 
   const openDrawer = () => {
     navigations.dispatch(DrawerActions.openDrawer());
   };
 
-
-  const handleMainContainerClick = (donationItem:  YourState) => {
-    navigation.navigate('details', {donationData: donationItem} as any );
+  const handleMainContainerClick = (donationItem: YourState) => {
+    navigation.navigate('details', {donationData: donationItem} as any);
   };
   return (
     <>
@@ -59,29 +67,37 @@ export default function Home({navigation}: HomeScreenProps) {
           <HOME.NavImg />
         </TouchableOpacity>
         {currentUser && currentUser.photoURL ? (
-          <Image source={{uri:currentUser.photoURL}} style={styleHome.userImage}/>
+          <Image
+            source={{uri: currentUser.photoURL}}
+            style={styleHome.userImage}
+          />
         ) : (
-          <HOME.DefaultHome height={48} width={48} style={{borderRadius:30}}/>
+          <HOME.DefaultHome height={48} width={48} style={{borderRadius: 30}} />
         )}
       </View>
       <Text style={styleHome.tesxt}>{`Find an \nAwesome \npets for you`}</Text>
-      <Input/>
+      <Input />
       <View style={{flexDirection: 'row'}}>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styleHome.scrollImage}>
-              {loading ? (
-          <Text>Loading...</Text>
-        ) : (
-          donationData?.donations.map((donationItem: any, index: number) => (
-       <TouchableOpacity    key={index}  onPress={() => handleMainContainerClick(donationItem)}>
-           <View style={{marginHorizontal: 4}}>
-             <Image source={{uri:donationItem.imageURL}} style={styleHome.imageSize}/>
-            <Text style={styleHome.tsxt}>{donationItem.petType}</Text>
-          </View>
-       </TouchableOpacity>
-          ))
+          {loading ? (
+              <ActivityIndicator size="large" color="black" />
+          ) : (
+            donationData?.donations.map((donationItem: any, index: number) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleMainContainerClick(donationItem)}>
+                <View style={{marginHorizontal: 4}}>
+                  <Image
+                    source={{uri: donationItem.imageURL}}
+                    style={styleHome.imageSize}
+                  />
+                  <Text style={styleHome.tsxt}>{donationItem.petType}</Text>
+                </View>
+              </TouchableOpacity>
+            ))
           )}
         </ScrollView>
       </View>
@@ -89,23 +105,33 @@ export default function Home({navigation}: HomeScreenProps) {
         <Text style={styleHome.homeHeading}>For You</Text>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-      {loading ? (
-          <Text>Loading...</Text>
-        ) : (
-          donationData?.donations.map((donationItem: any, index: number) => (
-    <TouchableOpacity 
-    key={index}
-    onPress={() => handleMainContainerClick(donationItem)}>
-          <ImageBackground source={{uri:donationItem.imageURL}} style={styleHome.largeImages} >
-        <View style={{paddingStart:15,paddingTop:10}} >
-      <Text style={styleHome.Imagetext}>{donationItem.petBreed}</Text>
-      <Text style={styleHome.Imagetext}>{donationItem.petType}</Text>
-      <Text style={styleHome.imageAmount}>{donationItem.amount}</Text>
-    </View>
-        </ImageBackground>
-    </TouchableOpacity>
-         ))
-         )}
+        <View style={{justifyContent: 'center'}}>
+          {loading ? (
+            <ActivityIndicator size="large" color="black" />
+          ) : (
+            donationData?.donations.map((donationItem: any, index: number) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleMainContainerClick(donationItem)}>
+                <ImageBackground
+                  source={{uri: donationItem.imageURL}}
+                  style={styleHome.largeImages}>
+                  <View style={{paddingStart: 15, paddingTop: 10}}>
+                    <Text style={styleHome.Imagetext}>
+                      {donationItem.petBreed}
+                    </Text>
+                    <Text style={styleHome.Imagetext}>
+                      {donationItem.petType}
+                    </Text>
+                    <Text style={styleHome.imageAmount}>
+                      {donationItem.amount}
+                    </Text>
+                  </View>
+                </ImageBackground>
+              </TouchableOpacity>
+            ))
+          )}
+        </View>
       </ScrollView>
     </>
   );

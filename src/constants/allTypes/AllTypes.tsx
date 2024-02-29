@@ -35,7 +35,7 @@ export interface AuthContextProps {
     | { type: "Login"; payload: { userData?: UserProfileData } }
     | { type: "Logout" };
 
-   export interface Resource {
+   export type Resource ={
       uri?: string;
       data?: string;
     }
@@ -60,4 +60,6 @@ export type UserData = {
       creationTime?: string;
       status?: string;
     };
+
+ 
 

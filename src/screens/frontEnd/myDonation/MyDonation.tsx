@@ -1,5 +1,5 @@
 // MyDonation.tsx
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import React, { useEffect } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -7,10 +7,9 @@ import { FAVOURITE, SrchIMAGES } from '../../../constants/assessts/AllAssessts';
 import { searchSt } from '../../../styles/frontEnd/Favourite';
 import { RootStackParamsDetailsList } from '../../../navigation/detailNavigation/DetailNavigation';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppThunk, RootState } from '../../../redux/store';
+import {  RootState } from '../../../redux/store';
 import { deleteDonation, fetchUserDonations } from '../../../redux/getDonationSlice';
 import { useIsFocused } from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
 import { YourState } from '../../../constants/allTypes/AllTypes';
 
 interface DonationScreenProps {
@@ -55,7 +54,7 @@ const MyDonation: React.FC<DonationScreenProps> = ({ navigation }) => {
       </View>
       <ScrollView>
         {loading ? (
-          <Text>Loading...</Text>
+                       <ActivityIndicator size="large" color="black" />
         ) : (
           donationData?.donations.map((donationItem: any, index: number) => (
             <TouchableOpacity key={index} onPress={() => handleMainContainerClick(donationItem)}>

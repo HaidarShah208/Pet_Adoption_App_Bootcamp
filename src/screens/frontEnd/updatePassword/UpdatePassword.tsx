@@ -45,11 +45,9 @@ export default function UpdatePassword() {
         currentPassword,
       );
   
-      // Reauthenticate the user
       currentUser
         .reauthenticateWithCredential(credential)
         .then(() => {
-          // User successfully reauthenticated, now update password
           currentUser
             .updatePassword(newPassword)
             .then(() => {

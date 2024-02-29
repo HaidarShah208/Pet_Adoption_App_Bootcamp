@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { FONTS } from '../../constants/fonts/AllFonts';
 
 interface ButtonProps {
-  title: string;
+  title: ReactNode;
   onPress: () => void;
   buttonStyle?: object;  
   textStyle?: object; 

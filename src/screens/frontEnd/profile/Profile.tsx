@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Image, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, Image, Alert, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
 import {HOME, IMAGES} from '../../../constants/assessts/AllAssessts';
@@ -15,19 +15,18 @@ import ImagePicker, {
 } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
+import { Resource } from '../../../constants/allTypes/AllTypes';
 
 interface userScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamsList, 'user'>;
 }
 
-interface Resource {
-  uri?: string;
-  data?: string;
-}
+
 export default function  Profile({navigation}: userScreenProps) {
   const {user} = useAuthContext();
   const [email, setEmai] = useState(user.email);
   const [name, setName] = useState(user.username);
+  const [loading, setLoading] = useState(false);
   const [resource, setResource] = useState<Resource>({});
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const currentUser = auth().currentUser;
@@ -41,22 +40,33 @@ export default function  Profile({navigation}: userScreenProps) {
     return;
   }
 
-  const handleSubmit = () => {
-    currentUser.updateProfile({
-      displayName: name,
-    });
-    const userDocRef = firestore().collection('users').doc(user.uid);
-    userDocRef
-      .update({
+  const handleSubmit = async () => {
+ try {
+      setLoading(true);
+
+      currentUser?.updateProfile({
+        displayName: name,
+      });
+
+      const userDocRef = firestore().collection('users').doc(user.uid);
+      await userDocRef.update({
         username: name,
         email: email,
-      })
-      .then(() => {
-        Alert.alert('Success', 'Profile updated successfully');
-      })
-      .catch(error => {
-        Alert.alert('Error', error.message);
       });
+
+      setLoading(false);
+      Toast.show({
+        type: 'success',
+        text1: 'Profile updated',
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        setLoading(false);
+        Alert.alert('Error', error.message);
+      } else {
+        console.error(error);
+      }
+    }
   };
 
   // image picker
@@ -68,7 +78,6 @@ export default function  Profile({navigation}: userScreenProps) {
     userDocRef
       .update({
         username: name,
-        // status: status,
       })
       .then(() => {
         Toast.show({
@@ -188,12 +197,12 @@ export default function  Profile({navigation}: userScreenProps) {
         />
       </View>
       <View style={userStyle.btnsContainer}>
-        <Button
-          title={'Update profile'}
-          buttonStyle={userStyle.btnsContainer}
-          onPress={handleSubmit}
-        />
-      </View>
+  <Button 
+    title={loading ? <ActivityIndicator size="large" color="white" />: 'Update profile'}
+    buttonStyle={userStyle.btnsContainer}
+    onPress={handleSubmit}
+  />
+</View>
     </View>
   );
 }

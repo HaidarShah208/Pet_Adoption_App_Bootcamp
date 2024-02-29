@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import {IMAGES} from '../../../constants/assessts/AllAssessts';
@@ -114,8 +115,8 @@ export default function DonateScreen({navigation}: donateScreenProps) {
       if (res?.didCancel) {
         console.log('User cancelled image picker');
       } else if (res?.assets && res.assets.length > 0) {
-        const uri = res.assets[0].uri;
-        const fileName = res.assets[0].type;
+        const uri = res.assets[0].uri || ''
+        const fileName = res.assets[0].type || ''
         setFileName(fileName);
         setFilePath(uri);
       } else {
@@ -323,7 +324,7 @@ export default function DonateScreen({navigation}: donateScreenProps) {
         </TouchableOpacity>
         <View style={styles.btns}>
           <Button
-            title={'Donate'}
+        title={loading ? <ActivityIndicator size="large" color="white" />: 'Donate'}
             buttonStyle={styles.btns}
             onPress={() => uploadImage()}
           />

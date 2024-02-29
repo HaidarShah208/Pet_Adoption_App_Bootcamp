@@ -1,10 +1,9 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {searchSt} from '../../../styles/frontEnd/Favourite';
 import {ScrollView} from 'react-native-gesture-handler';
 import {
   FAVOURITE,
-  IMAGES,
   SrchIMAGES,
 } from '../../../constants/assessts/AllAssessts';
 import {useDispatch, useSelector} from 'react-redux';
@@ -19,11 +18,11 @@ interface  FavrouriteScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'search'>;
 }
 export default function Favourite({navigation}: FavrouriteScreenProps) {
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const favoriteDonations = useSelector((state: RootState) => state.donation.favoriteDonations,);
-  
+  const loading = useSelector((state: RootState) => state.donation.loading);
+
   useEffect(() => {
     if (isFocused) {
       dispatch(fetchFavoriteDonations() as any);
@@ -43,6 +42,9 @@ export default function Favourite({navigation}: FavrouriteScreenProps) {
         <Text style={searchSt.heading}>Favourite</Text>
         <FAVOURITE.ADD onPress={moveToFav} />
       </View>
+      {loading ? (
+        <ActivityIndicator size="large" color="black" />
+      ) : (
       <ScrollView>
         {favoriteDonations.map((donationItem: any, index: number) => (
           <TouchableOpacity 
@@ -71,6 +73,7 @@ export default function Favourite({navigation}: FavrouriteScreenProps) {
           </TouchableOpacity>
         ))}
       </ScrollView>
+)}
     </View>
   );
 }

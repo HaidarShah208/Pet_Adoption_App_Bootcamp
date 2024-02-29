@@ -11,9 +11,11 @@ export const DetialsStyle = StyleSheet.create({
   ImgView: {
     alignSelf: 'center',
     height: 350,
+    // width: 390,
+
   },
   InfoContainer: {
-    width: 375,
+    width: 390,
      minHeight: 490,
     backgroundColor: 'white',
     borderTopLeftRadius: 30,
