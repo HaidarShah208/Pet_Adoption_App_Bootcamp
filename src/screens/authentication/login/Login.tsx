@@ -1,4 +1,4 @@
-import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator} from 'react-native';
 import React, { useState } from 'react';
 import {styles} from '../../../styles/authentication/Login';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
@@ -9,14 +9,24 @@ import { FirebaseUser, UserProfileData } from '../../../constants/allTypes/AllTy
 import { useAuthContext } from '../../../context/AuthContext';
 import { IMAGES } from '../../../constants/assessts/AllAssessts';
 import Button from '../../../components/button/Button';
+import { login } from '../../../redux/authSlice';
+import { useDispatch } from 'react-redux';
 
 interface LoginScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'LOGIN'>;
 }
+
+type SigninUserData = {
+  email: string;
+  password: string;
+  uid?: string;
+};
 export default function Login({navigation}: LoginScreenProps) {
   const [email, setEmail] = useState('');
   const [passowrd, setPassword] = useState('');
-  const {dispatch}=useAuthContext()
+  const [loading, setisloading] = useState(false);
+  // const {dispatch}=useAuthContext()
+  const dispatch=useDispatch()
 
     // firebasAuth
     const handleSubmit = () => {
@@ -29,8 +39,11 @@ export default function Login({navigation}: LoginScreenProps) {
         console.log('enter email and password')
         return;
       }
+      let userData = {email, passowrd};
+      setisloading(true);
+      
       auth()
-      .signInWithEmailAndPassword(email, passowrd)
+      .signInWithEmailAndPassword(userData.email,userData.passowrd)
       .then((userCredential) => {
         const user:FirebaseUser | null =userCredential.user
         if(user){
@@ -44,16 +57,19 @@ export default function Login({navigation}: LoginScreenProps) {
           type:'success',
           text1:'Signed In Successfully'
         })
+        dispatch(login(userData) as any) ;
       setEmail('')
       setPassword('')
+      setisloading(false);
+
       })
       .catch(error => {
+        setisloading(false);
         Toast.show({
           type:'error',
           text1:'user is not existl'
         })
         console.log('user is not exist')
-        console.error(error);
       });
     };
   return (
@@ -84,7 +100,7 @@ export default function Login({navigation}: LoginScreenProps) {
       </View>
       </TouchableOpacity>
       <View style={styles.buttonStyle}>
-<Button title={'Log in'} onPress={handleSubmit}/>
+<Button  title={loading ? <ActivityIndicator size="large" color="white" />: 'Login'} onPress={handleSubmit}/>
       </View>
       <TouchableOpacity activeOpacity={1}
         onPress={() => {
@@ -94,4 +110,8 @@ export default function Login({navigation}: LoginScreenProps) {
       </TouchableOpacity>
     </View>
   );
+}
+
+function setisloading(arg0: boolean) {
+  throw new Error('Function not implemented.');
 }

@@ -1,4 +1,4 @@
-import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator} from 'react-native';
 import React, {useState} from 'react';
 import {styles} from '../../../styles/authentication/SignUp';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -10,6 +10,8 @@ import Button from '../../../components/button/Button';
 import {useAuthContext} from '../../../context/AuthContext';
 import firestore from '@react-native-firebase/firestore';
 import { UserData } from '../../../constants/allTypes/AllTypes';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../redux/authSlice';
 
 interface SignupScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'SIGNUP'>;
@@ -22,7 +24,8 @@ const initialState = {
 };
 
 export default function SignUp({navigation}: SignupScreenProps) {
-  const {dispatch} = useAuthContext();
+  // const {dispatch} = useAuthContext();
+  const dispatch=useDispatch()
   const [loading, setisloading] = useState(false);
   const [state, setState] = useState(initialState);
 
@@ -71,7 +74,6 @@ export default function SignUp({navigation}: SignupScreenProps) {
     setisloading(true);
     createUser(userData);
     setState(initialState);
-    setisloading(false);
   };
 
   const createUser = (userData: UserData): void => {
@@ -93,6 +95,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
               type: 'success',
               text1: 'Sign Up successfully',
             });
+dispatch(login(userData))
             setisloading(false);
           })
           .catch((error: any) => {
@@ -152,7 +155,7 @@ export default function SignUp({navigation}: SignupScreenProps) {
         </Text>
       </View>
       <View style={styles.buttonStyle}>
-        <Button title={'Sign up'} onPress={handleRegister} />
+        <Button  title={loading ? <ActivityIndicator size="large" color="white" />: 'Sign Up'} onPress={handleRegister} />
       </View>
       <TouchableOpacity
         activeOpacity={1}

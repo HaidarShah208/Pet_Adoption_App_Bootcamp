@@ -10,13 +10,20 @@ import {drawarSide} from '../../styles/navigation/DrawarSideMenue';
 import Input from '../../components/input/Input';
 import {TextInput} from 'react-native-gesture-handler';
 import {useAuthContext} from '../../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import authSlice, { logout } from '../../redux/authSlice';
 
 const SideMenue = (props: any) => {
+  const dispatch=useDispatch()
   const closeDrawer = () => {
     props.navigation.closeDrawer();
   };
 
-  const {logout} = useAuthContext();
+  const handleLogout = () => {
+    dispatch(logout());
+    closeDrawer();
+  };
+
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
@@ -39,7 +46,7 @@ const SideMenue = (props: any) => {
       </DrawerContentScrollView>
 
       <TouchableOpacity>
-        <Text style={drawarSide.Lgout} onPress={logout}>
+        <Text style={drawarSide.Lgout} onPress={handleLogout}>
           Log out
         </Text>
       </TouchableOpacity>

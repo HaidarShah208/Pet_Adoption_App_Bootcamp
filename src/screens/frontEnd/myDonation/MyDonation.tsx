@@ -27,7 +27,7 @@ const MyDonation: React.FC<DonationScreenProps> = ({ navigation }) => {
   };
 
   const handleAddImageClick = () => {
-    navigation.navigate('donate');
+    navigation.navigate('Add_Pet');
   };
 
   const handleDeleteClick = (donationItem: any) => {

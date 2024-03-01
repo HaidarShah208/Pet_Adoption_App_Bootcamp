@@ -24,6 +24,7 @@ import {fetchDonationData} from '../../../redux/getDonationSlice';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsDetailsList} from '../../../navigation/tabNavigation/DetailsNavigation';
 import {YourState} from '../../../constants/allTypes/AllTypes';
+import { selectAuthState } from '../../../redux/authSlice';
 
 interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'home'>;
@@ -31,8 +32,8 @@ interface HomeScreenProps {
 
 export default function Home({navigation}: HomeScreenProps) {
   const navigations = useNavigation();
-  const {user} = useAuthContext();
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const user=useSelector(selectAuthState)
+  const [profileImage, setProfileImage] = useState<string | null>(user?.photoURL || null);
 
   const isFocused = useIsFocused();
   const dispatch = useDispatch();
@@ -48,10 +49,10 @@ export default function Home({navigation}: HomeScreenProps) {
 
   const currentUser = auth().currentUser;
   useEffect(() => {
-    if (user.photoURL) {
+    if (user && user.photoURL) {
       setProfileImage(user.photoURL);
     }
-  }, [user.photoURL]);
+  }, [user]);
 
   const openDrawer = () => {
     navigations.dispatch(DrawerActions.openDrawer());

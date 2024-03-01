@@ -1,27 +1,40 @@
-import { View, Text, TouchableOpacity, Image, Alert, ActivityIndicator } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { RootTabParamsList } from '../../../navigation/tabNavigation/Navigator';
-import { HOME, IMAGES } from '../../../constants/assessts/AllAssessts';
-import { userStyle } from '../../../styles/frontEnd/User';
-import { TextInput } from 'react-native-gesture-handler';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
+import {HOME, IMAGES} from '../../../constants/assessts/AllAssessts';
+import {userStyle} from '../../../styles/frontEnd/User';
+import {TextInput} from 'react-native-gesture-handler';
 import Button from '../../../components/button/Button';
 import Toast from 'react-native-toast-message';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { useAuthContext } from '../../../context/AuthContext';
+import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {useAuthContext} from '../../../context/AuthContext';
 import auth from '@react-native-firebase/auth';
-import ImagePicker, { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
+import ImagePicker, {
+  ImagePickerResponse,
+  launchImageLibrary,
+} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
-import { Resource } from '../../../constants/allTypes/AllTypes';
+import {Resource} from '../../../constants/allTypes/AllTypes';
+import {useSelector} from 'react-redux';
+import {selectAuthState} from '../../../redux/authSlice';
 
 interface userScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamsList, 'user'>;
 }
 
-export default function Profile({ navigation }: userScreenProps) {
-  const { user } = useAuthContext();
-  const [email, setEmail] = useState(user?.email || '');
-  const [name, setName] = useState(user?.username || '');
+export default function Profile({navigation}: userScreenProps) {
+  // const { user } = useAuthContext();
+  const user = useSelector(selectAuthState);
+  const [email, setEmail] = useState(user?.user.email || '');
+  const [name, setName] = useState(user?.user.username || '');
   const [loading, setLoading] = useState(false);
   const [resource, setResource] = useState<Resource>({});
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -46,7 +59,7 @@ export default function Profile({ navigation }: userScreenProps) {
         displayName: name,
       });
 
-      const userDocRef = firestore().collection('users').doc(user?.uid);
+      const userDocRef = firestore().collection('users').doc(user?.user.uid);
       await userDocRef.update({
         username: name,
         email: email,
@@ -72,7 +85,7 @@ export default function Profile({ navigation }: userScreenProps) {
     currentUser.updateProfile({
       displayName: name,
     });
-    const userDocRef = firestore().collection('users').doc(user?.uid);
+    const userDocRef = firestore().collection('users').doc(user?.user.uid);
     userDocRef
       .update({
         username: name,
@@ -97,7 +110,7 @@ export default function Profile({ navigation }: userScreenProps) {
       title: 'Select Image',
       mediaType: 'photo' as ImagePicker.MediaType,
       customButtons: [
-        { name: 'customOptionKey', title: 'Choose File from Custom Option' },
+        {name: 'customOptionKey', title: 'Choose File from Custom Option'},
       ],
       storageOptions: {
         skipBackup: true,
@@ -141,7 +154,7 @@ export default function Profile({ navigation }: userScreenProps) {
       const ref = storage().ref().child(`profileImages/${imageName}`);
       await ref.put(blob);
       const downloadURL = await ref.getDownloadURL();
-      const userDocRef = firestore().collection('users').doc(user?.uid);
+      const userDocRef = firestore().collection('users').doc(user?.user.uid);
       userDocRef
         .update({
           photoURL: downloadURL,
@@ -161,19 +174,19 @@ export default function Profile({ navigation }: userScreenProps) {
       console.error('Error uploading image to Firebase Storage:', error);
     }
   };
-// console.log('userDocRef',userDocRef)
+  console.log('userDocRef',currentUser)
   return (
     <View style={userStyle.mainContainer}>
       <View style={userStyle.main}>
         <Text style={userStyle.heading}>Profile Setting</Text>
         <View>
           {currentUser.photoURL == null ? (
-            <View style={{ borderRadius: 90, overflow: 'hidden' }}>
+            <View style={{borderRadius: 90, overflow: 'hidden'}}>
               <IMAGES.Defaults height={120} width={120} />
             </View>
           ) : (
             <Image
-              source={{ uri: currentUser.photoURL }}
+              source={{uri: currentUser.photoURL}}
               style={userStyle.profile}
             />
           )}
@@ -199,7 +212,13 @@ export default function Profile({ navigation }: userScreenProps) {
       </View>
       <View style={userStyle.btnsContainer}>
         <Button
-          title={loading ? <ActivityIndicator size="large" color="white" /> : 'Update profile'}
+          title={
+            loading ? (
+              <ActivityIndicator size="large" color="white" />
+            ) : (
+              'Update profile'
+            )
+          }
           buttonStyle={userStyle.btnsContainer}
           onPress={handleSubmit}
         />

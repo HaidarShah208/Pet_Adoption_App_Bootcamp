@@ -24,13 +24,13 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsDetailsList} from '../../../navigation/detailNavigation/DetailNavigation';
 import {AppThunk} from '../../../redux/store';
 
-const datas = [{dog: 'Cat'}, {dog: 'Dog'}, {dog: 'Sheep'}];
+const datas = [{dog: 'Cat'}, {dog: 'Dog'}, {dog: 'Sheep'},{dog: 'Rabit'}];
 
 const Gender = [{gender: 'Male'}, {gender: 'Female'}];
 const Vaccinated = [{isVaccinated: 'Yes'}, {isVaccinated: 'No'}];
 
 interface donateScreenProps {
-  navigation: StackNavigationProp<RootStackParamsDetailsList, 'donate'>;
+  navigation: StackNavigationProp<RootStackParamsDetailsList, 'Add_Pet'>;
 }
 
 export default function DonateScreen({navigation}: donateScreenProps) {
@@ -133,6 +133,7 @@ export default function DonateScreen({navigation}: donateScreenProps) {
     const userUID = auth().currentUser?.uid;
     const user = auth().currentUser;
     if (userUID) {
+      setisloading(true)
       const reference = storage().ref(`images/${id}.${imageType}`);
       try {
         const snapshot = await reference.putFile(filePath);
