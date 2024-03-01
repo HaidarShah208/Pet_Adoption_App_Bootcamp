@@ -61,5 +61,14 @@ export type UserData = {
       status?: string;
     };
 
+    export type AuthStates= {
+      username: string;
+      email: string;
+      photoURL: null;
+      isAuth: boolean;
+      user: UserProfileData;
+      isAppLoading: boolean;
+    }
+
  
 

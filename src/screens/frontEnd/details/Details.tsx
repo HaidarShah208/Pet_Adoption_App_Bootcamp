@@ -1,45 +1,22 @@
 import {View, Text, Image} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {DETAILS, HOME, IMAGES} from '../../../constants/assessts/AllAssessts';
 import {DetialsStyle} from '../../../styles/frontEnd/Details';
 import Button from '../../../components/button/Button';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsDetailsList} from '../../../navigation/detailNavigation/DetailNavigation';
-import { styleHome } from '../../../styles/frontEnd/Home';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-
-
+import {styleHome} from '../../../styles/frontEnd/Home';
+import useDetails from '../../../hooks/frontendHooks/useDetails';
+import {RouteProp} from '@react-navigation/native';
 
 interface DetailsProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'details'>;
-  route: any;
+  route: RouteProp<RootStackParamsDetailsList, 'details'>;
 }
 export default function Details({navigation, route}: DetailsProps) {
-  const currentUser = auth().currentUser;
-  const {donationData,} = route.params;
-  const [userData, setUserData] = useState<{ username?: string; photoURL?: string } | null>(null);
+  const {userData, donationData} = useDetails({route});
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userDoc = await firestore().collection('users').doc(donationData.userId).get();
-        if (userDoc.exists && userDoc.data()) {
-          setUserData(userDoc.data() as any);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-  
-    fetchUserData();
-  }, [donationData.userId]);
-  
-
-  const Back = () => {
-    navigation.goBack();
-  };
-  console.log('donationsData',donationData.userId)
+  console.log('donationsData', donationData.userId);
   return (
     <View style={DetialsStyle.MainConaier}>
       <View style={DetialsStyle.ImgView}>
@@ -55,7 +32,7 @@ export default function Details({navigation, route}: DetailsProps) {
             height: 20,
             left: 20,
           }}
-          onPress={Back}
+          onPress={() => navigation.goBack()}
         />
       </View>
       <View style={DetialsStyle.InfoContainer}>
@@ -89,13 +66,22 @@ export default function Details({navigation, route}: DetailsProps) {
 
         <View style={DetialsStyle.MainInfo}>
           <View style={DetialsStyle.detailsInfo}>
-          {userData && userData.photoURL ?(
-          <Image source={{uri: userData.photoURL}} style={styleHome.userImage}/>
-        ) : (
-          <HOME.DefaultHome height={48} width={48} style={{borderRadius:30}}/>
-        )}
+            {userData && userData.photoURL ? (
+              <Image
+                source={{uri: userData.photoURL}}
+                style={styleHome.userImage}
+              />
+            ) : (
+              <HOME.DefaultHome
+                height={48}
+                width={48}
+                style={{borderRadius: 30}}
+              />
+            )}
             <View style={DetialsStyle.NameInfo}>
-              <Text style={DetialsStyle.Name}>{userData?userData.username:'unknown'}</Text>
+              <Text style={DetialsStyle.Name}>
+                {userData ? userData.username : 'unknown'}
+              </Text>
               <Text style={DetialsStyle.owner}>Owner</Text>
             </View>
           </View>

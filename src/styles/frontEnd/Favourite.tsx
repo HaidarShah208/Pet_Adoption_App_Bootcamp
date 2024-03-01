@@ -68,5 +68,11 @@ export const searchSt = StyleSheet.create({
     color: 'black',
   },discription:{
     color:'#101C1D'
+  },emptText:{
+    textAlign:'center',
+    fontFamily:FONTS.BOLD,
+    color:'#101C1D',
+    paddingTop:40
   }
+
 });

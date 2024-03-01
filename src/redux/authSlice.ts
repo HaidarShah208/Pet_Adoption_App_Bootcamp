@@ -1,19 +1,11 @@
 // authSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserProfileData } from '../constants/allTypes/AllTypes';
+import { AuthStates, UserProfileData } from '../constants/allTypes/AllTypes';
 import { RootState } from './store';
 
-interface AuthState {
-  // uid(uid: any): unknown;
-  username: string;
-  email: string;
-  photoURL: null;
-  isAuth: boolean;
-  user: UserProfileData;
-  isAppLoading: boolean;
-}
 
-const initialState: AuthState = {
+
+const initialState: AuthStates = {
   isAuth: false,
   user: {} as UserProfileData,
   isAppLoading: true,

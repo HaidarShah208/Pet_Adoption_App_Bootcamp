@@ -9,62 +9,31 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {styleHome} from '../../../styles/frontEnd/Home';
-import {
-  DrawerActions,
-  useIsFocused,
-  useNavigation,
-} from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
-import {useAuthContext} from '../../../context/AuthContext';
+import {DrawerActions} from '@react-navigation/native';
 import {HOME} from '../../../constants/assessts/AllAssessts';
 import Input from '../../../components/input/Input';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../redux/store';
-import {fetchDonationData} from '../../../redux/getDonationSlice';
+
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsDetailsList} from '../../../navigation/tabNavigation/DetailsNavigation';
 import {YourState} from '../../../constants/allTypes/AllTypes';
-import { selectAuthState } from '../../../redux/authSlice';
+import useHome from '../../../hooks/frontendHooks/useHome';
 
 interface HomeScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'home'>;
 }
 
 export default function Home({navigation}: HomeScreenProps) {
-  const navigations = useNavigation();
-  const user=useSelector(selectAuthState)
-  const [profileImage, setProfileImage] = useState<string | null>(user?.photoURL || null);
-
-  const isFocused = useIsFocused();
-  const dispatch = useDispatch();
-  const donationData = useSelector(
-    (state: RootState) => state.donation.donationData,
-  );
-  const loading = useSelector((state: RootState) => state.donation.loading);
-  useEffect(() => {
-    if (isFocused) {
-      dispatch(fetchDonationData() as any);
-    }
-  }, [dispatch, isFocused]);
-
-  const currentUser = auth().currentUser;
-  useEffect(() => {
-    if (user && user.photoURL) {
-      setProfileImage(user.photoURL);
-    }
-  }, [user]);
-
-  const openDrawer = () => {
-    navigations.dispatch(DrawerActions.openDrawer());
-  };
+  const {navigations, profileImage, donationData, loading, currentUser} =
+    useHome();
 
   const handleMainContainerClick = (donationItem: YourState) => {
-    navigation.navigate('details', {donationData: donationItem,} as any);
+    navigation.navigate('details', {donationData: donationItem} as any);
   };
   return (
     <>
       <View style={styleHome.header}>
-        <TouchableOpacity onPress={openDrawer}>
+        <TouchableOpacity
+          onPress={() => navigations.dispatch(DrawerActions.openDrawer())}>
           <HOME.NavImg />
         </TouchableOpacity>
         {currentUser && currentUser.photoURL ? (
@@ -84,7 +53,7 @@ export default function Home({navigation}: HomeScreenProps) {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styleHome.scrollImage}>
           {loading ? (
-              <ActivityIndicator size="large" color="black" />
+            <ActivityIndicator size="large" color="black" />
           ) : (
             donationData?.donations.map((donationItem: any, index: number) => (
               <TouchableOpacity

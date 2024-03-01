@@ -3,52 +3,21 @@ import React, { useState } from 'react';
 import {styles} from '../../../styles/authentication/Login';
 import {RootStackParamsList} from '../../../navigation/stackNavigation/Navigator';
 import {StackNavigationProp} from '@react-navigation/stack';
-import auth from '@react-native-firebase/auth';
-import Toast from 'react-native-toast-message';
 import Button from '../../../components/button/Button';
 import { IMAGES } from '../../../constants/assessts/AllAssessts';
+import useForgotPassword from '../../../hooks/authHooks/useForgotPassword';
 
 interface ForgotScreenProps {
   navigation: StackNavigationProp<RootStackParamsList, 'FORGOT_PASSWORD'>;
 }
 export default function ForgetPassword({navigation}: ForgotScreenProps) {
-  const [email, setEmail] = useState('');
 
+  const {handleSubmit,email,setEmail}=useForgotPassword()
 
-    // firebasAuth
-    const handleSubmit = () => {
-      console.log('submit');
-      if(!email.trim()){
-        Toast.show({
-          type:'error',
-          text1:'enter your email'
-        })
-        console.log('enter email')
-        return;
-      }
-      auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        Toast.show({
-          type:'success',
-          text1:'link sent successfully'
-        })
-        console.log('link sent successfully')
-      setEmail('')
-      })
-      .catch(error => {
-        Toast.show({
-          type:'error',
-          text1:'server error'
-        })
-        console.log('server error')
-        console.error(error);
-      });
-    };
-
-    const backMove=()=>{
-      navigation.goBack();
-    }
+  const backMove=()=>{
+    navigation.goBack();
+  }
+  
   return (
     <View style={styles.flexContainer}>
       <IMAGES.RecoverBack style={{marginTop:30}} onPress={backMove}/>
