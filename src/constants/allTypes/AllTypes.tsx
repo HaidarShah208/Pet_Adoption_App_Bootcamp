@@ -62,6 +62,7 @@ export type UserData = {
     };
 
     export type AuthStates= {
+      updateProfile(arg0: { photoURL: string; }): unknown;
       username: string;
       email: string;
       photoURL: null;

@@ -1,19 +1,18 @@
-import  { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import {useState} from 'react';
+import {useDispatch} from 'react-redux';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Toast from 'react-native-toast-message';
-import { login } from '../../redux/authSlice';
-import { UserData } from '../../constants/allTypes/AllTypes';
-
+import {login} from '../../redux/authSlice';
+import {UserData} from '../../constants/allTypes/AllTypes';
 
 const initialState = {
-    username: '',
-    email: '',
-    password: '',
-  };
+  username: '',
+  email: '',
+  password: '',
+};
 export default function useSignUp() {
-    const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const [loading, setisloading] = useState(false);
   const [state, setState] = useState(initialState);
 
@@ -22,7 +21,6 @@ export default function useSignUp() {
   };
 
   // firebasAuth
-
   const handleRegister = () => {
     const {username, email, password} = state;
     if (!username.trim() || !email.trim() || !password.trim()) {
@@ -83,7 +81,7 @@ export default function useSignUp() {
               type: 'success',
               text1: 'Sign Up successfully',
             });
-dispatch(login(userData))
+            dispatch(login(userData));
             setisloading(false);
           })
           .catch((error: any) => {
@@ -107,7 +105,5 @@ dispatch(login(userData))
         return console.log('Email|Password Error', 'plz try again', 'error');
       });
   };
-  return (
-    {handleRegister,loading,handleChange,state}
-  )
+  return {handleRegister, loading, handleChange, state};
 }

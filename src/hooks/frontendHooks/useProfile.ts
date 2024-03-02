@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import Toast from 'react-native-toast-message';
 import { Alert } from 'react-native';
 
-
 export default function useProfile() {
     const user = useSelector(selectAuthState);
   const [email, setEmail] = useState(user?.user.email || '');
@@ -26,12 +25,34 @@ export default function useProfile() {
     if (user?.photoURL) {
       setProfileImage(user.photoURL);
     }
+  
   }, [user?.photoURL]);
+
+  useEffect(() => {
+    if (currentUser) {
+      fetchUserData(currentUser.uid); // Fetch user data from Firestore when component mounts
+    }
+  }, [currentUser]);
 
   if (!currentUser) {
     Alert.alert('Error', 'User not logged in');
     return null;
   }
+
+  const fetchUserData = async (uid: string) => {
+    try {
+      const userDoc = await firestore().collection('users').doc(uid).get();
+      if (userDoc.exists) {
+        const userData = userDoc.data();
+        if (userData) {
+          setName(userData.username || '');
+          setEmail(userData.email || '');
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -156,7 +177,6 @@ export default function useProfile() {
       console.error('Error uploading image to Firebase Storage:', error);
     }
   };
-  console.log('userDocRef', currentUser);
   return (
     {currentUser,name,setName,email,setEmail,loading,handleSubmit,handlePicture}
   )

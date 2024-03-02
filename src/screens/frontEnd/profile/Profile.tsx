@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   View,
   Text,
@@ -5,34 +6,33 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import React  from 'react';
-import {RootTabParamsList} from '../../../navigation/tabNavigation/Navigator';
-import { IMAGES} from '../../../constants/assessts/AllAssessts';
-import {userStyle} from '../../../styles/frontEnd/User';
-import {TextInput} from 'react-native-gesture-handler';
+import { RootTabParamsList } from '../../../navigation/tabNavigation/Navigator';
+import { IMAGES } from '../../../constants/assessts/AllAssessts';
+import { userStyle } from '../../../styles/frontEnd/User';
+import { TextInput } from 'react-native-gesture-handler';
 import Button from '../../../components/button/Button';
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import useProfile from '../../../hooks/frontendHooks/useProfile';
-
 
 interface userScreenProps {
   navigation: BottomTabNavigationProp<RootTabParamsList, 'user'>;
 }
 
-export default function Profile({navigation}: userScreenProps) {
-const {currentUser,name,email,setName,handleSubmit,loading,handlePicture}=useProfile()
+export default function Profile({ navigation }: userScreenProps) {
+  const { currentUser, name, email, setName, handleSubmit, loading, handlePicture } = useProfile();
+
   return (
     <View style={userStyle.mainContainer}>
       <View style={userStyle.main}>
         <Text style={userStyle.heading}>Profile Setting</Text>
         <View>
           {currentUser.photoURL == null ? (
-            <View style={{borderRadius: 90, overflow: 'hidden'}}>
+            <View style={{ borderRadius: 90, overflow: 'hidden' }}>
               <IMAGES.Defaults height={120} width={120} />
             </View>
           ) : (
             <Image
-              source={{uri: currentUser.photoURL}}
+              source={{ uri: currentUser.photoURL }}
               style={userStyle.profile}
             />
           )}
@@ -47,7 +47,7 @@ const {currentUser,name,email,setName,handleSubmit,loading,handlePicture}=usePro
         <TextInput
           style={userStyle.input}
           value={name}
-          onChangeText={name => setName(name)}
+          onChangeText={(name) => setName(name)}
         />
         <Text style={userStyle.mail}>Email</Text>
         <TextInput

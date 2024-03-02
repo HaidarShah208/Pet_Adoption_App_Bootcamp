@@ -5,6 +5,7 @@ import Message from '../../screens/frontEnd/message/Message';
 import { drawarSide } from '../../styles/navigation/DrawarSideMenue';
 import DetailNavigation, { AddPet } from '../detailNavigation/DetailNavigation';
 import { HomeDetailsNavigations } from '../tabNavigation/DetailsNavigation';
+import DonationRequests from '../../screens/frontEnd/donationRequests/DonationRequests';
 
 export type RootDrawerParamsList = {
  home:undefined;
@@ -13,8 +14,8 @@ export type RootDrawerParamsList = {
   tabNavigator:undefined;
     favroutite:undefined;
     donateScren:undefined;
-    Add_Pet:undefined
- 
+    Add_Pet:undefined;
+    request:undefined
   };
 const Drawer = createDrawerNavigator<RootDrawerParamsList>();
 
@@ -27,6 +28,7 @@ export default function  DrawerNavigator() {
       <Drawer.Screen name="MyDonations" component={DetailNavigation} />
       <Drawer.Screen name="favroutite" component={Favourite} />
       <Drawer.Screen name="Add_Pet" component={AddPet} />
+      <Drawer.Screen name="request" component={DonationRequests} />
     </Drawer.Navigator>
   );
 }
