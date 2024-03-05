@@ -5,7 +5,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import AuthNavigation from './src/navigation/AuthNavigation';
 import {Provider} from 'react-redux';
-import {store} from './src/redux/store';
+import {store} from './src/store/store';
 export default function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
