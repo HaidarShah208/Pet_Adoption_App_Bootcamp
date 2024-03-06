@@ -10,11 +10,8 @@ export default function useUpdatePassword() {
   const [newPassword, setNewPassword] = useState('');
   const {user} = useAuthContext();
 
-  console.log('user.password', user.password);
-  console.log('user.confirmPassword', user.confirmPassword);
 
   const currentUser = auth().currentUser;
-  console.log('currentUser', currentUser);
   const handleSubmit = () => {
     if (!currentUser) {
       Alert.alert('Error', 'User not logged in');

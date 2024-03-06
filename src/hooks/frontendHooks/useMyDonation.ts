@@ -3,6 +3,7 @@ import {RootState} from '../../store/store';
 import {deleteDonation, fetchUserDonations} from '../../store/slice/getDonationSlice';
 import {useIsFocused} from '@react-navigation/native';
 import {useEffect} from 'react';
+import Toast from 'react-native-toast-message';
 
 export default function useMyDonation() {
   const isFocused = useIsFocused();
@@ -18,7 +19,10 @@ export default function useMyDonation() {
     if (donationId) {
       dispatch(deleteDonation(donationId) as any);
     } else {
-      console.error('Donation ID not found in the donationItem');
+      Toast.show({
+        type: 'error',
+        text1: 'Donation Id not found',
+      });
     }
   };
 

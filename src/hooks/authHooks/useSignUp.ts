@@ -84,8 +84,11 @@ export default function useSignUp() {
             dispatch(login(userData));
             setisloading(false);
           })
-          .catch((error: any) => {
-            console.error('Error adding user data to Firestore: ', error);
+          .catch(() => {
+            Toast.show({
+              type: 'error',
+              text1: 'Error adding user data to database',
+            });
           });
       })
       .catch(error => {
@@ -99,10 +102,17 @@ export default function useSignUp() {
 
         if (error.code === 'auth/invalid-email') {
           setisloading(false);
-          return console.log('Email|Password Error', 'plz try again', 'error');
+           
+         return Toast.show({
+            type: 'error',
+            text1: 'Email or Password Error please try again',
+          });
         }
         setisloading(false);
-        return console.log('Email|Password Error', 'plz try again', 'error');
+        return Toast.show({
+          type: 'error',
+          text1: 'Email or Password Error please try again',
+        });
       });
   };
   return {handleRegister, loading, handleChange, state};

@@ -13,13 +13,11 @@ export default function useLogIn() {
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    console.log('submit');
     if (!email.trim() || !passowrd.trim()) {
       Toast.show({
         type: 'error',
         text1: 'Enter Email or Passowrd',
       });
-      console.log('enter email and password');
       return;
     }
     let userData = {email, passowrd};
@@ -49,9 +47,8 @@ export default function useLogIn() {
         setisloading(false);
         Toast.show({
           type: 'error',
-          text1: 'user is not existl',
+          text1: 'User is not exist',
         });
-        console.log('user is not exist');
       });
   };
   return {handleSubmit, loading, setEmail, setPassword, email, passowrd};

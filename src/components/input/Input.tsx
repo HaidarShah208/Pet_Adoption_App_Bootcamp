@@ -32,7 +32,7 @@ const Input: React.FC<InputProps> = ({onInputChange}) => {
 };
 
 export default Input;
-const styleHome = StyleSheet.create({
+ const styleHome = StyleSheet.create({
   input: {
     marginTop: 60,
     width: 270,

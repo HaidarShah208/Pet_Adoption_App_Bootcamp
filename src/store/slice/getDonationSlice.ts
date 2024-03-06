@@ -4,6 +4,7 @@ import {AppThunk} from '../store';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {ReactNode} from 'react';
+import Toast from 'react-native-toast-message';
 
 interface Donation {
   donationId: string;
@@ -76,10 +77,16 @@ export const fetchDonationData = (): AppThunk => async dispatch => {
 
       dispatch(setDonationData(donationData));
     } else {
-      console.log('No data found in the donations collection');
+      Toast.show({
+        type: 'error',
+        text1: 'No data found in the donations collection',
+      });
     }
   } catch (error) {
-    console.error('Error fetching donation data from Firestore: ', error);
+    Toast.show({
+      type: 'error',
+      text1: 'Error while loading donation information',
+    });
   } finally {
     dispatch(setLoading(false));
   }
@@ -112,10 +119,16 @@ export const fetchUserDonations = (): AppThunk => async dispatch => {
 
       dispatch(setDonationData(userDonationData));
     } catch (error) {
-      console.error('Error fetching user donations from Firestore: ', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error fetching user donations from Firestore',
+      });
     }
   } else {
-    console.error('User not authenticated');
+    Toast.show({
+      type: 'error',
+      text1: 'User not authenticated',
+    });
   }
 };
 
@@ -135,13 +148,16 @@ export const fetchFavoriteDonations = (): AppThunk => async dispatch => {
       );
       dispatch(setFavoriteDonations(favoriteDonations));
     } catch (error) {
-      console.error(
-        'Error fetching favorite donations from Firestore: ',
-        error,
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Error fetching user donations from Firestore',
+      });
     }
   } else {
-    console.error('User not authenticated');
+    Toast.show({
+      type: 'error',
+      text1: 'User not authenticated',
+    });
   }
 };
 
@@ -158,10 +174,16 @@ export const deleteDonation =
 
         dispatch(fetchUserDonations());
       } catch (error) {
-        console.error('Error deleting donation from Firestore: ', error);
+        Toast.show({
+          type: 'error',
+          text1: 'Error fetching user donations from Firestore',
+        });
       }
     } else {
-      console.error('User not authenticated');
+      Toast.show({
+        type: 'error',
+        text1: 'User not authenticated',
+      });
     }
   };
 

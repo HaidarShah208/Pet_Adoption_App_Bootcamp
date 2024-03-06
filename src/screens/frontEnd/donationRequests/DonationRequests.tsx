@@ -12,6 +12,7 @@ import {requesStyles} from '../../../styles/frontEnd/DonationRequests';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchUserDonations} from '../../../store/slice/getDonationRequestSlice';
 import {RootState} from '../../../store/store';
+import Toast from 'react-native-toast-message';
 
 export default function DonationRequests() {
   const dispatch = useDispatch();
@@ -19,7 +20,6 @@ export default function DonationRequests() {
     (state: RootState) => state.request,
   );
 
-  console.log('donations', donations);
   useEffect(() => {
     dispatch(fetchUserDonations() as any);
   }, [dispatch]);
@@ -27,9 +27,12 @@ export default function DonationRequests() {
   const handleContactPress = (email: any) => {
     const emailLink = `mailto:${email}`;
 
-    Linking.openURL(emailLink)
-      .then(() => console.log('Email app opened'))
-      .catch(error => console.error('Error opening email app:', error));
+    Linking.openURL(emailLink).catch(() =>
+      Toast.show({
+        type: 'error',
+        text1: 'Error opening email app:',
+      }),
+    );
   };
   return (
     <ScrollView>
@@ -68,7 +71,14 @@ export default function DonationRequests() {
                       {donation.petLocation}
                     </Text>
                   </View>
-                  <Text>Date:{donation.date}</Text>
+                  <Text>
+                    Date:{' '}
+                    {new Date(donation.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </Text>
                 </View>
               </View>
               <View>

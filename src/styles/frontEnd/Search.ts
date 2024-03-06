@@ -2,27 +2,6 @@ import {StyleSheet} from 'react-native';
 import {FONTS} from '../../constants/fonts/AllFonts';
 
 export const searchSt = StyleSheet.create({
-  input: {
-    marginTop: 60,
-    width: 270,
-    marginLeft: 22,
-    height: 48,
-    borderRadius: 20,
-    padding: 10,
-    backgroundColor: 'white',
-    position: 'absolute',
-  },
-  searchB: {
-    position: 'relative',
-    width: 80,
-    height: 60,
-    backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-    left: 260,
-    top: 52,
-  },
   tabIconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -118,5 +97,26 @@ export const searchSt = StyleSheet.create({
     marginTop: 5,
     justifyContent: 'space-between',
     paddingRight: 22,
+  },
+  inputs: {
+    marginTop: 60,
+    width: 270,
+    marginLeft: 32,
+    height: 48,
+    borderRadius: 20,
+    padding: 10,
+    backgroundColor: 'white',
+    position: 'absolute',
+  },
+  searchBs: {
+    position: 'relative',
+    width: 80,
+    height: 60,
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    left: 280,
+    top: 52,
   },
 });

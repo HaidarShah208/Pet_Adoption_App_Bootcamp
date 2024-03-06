@@ -49,7 +49,10 @@ export default function useProfile() {
         }
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error in fetching user data',
+      });
     }
   };
 
@@ -76,8 +79,6 @@ export default function useProfile() {
       if (error instanceof Error) {
         setLoading(false);
         Alert.alert('Error', error.message);
-      } else {
-        console.error(error);
       }
     }
   };
@@ -122,7 +123,6 @@ export default function useProfile() {
     try {
       const res: ImagePickerResponse = await launchImageLibrary(options);
 
-      console.log('response', res.assets);
       const resp = res.assets as ImagePicker.Asset[];
       const uri: string | undefined = resp[0].uri;
       setResource({
@@ -130,14 +130,14 @@ export default function useProfile() {
         data: res.data,
       });
       if (uri !== undefined && uri !== null) {
-        console.log('uri before', uri);
         uploadImageToFirebaseStorage(uri);
       }
       if (res.didCancel) {
-        console.log('res.uri', res.uri);
-        console.log('res.data', res.data);
       } else {
-        console.log('User cancelled image picker');
+        Toast.show({
+          type: 'error',
+          text1: 'You cancelled upload image',
+        });
       }
     } catch (err) {
       Toast.show({
@@ -175,7 +175,10 @@ export default function useProfile() {
         photoURL: downloadURL,
       });
     } catch (error) {
-      console.error('Error uploading image to Firebase Storage:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error in uploading image to database',
+      });
     }
   };
   return {

@@ -58,24 +58,33 @@ export default function useSearch() {
         });
       }
     } else {
-      console.error('User not authenticated');
+      Toast.show({
+        type: 'error',
+        text1: 'User  not authenticated',
+      });
     }
   };
 
-  const handleSearch = (text: string) => {
-    setSearchTerm(text);
-  };
+ 
 
   const filteredDonations =
     donationData?.donations?.filter(donationItem =>
       donationItem.petType.toLowerCase().includes(searchTerm.toLowerCase()),
     ) || [];
+
+    const onInputChange = (text: string) => {
+      setSearchTerm(text);
+      if (filteredDonations.length > 0) {
+        setSelectedItem(filteredDonations[0].petType);
+      }
+    };
   return {
     donationData: {donations: filteredDonations},
     handleItemClick,
     selectedItem,
     loading,
     handleFavoriteClick,
-    handleSearch,
+    onInputChange,
+    searchTerm
   };
 }

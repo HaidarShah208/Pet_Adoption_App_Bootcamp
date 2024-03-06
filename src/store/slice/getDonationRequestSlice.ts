@@ -4,6 +4,7 @@ import {AppThunk} from '../store';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {ReactNode} from 'react';
+import Toast from 'react-native-toast-message';
 
 export interface Donation {
   userPhotoURL: string | undefined;
@@ -13,7 +14,7 @@ export interface Donation {
   userId: string;
   petBreed: string;
   petLocation: string;
-  date: string;
+  date:  number;
 }
 
 export interface DonationState {
@@ -41,11 +42,13 @@ const donationSlice = createSlice({
 });
 
 export const {setDonations, setLoadingDonations} = donationSlice.actions;
-console.log('setDonations', setDonations);
 export const fetchUserDonations = (): AppThunk => async dispatch => {
   const currentUser = auth().currentUser;
   if (!currentUser) {
-    console.error('Invalid owneruid provided');
+    Toast.show({
+      type: 'error',
+      text1: 'User not valid',
+    });
     return;
   }
   const owneruid = currentUser.uid;
@@ -62,7 +65,10 @@ export const fetchUserDonations = (): AppThunk => async dispatch => {
 
     dispatch(setDonations(donations));
   } catch (error) {
-    console.error('Error fetching user donations from Firestore: ', error);
+    Toast.show({
+      type: 'error',
+      text1: 'Error in getting donation information',
+    });
   } finally {
     dispatch(setLoadingDonations(false));
   }

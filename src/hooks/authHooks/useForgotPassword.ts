@@ -6,13 +6,11 @@ export default function useForgotPassword() {
   const [email, setEmail] = useState('');
 
   const handleSubmit = () => {
-    console.log('submit');
     if (!email.trim()) {
       Toast.show({
         type: 'error',
         text1: 'enter your email',
       });
-      console.log('enter email');
       return;
     }
     auth()
@@ -22,7 +20,6 @@ export default function useForgotPassword() {
           type: 'success',
           text1: 'link sent successfully',
         });
-        console.log('link sent successfully');
         setEmail('');
       })
       .catch(error => {
@@ -30,8 +27,6 @@ export default function useForgotPassword() {
           type: 'error',
           text1: 'server error',
         });
-        console.log('server error');
-        console.error(error);
       });
   };
 

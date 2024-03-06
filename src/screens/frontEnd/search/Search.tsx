@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {searchSt} from '../../../styles/frontEnd/Search';
-import {IMAGES, SrchIMAGES} from '../../../constants/assessts/AllAssessts';
+import {
+  HOME,
+  IMAGES,
+  SrchIMAGES,
+} from '../../../constants/assessts/AllAssessts';
 
 import {RootStackParamsDetailsList} from '../../../navigation/tabNavigation/DetailsNavigation';
 import {YourState} from '../../../constants/allTypes/AllTypes';
 import useSearch from '../../../hooks/frontendHooks/useSearch';
+import Input from '../../../components/input/Input';
+import {styleHome} from '../../../styles/frontEnd/Home';
+import {TextInput} from 'react-native-gesture-handler';
 
 interface SearchScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'search'>;
@@ -30,20 +30,22 @@ const Search = ({navigation}: SearchScreenProps) => {
     selectedItem,
     loading,
     handleFavoriteClick,
-    handleSearch,
+    onInputChange,
+    searchTerm,
   } = useSearch();
 
   return (
     <View>
       <View style={{flexDirection: 'row'}}>
         <TextInput
-          placeholder="pet search"
-          style={searchSt.input}
-          onChangeText={text => handleSearch(text)}
+          placeholder="Pet search"
+          style={searchSt.inputs}
+          onChangeText={onInputChange}
+          value={searchTerm}
         />
-        <TouchableOpacity onPress={() => console.log('Button pressed')}>
-          <View style={searchSt.searchB}>
-            <IMAGES.focusSearch />
+        <TouchableOpacity>
+          <View style={searchSt.searchBs}>
+            <HOME.FocusImg />
           </View>
         </TouchableOpacity>
       </View>

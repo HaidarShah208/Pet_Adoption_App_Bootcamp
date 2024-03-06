@@ -24,7 +24,10 @@ export default function useDetails({route}: any) {
           setUserData(userDoc.data() as any);
         }
       } catch (error) {
-        console.error('Error fetching user data:', error);
+         Toast.show({
+          type: 'error',
+          text1: 'Error in fetching user data',
+        });
       }
     };
 
@@ -41,13 +44,11 @@ export default function useDetails({route}: any) {
     const userEmail = currentUser?.email;
     const userName = currentUser?.displayName;
     const uid = currentUser?.uid;
-    console.log('currentUser', currentUser);
     const userPhotoURL = currentUser?.photoURL;
     const owneruid = userData?.uid;
-    console.log('userData', userData);
 
     try {
-      const timestamp = new Date().getDate();
+      const timestamp = new Date().getTime();
 
       await firestore().collection('adoptionRequests').add({
         petName: donationData.petBreed,
@@ -65,8 +66,7 @@ export default function useDetails({route}: any) {
         type: 'success',
         text1: 'Request send successfully',
       });
-    } catch (error) {
-      console.error('Error submitting adoption request:', error);
+    } catch (error) {      
       Alert.alert(
         'Error',
         'There was an error submitting the adoption request. Please try again.',

@@ -98,17 +98,26 @@ export default function useDonationScreen() {
       );
 
       if (res?.didCancel) {
-        console.log('User cancelled image picker');
+         Toast.show({
+          type: 'error',
+          text1: 'You cancel upload image  ',
+        });
       } else if (res?.assets && res.assets.length > 0) {
         const uri = res.assets[0].uri || '';
         const fileName = res.assets[0].type || '';
         setFileName(fileName);
         setFilePath(uri);
       } else {
-        console.log('No image selected or an error occurred');
+       Toast.show({
+          type: 'error',
+          text1: 'No image selected or an error occurred',
+        });
       }
     } catch (err) {
-      console.error('ImagePicker error:', err);
+      Toast.show({
+        type: 'error',
+        text1: 'Image picker error ocurred',
+      });
     }
   };
 
@@ -147,13 +156,16 @@ export default function useDonationScreen() {
         });
         setisloading(false);
       } catch (error) {
-        console.error(
-          'Error uploading image to storage or updating Firestore:',
-          error,
-        );
+        return Toast.show({
+          type: 'error',
+          text1: 'Error uploading image to storage or updating Firestore:',
+        });
       }
     } else {
-      console.error('User not authenticated');
+      Toast.show({
+        type: 'error',
+        text1: 'User not authenticated',
+      });
     }
   };
   return {

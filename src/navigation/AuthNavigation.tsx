@@ -29,7 +29,6 @@ export default function AuthNavigation() {
     auth().onAuthStateChanged((user: FirebaseUser | null) => {
       if (user) {
         readUserProfile(user);
-        console.log('user', user);
       } else {
         setIsAppLoading(false);
       }
@@ -51,9 +50,6 @@ export default function AuthNavigation() {
       setIsAppLoading(false);
     }, 2000);
   };
-
-  console.log('isAuth', isAuth.isAuth);
-
   return (
     <>
       {isAuth.isAuth ? (
