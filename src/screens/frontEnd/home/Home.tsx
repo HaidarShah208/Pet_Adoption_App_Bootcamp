@@ -53,6 +53,7 @@ export default function Home({navigation}: HomeScreenProps) {
       </View>
       <Text style={styleHome.tesxt}>{`Find an \nAwesome \npets for you`}</Text>
       <Input
+      
         onInputChange={(text: React.SetStateAction<string>) =>
           setSearchInput(text)
         }
