@@ -107,9 +107,12 @@ export default function Home({navigation}: HomeScreenProps) {
                     <Text style={styleHome.Imagetext}>
                       {donationItem.petType}
                     </Text>
-                    <Text style={styleHome.imageAmount}>
+                 <View style={{flexDirection:'row'}}>
+                  <Text style={styleHome.imageAmount}>$ </Text>
+                 <Text style={styleHome.imageAmount}>
                       {donationItem.amount}
                     </Text>
+                 </View>
                   </View>
                 </ImageBackground>
               </TouchableOpacity>

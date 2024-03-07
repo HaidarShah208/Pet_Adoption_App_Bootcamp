@@ -13,7 +13,7 @@ export default function App() {
         SplashScreen.hide();
       }
     };
-    const timeoutId = setTimeout(hideSplashScreen, 3000);
+    const timeoutId = setTimeout(hideSplashScreen, 2000);
     return () => clearTimeout(timeoutId);
   }, []);
 

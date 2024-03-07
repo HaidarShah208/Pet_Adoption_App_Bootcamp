@@ -37,7 +37,7 @@ export const searchSt = StyleSheet.create({
     left: 160,
     top: 8,
     paddingLeft: 60,
-    width: 206,
+    width: 190,
     height: 126,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',

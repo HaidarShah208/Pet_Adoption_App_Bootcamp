@@ -10,10 +10,10 @@ export const DetialsStyle = StyleSheet.create({
   },
   ImgView: {
     alignSelf: 'center',
-    height: 350,
+    height: 330,
   },
   InfoContainer: {
-    width: 390,
+    width: 360,
     minHeight: 490,
     backgroundColor: 'white',
     borderTopLeftRadius: 30,

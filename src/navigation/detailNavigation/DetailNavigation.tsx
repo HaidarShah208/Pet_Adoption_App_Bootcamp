@@ -3,7 +3,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import MyDonation from '../../screens/frontEnd/myDonation/MyDonation';
 import Details from '../../screens/frontEnd/details/Details';
-import DonateScreen from '../../screens/frontEnd/donate/DonateScreen';
+import DonateScreen from '../../screens/frontEnd/donateScreen/DonateScreen';
 
 export type RootStackParamsDetailsList = {
   mydonation: undefined;

@@ -36,12 +36,13 @@ export default Input;
   input: {
     marginTop: 60,
     width: 270,
-    marginLeft: 32,
+    marginLeft: 22,
     height: 48,
     borderRadius: 20,
     padding: 10,
     backgroundColor: 'white',
     position: 'absolute',
+    color:'#101C1D'
   },
   searchB: {
     position: 'relative',
@@ -51,7 +52,7 @@ export default Input;
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
-    left: 280,
+    left: 265,
     top: 52,
   },
 });

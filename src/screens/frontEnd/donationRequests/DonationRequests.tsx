@@ -20,6 +20,8 @@ export default function DonationRequests() {
     (state: RootState) => state.request,
   );
 
+  console.log('donationsss',donations)
+
   useEffect(() => {
     dispatch(fetchUserDonations() as any);
   }, [dispatch]);
@@ -71,8 +73,8 @@ export default function DonationRequests() {
                       {donation.petLocation}
                     </Text>
                   </View>
-                  <Text>
-                    Date:{' '}
+                  <Text style={{color:"black"}}>
+                    Date:
                     {new Date(donation.date).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',

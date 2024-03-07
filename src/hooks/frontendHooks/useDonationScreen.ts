@@ -12,7 +12,9 @@ const datas = [
   {dog: 'Dog'},
   {dog: 'Sheep'},
   {dog: 'Rabit'},
-  {dog: 'Cow'},
+  {dog: 'Rat'},
+  {dog: 'Horse'},
+  {dog: 'Parrot'},
 ];
 
 const Gender = [{gender: 'Male'}, {gender: 'Female'}];

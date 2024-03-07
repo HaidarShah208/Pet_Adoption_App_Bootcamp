@@ -37,7 +37,7 @@ export default function useSearch() {
 
     if (userUID) {
       const userFavoritesCollection = firestore()
-        .collection('All_Favrouite_Donaitons')
+        .collection('allFavrouiteDonaitons')
         .doc(userUID)
         .collection('favoriteDonations');
 

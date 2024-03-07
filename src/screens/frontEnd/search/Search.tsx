@@ -1,19 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {searchSt} from '../../../styles/frontEnd/Search';
 import {
   HOME,
-  IMAGES,
   SrchIMAGES,
 } from '../../../constants/assessts/AllAssessts';
 
 import {RootStackParamsDetailsList} from '../../../navigation/tabNavigation/DetailsNavigation';
 import {YourState} from '../../../constants/allTypes/AllTypes';
 import useSearch from '../../../hooks/frontendHooks/useSearch';
-import Input from '../../../components/input/Input';
-import {styleHome} from '../../../styles/frontEnd/Home';
 import {TextInput} from 'react-native-gesture-handler';
+import { styleHome } from '../../../styles/frontEnd/Home';
 
 interface SearchScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'search'>;
@@ -93,7 +91,8 @@ const Search = ({navigation}: SearchScreenProps) => {
               <TouchableOpacity
                 key={index}
                 onPress={() => handleMainContainerClick(donationItem)}>
-                <View style={searchSt.MainContainer}>
+          <View style={{justifyContent:'center',alignItems:'center'}}>
+          <View style={searchSt.MainContainer}>
                   <Image
                     source={{uri: donationItem.imageURL}}
                     style={searchSt.mainImg}
@@ -118,10 +117,11 @@ const Search = ({navigation}: SearchScreenProps) => {
                     </View>
                   </View>
                 </View>
+          </View>
               </TouchableOpacity>
             ))
         ) : (
-          <Text>No donations available.</Text>
+          <Text style={styleHome.notAvail}>This pet isn't available.</Text>
         )}
       </ScrollView>
     </View>

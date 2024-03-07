@@ -1,17 +1,20 @@
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {useEffect, useState} from 'react';
-import {Alert} from 'react-native';
+import { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { useSelector } from 'react-redux';
+import { selectAuthState } from '../../store/slice/authSlice';
 
-export default function useDetails({route}: any) {
+export default function useDetails({ route }: any) {
   const [userData, setUserData] = useState<{
     username?: string;
     photoURL?: string;
     uid: string;
   } | null>(null);
   const currentUser = auth().currentUser;
-  const {donationData} = route.params;
+  const { donationData } = route.params;
+  const user = useSelector(selectAuthState);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -20,11 +23,20 @@ export default function useDetails({route}: any) {
           .collection('users')
           .doc(donationData.userId)
           .get();
-        if (userDoc.exists && userDoc.data()) {
-          setUserData(userDoc.data() as any);
+
+        if (userDoc.exists) {
+          const userDataFromFirestore = userDoc.data();
+          if (userDataFromFirestore) {
+            const { username, photoURL, uid } = userDataFromFirestore;
+            setUserData({
+              username: username || '',
+              photoURL: photoURL || '',
+              uid: uid || '',
+            });
+          }
         }
       } catch (error) {
-         Toast.show({
+        Toast.show({
           type: 'error',
           text1: 'Error in fetching user data',
         });
@@ -42,9 +54,9 @@ export default function useDetails({route}: any) {
 
     const currentUser = auth().currentUser;
     const userEmail = currentUser?.email;
-    const userName = currentUser?.displayName;
+    const userName = userData?.username || ''; // Get the username from userData
     const uid = currentUser?.uid;
-    const userPhotoURL = currentUser?.photoURL;
+    const userPhotoURL = currentUser?.photoURL || ''; // Get the photo URL from currentUser
     const owneruid = userData?.uid;
 
     try {
@@ -64,15 +76,15 @@ export default function useDetails({route}: any) {
 
       Toast.show({
         type: 'success',
-        text1: 'Request send successfully',
+        text1: 'Request sent successfully',
       });
-    } catch (error) {      
+    } catch (error) {
       Alert.alert(
         'Error',
-        'There was an error submitting the adoption request. Please try again.',
+        'There was an error submitting the adoption request. Please try again.'
       );
     }
   };
 
-  return {userData, setUserData, currentUser, donationData, handleAdoptNow};
+  return { userData, setUserData, currentUser, donationData, handleAdoptNow };
 }

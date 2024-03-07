@@ -14,16 +14,19 @@ import {Alert} from 'react-native';
 
 export default function useProfile() {
   const user = useSelector(selectAuthState);
+  console.log('usersss',user)
   const [email, setEmail] = useState(user?.user.email || '');
   const [name, setName] = useState(user?.user.username || '');
   const [loading, setLoading] = useState(false);
   const [resource, setResource] = useState<Resource>({});
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const currentUser = auth().currentUser;
-
+  
+  
   useEffect(() => {
     if (user?.photoURL) {
       setProfileImage(user.photoURL);
+      console.log('auth',user.photoURL)
     }
   }, [user?.photoURL]);
 
@@ -63,13 +66,12 @@ export default function useProfile() {
       currentUser?.updateProfile({
         displayName: name,
       });
-
       const userDocRef = firestore().collection('users').doc(user?.user.uid);
       await userDocRef.update({
         username: name,
         email: email,
       });
-
+console.log('datssss',name,email)
       setLoading(false);
       Toast.show({
         type: 'success',
@@ -132,13 +134,7 @@ export default function useProfile() {
       if (uri !== undefined && uri !== null) {
         uploadImageToFirebaseStorage(uri);
       }
-      if (res.didCancel) {
-      } else {
-        Toast.show({
-          type: 'error',
-          text1: 'You cancelled upload image',
-        });
-      }
+     
     } catch (err) {
       Toast.show({
         type: 'error',

@@ -52,7 +52,7 @@ export const searchSt = StyleSheet.create({
   },
   MainContainer: {
     marginTop: 30,
-    marginRight: 80,
+    marginRight: 190,
     display: 'flex',
     flexDirection: 'row',
   },
@@ -70,7 +70,7 @@ export const searchSt = StyleSheet.create({
     left: 170,
     top: 23,
     paddingLeft: 60,
-    width: 206,
+    width: 190,
     height: 126,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
@@ -101,12 +101,13 @@ export const searchSt = StyleSheet.create({
   inputs: {
     marginTop: 60,
     width: 270,
-    marginLeft: 32,
+    marginLeft: 22,
     height: 48,
     borderRadius: 20,
     padding: 10,
     backgroundColor: 'white',
     position: 'absolute',
+    color:'#101C1D'
   },
   searchBs: {
     position: 'relative',
@@ -116,7 +117,7 @@ export const searchSt = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
-    left: 280,
+    left: 265,
     top: 52,
   },
 });

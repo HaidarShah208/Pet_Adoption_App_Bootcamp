@@ -8,6 +8,7 @@ import {RootStackParamsDetailsList} from '../../../navigation/detailNavigation/D
 import {styleHome} from '../../../styles/frontEnd/Home';
 import useDetails from '../../../hooks/frontendHooks/useDetails';
 import {RouteProp} from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 interface DetailsProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'details'>;
@@ -18,19 +19,21 @@ export default function Details({navigation, route}: DetailsProps) {
   
 
   return (
+    <ScrollView>
+
     <View style={DetialsStyle.MainConaier}>
       <View style={DetialsStyle.ImgView}>
         <Image
           source={{uri: donationData.imageURL}}
-          style={{width: 400, height: 380}}
+          style={{width: 380, height: 380}}
         />
         <IMAGES.DetailBack
           style={{
             position: 'absolute',
-            top: 60,
+            top: 20,
             width: 20,
             height: 20,
-            left: 20,
+            left: 30,
           }}
           onPress={() => navigation.goBack()}
         />
@@ -41,7 +44,8 @@ export default function Details({navigation, route}: DetailsProps) {
             <Text style={DetialsStyle.InfoText}>{donationData.petBreed}</Text>
             <Text style={DetialsStyle.InfoSub}>{donationData.petType}</Text>
           </View>
-          <View>
+          <View style={{flexDirection:'row'}}>
+            <Text style={DetialsStyle.Price}>$ </Text>
             <Text style={DetialsStyle.Price}>{donationData.amount}</Text>
           </View>
         </View>
@@ -106,5 +110,7 @@ export default function Details({navigation, route}: DetailsProps) {
         </View>
       </View>
     </View>
+    </ScrollView>
+
   );
 }

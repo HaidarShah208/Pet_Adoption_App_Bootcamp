@@ -138,7 +138,7 @@ export const fetchFavoriteDonations = (): AppThunk => async dispatch => {
   if (userUID) {
     try {
       const favoriteCollection = await firestore()
-        .collection('All_Favrouite_Donaitons')
+        .collection('allFavrouiteDonaitons')
         .doc(userUID)
         .collection('favoriteDonations')
         .get();
