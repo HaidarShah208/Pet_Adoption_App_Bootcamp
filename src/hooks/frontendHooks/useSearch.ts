@@ -67,9 +67,10 @@ export default function useSearch() {
 
  
 
+  const uniquePetTypes = [...new Set(donationData?.donations?.map(item => item.petType))] || [];
   const filteredDonations =
-    donationData?.donations?.filter(donationItem =>
-      donationItem.petType.toLowerCase().includes(searchTerm.toLowerCase()),
+    donationData?.donations?.filter(
+      (donationItem) => donationItem.petType === selectedItem
     ) || [];
 
     const onInputChange = (text: string) => {
@@ -85,6 +86,7 @@ export default function useSearch() {
     loading,
     handleFavoriteClick,
     onInputChange,
-    searchTerm
+    searchTerm,
+    uniquePetTypes
   };
 }

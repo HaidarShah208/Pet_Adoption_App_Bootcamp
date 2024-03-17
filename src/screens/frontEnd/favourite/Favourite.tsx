@@ -25,7 +25,7 @@ export default function Favourite({navigation}: FavrouriteScreenProps) {
 
   const {favoriteDonations, loading} = useFavourite();
   return (
-    <View>
+    <View style={searchSt.container}>
       <View style={searchSt.header}>
         <Text style={searchSt.heading}>Favourite</Text>
         <FAVOURITE.ADD onPress={() => navigation.navigate('search')} />

@@ -9,7 +9,6 @@ import {
 import {drawarSide} from '../../styles/navigation/DrawarSideMenue';
 import Input from '../../components/input/Input';
 import {TextInput} from 'react-native-gesture-handler';
-import {useAuthContext} from '../../context/AuthContext';
 import {useDispatch, useSelector} from 'react-redux';
 import authSlice, {logout} from '../../store/slice/authSlice';
 

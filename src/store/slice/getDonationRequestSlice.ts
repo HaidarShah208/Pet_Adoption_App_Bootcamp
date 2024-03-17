@@ -7,6 +7,7 @@ import {ReactNode} from 'react';
 import Toast from 'react-native-toast-message';
 
 export interface Donation {
+  petName: ReactNode;
   userPhotoURL: string | undefined;
   userEmail: ReactNode;
   userName: ReactNode;

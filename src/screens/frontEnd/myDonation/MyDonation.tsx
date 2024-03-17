@@ -27,7 +27,7 @@ const MyDonation: React.FC<DonationScreenProps> = ({
 
   const {handleDeleteClick, donationData, loading} = useMyDonation();
   return (
-    <View>
+    <View style={searchSt.container}>
       <View style={searchSt.header}>
         <Text style={searchSt.heading}>My Donation</Text>
         <FAVOURITE.ADD onPress={() => navigation.navigate('Add_Pet')} />
@@ -46,7 +46,13 @@ const MyDonation: React.FC<DonationScreenProps> = ({
                   style={searchSt.mainImg}
                 />
                 <View style={searchSt.data}>
-                  <Text style={searchSt.heding}>{donationItem.petType}</Text>
+                  <Text style={searchSt.heding}>{donationItem.petBreed}</Text>
+                  <View style={searchSt.locator}>
+                    <Text style={searchSt.discription}>Age: </Text>
+                    <Text style={searchSt.discription}>
+                      {donationItem.petAge}
+                    </Text>
+                  </View>
                   <View style={searchSt.locator}>
                     <Text style={searchSt.discription}>
                       {donationItem.petLocation}
@@ -54,10 +60,12 @@ const MyDonation: React.FC<DonationScreenProps> = ({
                     <SrchIMAGES.Location style={searchSt.locatorImg} />
                   </View>
                   <View style={searchSt.heartSty}>
-                    <Text>{donationItem.gender}</Text>
+                    <Text style={searchSt.discription}>
+                      {donationItem.gender}
+                    </Text>
                     <TouchableOpacity
                       onPress={() => handleDeleteClick(donationItem)}>
-                      <FAVOURITE.Delete />
+                      <FAVOURITE.Delete style={{marginTop: 8}} />
                     </TouchableOpacity>
                   </View>
                 </View>

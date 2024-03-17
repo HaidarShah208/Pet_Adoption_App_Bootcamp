@@ -31,6 +31,7 @@ export default function useHome() {
       setProfileImage(user.photoURL);
     }
   }, [user]);
+  
 
   const filteredDonationsHorizontal = donationData?.donations?.filter(
     donationItem =>

@@ -67,5 +67,10 @@ export const requesStyles = StyleSheet.create({
   },
   loader:{
     flex:1,justifyContent:'center',alignItems:'center'
+  },
+  flex:{
+    display:'flex',
+    flexDirection:'row'
   }
+
 });

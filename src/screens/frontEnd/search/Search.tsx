@@ -1,17 +1,21 @@
 import React from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {searchSt} from '../../../styles/frontEnd/Search';
-import {
-  HOME,
-  SrchIMAGES,
-} from '../../../constants/assessts/AllAssessts';
+import {HOME, SrchIMAGES} from '../../../constants/assessts/AllAssessts';
 
 import {RootStackParamsDetailsList} from '../../../navigation/tabNavigation/DetailsNavigation';
 import {YourState} from '../../../constants/allTypes/AllTypes';
 import useSearch from '../../../hooks/frontendHooks/useSearch';
 import {TextInput} from 'react-native-gesture-handler';
-import { styleHome } from '../../../styles/frontEnd/Home';
+import {styleHome} from '../../../styles/frontEnd/Home';
 
 interface SearchScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'search'>;
@@ -30,10 +34,11 @@ const Search = ({navigation}: SearchScreenProps) => {
     handleFavoriteClick,
     onInputChange,
     searchTerm,
+    uniquePetTypes
   } = useSearch();
 
   return (
-    <View>
+    <View style={{marginBottom:200}}>
       <View style={{flexDirection: 'row'}}>
         <TextInput
           placeholder="Pet search"
@@ -52,25 +57,25 @@ const Search = ({navigation}: SearchScreenProps) => {
           horizontal={true}
           contentContainerStyle={searchSt.scrollImage}
           showsHorizontalScrollIndicator={false}>
-          {donationData?.donations?.map((item, index) => (
+          {uniquePetTypes.map((petType, index) => (
             <TouchableOpacity
               key={index}
-              onPress={() => handleItemClick(item.petType)}>
+              onPress={() => handleItemClick(petType)}>
               <View
                 style={[
                   searchSt.mar,
-                  selectedItem === item.petType
+                  selectedItem === petType
                     ? searchSt.focusSlider
                     : searchSt.unFocus,
                 ]}>
                 <Text
                   style={[
                     searchSt.co,
-                    selectedItem === item.petType
+                    selectedItem ===petType
                       ? searchSt.focusText
                       : searchSt.unFocusText,
                   ]}>
-                  {item.petType}
+                  {petType}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -79,8 +84,8 @@ const Search = ({navigation}: SearchScreenProps) => {
       </View>
       <ScrollView>
         {loading ? (
-          <Text>Loading...</Text>
-        ) : donationData?.donations ? (
+          <ActivityIndicator size="large" color="black" />
+          ) : donationData?.donations && donationData.donations.length > 0 ? (
           donationData.donations
             .filter(donationItem =>
               donationItem.petType
@@ -91,37 +96,39 @@ const Search = ({navigation}: SearchScreenProps) => {
               <TouchableOpacity
                 key={index}
                 onPress={() => handleMainContainerClick(donationItem)}>
-          <View style={{justifyContent:'center',alignItems:'center'}}>
-          <View style={searchSt.MainContainer}>
-                  <Image
-                    source={{uri: donationItem.imageURL}}
-                    style={searchSt.mainImg}
-                  />
-                  <View style={searchSt.data}>
-                    <Text style={searchSt.heding}>{donationItem.petType}</Text>
-                    <Text style={{color: '#101C1D'}}>age 9 month</Text>
-                    <View style={searchSt.locator}>
-                      <Text style={{color: '#101C1D'}}>
-                        {donationItem.petLocation}
+                <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                  <View style={searchSt.MainContainer}>
+                    <Image
+                      source={{uri: donationItem.imageURL}}
+                      style={searchSt.mainImg}
+                    />
+                    <View style={searchSt.data}>
+                      <Text style={searchSt.heding}>
+                        {donationItem.petType}
                       </Text>
-                      <SrchIMAGES.Location style={searchSt.locatorImg} />
-                    </View>
-                    <View style={searchSt.heartSty}>
-                      <Text style={{color: '#101C1D'}}>
-                        {donationItem.gender}
-                      </Text>
-                      <TouchableOpacity
-                        onPress={() => handleFavoriteClick(donationItem)}>
-                        <SrchIMAGES.EmptyHeart />
-                      </TouchableOpacity>
+                      <Text style={{color: '#101C1D'}}>age 9 month</Text>
+                      <View style={searchSt.locator}>
+                        <Text style={{color: '#101C1D'}}>
+                          {donationItem.petLocation}
+                        </Text>
+                        <SrchIMAGES.Location style={searchSt.locatorImg} />
+                      </View>
+                      <View style={searchSt.heartSty}>
+                        <Text style={{color: '#101C1D'}}>
+                          {donationItem.gender}
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => handleFavoriteClick(donationItem)}>
+                          <SrchIMAGES.EmptyHeart />
+                        </TouchableOpacity>
+                      </View>
                     </View>
                   </View>
                 </View>
-          </View>
               </TouchableOpacity>
             ))
         ) : (
-          <Text style={styleHome.notAvail}>This pet isn't available.</Text>
+          <Text style={styleHome.notAvail}>This pet isn't available &#128529;</Text>
         )}
       </ScrollView>
     </View>

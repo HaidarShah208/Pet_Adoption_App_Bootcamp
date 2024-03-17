@@ -27,6 +27,7 @@ export default function Profile({navigation}: userScreenProps) {
     handleSubmit,
     loading,
     handlePicture,
+    imageUploading
   } = useProfile();
 
   return (
@@ -63,7 +64,7 @@ export default function Profile({navigation}: userScreenProps) {
       <View style={userStyle.btnsContainer}>
         <Button
           title={
-            loading ? (
+    imageUploading || loading ? (
               <ActivityIndicator size="large" color="white" />
             ) : (
               'Update profile'

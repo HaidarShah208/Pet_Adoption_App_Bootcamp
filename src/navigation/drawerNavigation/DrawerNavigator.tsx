@@ -7,14 +7,14 @@ import {HomeDetailsNavigations} from '../tabNavigation/DetailsNavigation';
 import DonationRequests from '../../screens/frontEnd/donationRequests/DonationRequests';
 
 export type RootDrawerParamsList = {
-  home: undefined;
+  Home: undefined;
   Messsage: undefined;
   MyDonations: undefined;
   tabNavigator: undefined;
-  favroutite: undefined;
+  Favourite: undefined;
   donateScren: undefined;
   Add_Pet: undefined;
-  request: undefined;
+  Request: undefined;
 };
 const Drawer = createDrawerNavigator<RootDrawerParamsList>();
 
@@ -23,11 +23,11 @@ export default function DrawerNavigator() {
     <Drawer.Navigator
       screenOptions={{headerShown: false, drawerLabelStyle: drawarSide.Items}}
       drawerContent={props => <SideMenue {...props} />}>
-      <Drawer.Screen name="home" component={HomeDetailsNavigations} />
+      <Drawer.Screen name="Home" component={HomeDetailsNavigations} />
       <Drawer.Screen name="MyDonations" component={DetailNavigation} />
-      <Drawer.Screen name="favroutite" component={Favourite} />
+      <Drawer.Screen name="Favourite" component={Favourite} />
       <Drawer.Screen name="Add_Pet" component={AddPet} />
-      <Drawer.Screen name="request" component={DonationRequests} />
+      <Drawer.Screen name="Request" component={DonationRequests} />
     </Drawer.Navigator>
   );
 }

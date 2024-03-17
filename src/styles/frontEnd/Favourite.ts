@@ -15,13 +15,14 @@ export const searchSt = StyleSheet.create({
     fontSize: 24,
     fontFamily: FONTS.BOLD,
     color: 'black',
-    // fontWeight: 'bold',
+    paddingBottom:10
   },
   MainContainer: {
     marginTop: 30,
     marginRight: 80,
     display: 'flex',
     flexDirection: 'row',
+
   },
   mainImg: {
     position: 'relative',
@@ -56,7 +57,8 @@ export const searchSt = StyleSheet.create({
     flexDirection: 'row',
   },
   locatorImg: {
-    paddingLeft: 40,
+    paddingLeft: 15,
+    marginTop:2
   },
   heartSty: {
     display: 'flex',
@@ -69,6 +71,8 @@ export const searchSt = StyleSheet.create({
   },
   discription: {
     color: '#101C1D',
+    fontFamily: FONTS.SemiBold,
+
   },
   emptText: {
     textAlign: 'center',
@@ -76,4 +80,7 @@ export const searchSt = StyleSheet.create({
     color: '#101C1D',
     paddingTop: 40,
   },
+  container:{
+    marginBottom:90
+  }
 });

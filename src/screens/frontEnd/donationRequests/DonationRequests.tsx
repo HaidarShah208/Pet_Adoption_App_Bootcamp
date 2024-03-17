@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {fetchUserDonations} from '../../../store/slice/getDonationRequestSlice';
 import {RootState} from '../../../store/store';
 import Toast from 'react-native-toast-message';
+import { styleHome } from '../../../styles/frontEnd/Home';
 
 export default function DonationRequests() {
   const dispatch = useDispatch();
@@ -20,7 +21,6 @@ export default function DonationRequests() {
     (state: RootState) => state.request,
   );
 
-  console.log('donationsss',donations)
 
   useEffect(() => {
     dispatch(fetchUserDonations() as any);
@@ -42,7 +42,9 @@ export default function DonationRequests() {
         <Text style={requesStyles.heading}>Donation Requests</Text>
         {loadingDonations ? (
           <ActivityIndicator size="large" color="black" />
-        ) : (
+          ) : donations.length === 0 ? (
+            <Text style={styleHome.notAvail}>Your request list is empty &#128529;</Text>
+          ) : (
           donations.map(donation => (
             <View key={donation.donationId} style={requesStyles.card}>
               <View style={{display: 'flex', flexDirection: 'row'}}>
@@ -56,9 +58,16 @@ export default function DonationRequests() {
                   <Text style={requesStyles.furthurInfo}>
                     {donation.userName}
                   </Text>
-                  <Text style={requesStyles.furthurInfo}>
+                <View style={requesStyles.flex}>
+                <Text style={requesStyles.furthurInfo}>
+                    {donation.petName}
+                  </Text>
+                  <Text style={{marginHorizontal:5,fontWeight:'900'}}>-</Text>
+                <Text style={requesStyles.furthurInfo}>
                     {donation.petBreed}
                   </Text>
+
+                </View>
                   <Text style={requesStyles.smallText}>
                     {donation.userEmail}
                   </Text>

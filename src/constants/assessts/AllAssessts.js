@@ -19,9 +19,6 @@ import contact from '../../assests/contact.svg'
 import recoverBack from '../../assests/recoverBack.svg'
 import defaults from '../../assests/default.svg'
 
-
-
-
 export const IMAGES = {
     homeBottom: home,
     searchBottom: search,

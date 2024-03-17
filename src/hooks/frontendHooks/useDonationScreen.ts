@@ -15,6 +15,8 @@ const datas = [
   {dog: 'Rat'},
   {dog: 'Horse'},
   {dog: 'Parrot'},
+  {dog: 'Hen'},
+  {dog: 'Fish'},
 ];
 
 const Gender = [{gender: 'Male'}, {gender: 'Female'}];
@@ -124,10 +126,34 @@ export default function useDonationScreen() {
   };
 
   const uploadImage = async () => {
+    const requiredFields = [
+      'petType',
+      'petBreed',
+      'petAge',
+      'amount',
+      'gender',
+      'petWeight',
+      'petLocation',
+      'description',
+    ];
+    const missingFields = requiredFields.filter((field) => !state[field]);
+
+    if (missingFields.length > 0) {
+      return Toast.show({
+        type: 'error',
+        text1: `Please fill in all required fields: ${missingFields.join(', ')}`,
+      });
+    }
+
+    if (!filePath) {
+      return Toast.show({
+        type: 'error',
+        text1: 'Please select an image',
+      });
+    }
     let imageType = fileName.split('/').pop();
     let id = Math.random().toString(36).slice(2);
     const userUID = auth().currentUser?.uid;
-    const user = auth().currentUser;
     if (userUID) {
       setisloading(true);
       const reference = storage().ref(`images/${id}.${imageType}`);
@@ -152,11 +178,11 @@ export default function useDonationScreen() {
         if (!favoriteDoc.exists) {
           await favoriteDonationsRef.set({donations: []});
         }
+        setisloading(false);
         Toast.show({
           type: 'success',
           text1: 'Donation data saved successfully',
         });
-        setisloading(false);
       } catch (error) {
         return Toast.show({
           type: 'error',

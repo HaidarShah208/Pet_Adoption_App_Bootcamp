@@ -14,19 +14,18 @@ import {Alert} from 'react-native';
 
 export default function useProfile() {
   const user = useSelector(selectAuthState);
-  console.log('usersss',user)
   const [email, setEmail] = useState(user?.user.email || '');
   const [name, setName] = useState(user?.user.username || '');
   const [loading, setLoading] = useState(false);
   const [resource, setResource] = useState<Resource>({});
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [imageUploading ,setImageUploading] = useState(false)
   const currentUser = auth().currentUser;
   
   
   useEffect(() => {
     if (user?.photoURL) {
       setProfileImage(user.photoURL);
-      console.log('auth',user.photoURL)
     }
   }, [user?.photoURL]);
 
@@ -71,7 +70,6 @@ export default function useProfile() {
         username: name,
         email: email,
       });
-console.log('datssss',name,email)
       setLoading(false);
       Toast.show({
         type: 'success',
@@ -145,6 +143,7 @@ console.log('datssss',name,email)
 
   const uploadImageToFirebaseStorage = async (uri: string) => {
     try {
+      setImageUploading(true)
       const imageName = uri.substring(uri.lastIndexOf('/') + 1);
       const response = await fetch(uri);
       const blob = await response.blob();
@@ -162,6 +161,7 @@ console.log('datssss',name,email)
             text1: 'Profile updated successfully',
           });
           setProfileImage(downloadURL);
+          setImageUploading(false)
         })
         .catch(error => {
           Alert.alert('Error', error.message);
@@ -186,5 +186,6 @@ console.log('datssss',name,email)
     loading,
     handleSubmit,
     handlePicture,
+    imageUploading
   };
 }

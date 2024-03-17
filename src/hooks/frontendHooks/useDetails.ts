@@ -53,7 +53,6 @@ export default function useDetails({ route }: any) {
     }
 
     const currentUser = auth().currentUser;
-    console.log('username',currentUser)
     const userEmail = currentUser?.email;
     const userName=currentUser?.displayName
     const uid = currentUser?.uid;
