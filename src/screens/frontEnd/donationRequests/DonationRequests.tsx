@@ -62,7 +62,7 @@ export default function DonationRequests() {
                 <Text style={requesStyles.furthurInfo}>
                     {donation.petName}
                   </Text>
-                  <Text style={{marginHorizontal:5,fontWeight:'900'}}>-</Text>
+                  <Text style={requesStyles.dash}>-</Text>
                 <Text style={requesStyles.furthurInfo}>
                     {donation.petBreed}
                   </Text>

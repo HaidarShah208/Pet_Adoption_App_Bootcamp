@@ -13,7 +13,7 @@ export type RootDrawerParamsList = {
   tabNavigator: undefined;
   Favourite: undefined;
   donateScren: undefined;
-  Add_Pet: undefined;
+  AddPet: undefined;
   Request: undefined;
 };
 const Drawer = createDrawerNavigator<RootDrawerParamsList>();
@@ -26,7 +26,7 @@ export default function DrawerNavigator() {
       <Drawer.Screen name="Home" component={HomeDetailsNavigations} />
       <Drawer.Screen name="MyDonations" component={DetailNavigation} />
       <Drawer.Screen name="Favourite" component={Favourite} />
-      <Drawer.Screen name="Add_Pet" component={AddPet} />
+      <Drawer.Screen name="AddPet" component={AddPet} />
       <Drawer.Screen name="Request" component={DonationRequests} />
     </Drawer.Navigator>
   );

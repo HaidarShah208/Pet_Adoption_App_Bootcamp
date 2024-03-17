@@ -71,6 +71,10 @@ export const requesStyles = StyleSheet.create({
   flex:{
     display:'flex',
     flexDirection:'row'
+  },
+  dash:{
+    marginHorizontal:5,fontWeight:'900',
+    paddingTop:5
   }
 
 });
