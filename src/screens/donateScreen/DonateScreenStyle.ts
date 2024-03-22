@@ -17,7 +17,6 @@ export const styles = StyleSheet.create({
     fontFamily: FONTS.SemiBold,
     color: '#101C1D',
     alignSelf: 'flex-start',
-    marginStart: 10,
     marginTop: 30,
   },
   dorpdown: {
@@ -76,7 +75,7 @@ export const styles = StyleSheet.create({
     color: '#101C1D',
     marginTop: 20,
     alignSelf: 'flex-start',
-    marginStart: 10,
+    marginStart: 0,
   },
   input: {
     height: 40,
@@ -93,8 +92,9 @@ export const styles = StyleSheet.create({
   btns: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 30,
     fontFamily: FONTS.BOLD,
+    marginTop:15,
     width: 321,
     height: 74,
   },

@@ -95,7 +95,7 @@ const Search = ({navigation}: SearchScreenProps) => {
               <TouchableOpacity
                 key={index}
                 onPress={() => handleMainContainerClick(donationItem)}>
-                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <View style={searchSt.cardMain}>
                   <View style={searchSt.MainContainer}>
                     <Image
                       source={{ uri: donationItem.imageURL }}
@@ -105,7 +105,7 @@ const Search = ({navigation}: SearchScreenProps) => {
                       <Text style={searchSt.heding}>
                         {donationItem.petType}
                       </Text>
-                      <Text style={{ color: '#101C1D' }}>age 9 month</Text>
+                      <Text style={{ color: '#101C1D' }}>age {donationItem.petAge} year</Text>
                       <View style={searchSt.locator}>
                         <Text style={{ color: '#101C1D' }}>
                           {donationItem.petLocation}

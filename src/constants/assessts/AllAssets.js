@@ -78,6 +78,9 @@ export const FAVOURITE = {
 
 
 import Locations from '../../assets/location.svg'
+import detailDelete from '../../assets/detailDelete.svg'
 export const DETAILS = {
     Location: Locations,
+    DetailDelete: detailDelete
+
 }

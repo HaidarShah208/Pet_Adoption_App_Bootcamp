@@ -55,6 +55,11 @@ export const searchSt = StyleSheet.create({
     marginRight: 190,
     display: 'flex',
     flexDirection: 'row',
+ 
+  },
+  cardMain:{
+     justifyContent: 'center', alignItems: 'center' ,
+   
   },
   mainImg: {
     position: 'relative',
@@ -63,6 +68,7 @@ export const searchSt = StyleSheet.create({
     width: 194,
     height: 171,
     borderRadius: 25,
+    
   },
 
   data: {
@@ -74,6 +80,11 @@ export const searchSt = StyleSheet.create({
     height: 126,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
+    shadowColor:"#000",
+    elevation:4,
+ 
+  
+    
   },
   heding: {
     fontSize: 18,
@@ -107,7 +118,8 @@ export const searchSt = StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
     position: 'absolute',
-    color:'#101C1D'
+    color:'#101C1D',
+    opacity:1
   },
   searchBs: {
     position: 'relative',

@@ -13,6 +13,7 @@ import {searchSt} from '../favourite/FavouriteStyle';
 import {RootStackParamsDetailsList} from '../../navigation/detailNavigation/DetailNavigation';
 import {YourState} from '../../constants/allTypes/AllTypes';
 import useMyDonation from './useMyDonation';
+import { styleHome } from '../home/HomeStyle';
 
 interface DonationScreenProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'mydonation'>;
@@ -35,7 +36,11 @@ const MyDonation: React.FC<DonationScreenProps> = ({
       <ScrollView>
         {loading ? (
           <ActivityIndicator size="large" color="black" />
-        ) : (
+        ): donationData?.donations.length === 0 ? (
+          <Text style={styleHome.notAvail}>
+            Your Donation list is empty &#128529;
+          </Text>
+        )  : (
           donationData?.donations.map((donationItem: any, index: number) => (
             <TouchableOpacity
               key={index}

@@ -50,7 +50,7 @@ export default function Favourite({navigation}: FavrouriteScreenProps) {
                   />
                   <View style={searchSt.data}>
                     <Text style={searchSt.heding}>{donationItem.petType}</Text>
-                    <Text style={{color: '#101C1D'}}>age 2 month</Text>
+                    <Text style={{color: '#101C1D'}}>age {donationItem.petAge} year</Text>
                     <View style={searchSt.locator}>
                       <Text style={{color: '#101C1D'}}>
                         {donationItem.petLocation}

@@ -42,7 +42,7 @@ export default Input;
     padding: 10,
     backgroundColor: 'white',
     position: 'absolute',
-    color:'#101C1D'
+    color:'black'
   },
   searchB: {
     position: 'relative',

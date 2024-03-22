@@ -5,6 +5,7 @@ import { Alert } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { useSelector } from 'react-redux';
 import { selectAuthState } from '../../store/slice/authSlice';
+import { RootState } from '../../store/store';
 
 export default function useDetails({ route }: any) {
   const [userData, setUserData] = useState<{
@@ -15,6 +16,11 @@ export default function useDetails({ route }: any) {
   const currentUser = auth().currentUser;
   const { donationData } = route.params;
   const user = useSelector(selectAuthState);
+
+  const favoriteDonations = useSelector((state: RootState) => state.donation.favoriteDonations);
+  const isDonationFavorite = favoriteDonations.includes(donationData);
+
+  
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -86,5 +92,5 @@ export default function useDetails({ route }: any) {
     }
   };
 
-  return { userData, setUserData, currentUser, donationData, handleAdoptNow };
+  return { userData, setUserData, currentUser, donationData, handleAdoptNow, isFavorite: isDonationFavorite };
 }

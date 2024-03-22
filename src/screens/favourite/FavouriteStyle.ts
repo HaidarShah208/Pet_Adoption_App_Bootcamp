@@ -22,7 +22,6 @@ export const searchSt = StyleSheet.create({
     marginRight: 80,
     display: 'flex',
     flexDirection: 'row',
-
   },
   mainImg: {
     position: 'relative',
@@ -42,6 +41,9 @@ export const searchSt = StyleSheet.create({
     height: 126,
     borderRadius: 20,
     backgroundColor: '#FFFFFF',
+    shadowColor:"#000",
+    elevation:4
+ 
   },
   heding: {
     fontSize: 18,
