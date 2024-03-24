@@ -37,7 +37,7 @@ export default function useDonationScreen() {
     petBreed: '',
     petAge: '',
     amount: '',
-    petGender: '',
+    gender: '',
     petWeight: '',
     petLocation: '',
     description: '',

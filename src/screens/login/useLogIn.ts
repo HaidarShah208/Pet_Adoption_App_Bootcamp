@@ -26,11 +26,12 @@ export default function useLogIn() {
     auth()
       .signInWithEmailAndPassword(userData.email, userData.passowrd)
       .then(userCredential => {
-        const user: FirebaseUser | null = userCredential.user;
+        const user= userCredential.user;
         if (user) {
-          const userEmail: string | undefined = user.email || undefined;
-          const userData: UserProfileData = {
-            email: userEmail,
+          const userData = {
+            uid: user.uid,
+            email: user.email,
+            username: user.displayName || '', // Use displayName as username
           };
           dispatch({type: 'Login', payload: {userData}});
         }

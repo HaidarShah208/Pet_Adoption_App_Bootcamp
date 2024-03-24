@@ -186,6 +186,7 @@ export default function useProfile() {
     loading,
     handleSubmit,
     handlePicture,
-    imageUploading
+    imageUploading,
+    currentUsername: name,
   };
 }

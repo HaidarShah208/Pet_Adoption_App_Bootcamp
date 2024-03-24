@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import AuthNavigation from './src/navigation/AuthNavigation';
 import {Provider} from 'react-redux';
 import {store} from './src/store/store';
+import { StatusBar } from 'react-native';
 export default function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
@@ -22,6 +23,7 @@ export default function App() {
         <GestureHandlerRootView style={{flex: 1}}>
           <NavigationContainer>
             <AuthNavigation />
+            <StatusBar backgroundColor={'#eaeaea'} barStyle={'dark-content'} />
             <Toast />
           </NavigationContainer>
         </GestureHandlerRootView>

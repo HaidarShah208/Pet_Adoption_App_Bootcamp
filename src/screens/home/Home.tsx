@@ -35,6 +35,7 @@ export default function Home({navigation}: HomeScreenProps) {
   const handleMainContainerClick = (donationItem: YourState) => {
     navigation.navigate('details', {donationData: donationItem} as any);
   };
+
   return (
     <>
       <View style={styleHome.header}>
@@ -42,18 +43,23 @@ export default function Home({navigation}: HomeScreenProps) {
           onPress={() => navigations.dispatch(DrawerActions.openDrawer())}>
           <HOME.NavImg />
         </TouchableOpacity>
-        {currentUser && currentUser.photoURL ? (
-          <Image
-            source={{uri: currentUser.photoURL}}
-            style={styleHome.userImage}
-          />
-        ) : (
-          <HOME.DefaultHome height={48} width={48} style={{borderRadius: 30}} />
-        )}
+        <TouchableOpacity onPress={()=>navigation.navigate('user')}>
+          {currentUser && currentUser.photoURL ? (
+            <Image
+              source={{uri: currentUser.photoURL}}
+              style={styleHome.userImage}
+            />
+          ) : (
+            <HOME.DefaultHome
+              height={48}
+              width={48}
+              style={{borderRadius: 30}}
+            />
+          )}
+        </TouchableOpacity>
       </View>
       <Text style={styleHome.tesxt}>{`Find an \nAwesome \npets for you`}</Text>
       <Input
-      
         onInputChange={(text: React.SetStateAction<string>) =>
           setSearchInput(text)
         }
@@ -108,12 +114,12 @@ export default function Home({navigation}: HomeScreenProps) {
                     <Text style={styleHome.Imagetext}>
                       {donationItem.petType}
                     </Text>
-                 <View style={{flexDirection:'row'}}>
-                  <Text style={styleHome.imageAmount}>$ </Text>
-                 <Text style={styleHome.imageAmount}>
-                      {donationItem.amount}
-                    </Text>
-                 </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={styleHome.imageAmount}>$ </Text>
+                      <Text style={styleHome.imageAmount}>
+                        {donationItem.amount}
+                      </Text>
+                    </View>
                   </View>
                 </ImageBackground>
               </TouchableOpacity>

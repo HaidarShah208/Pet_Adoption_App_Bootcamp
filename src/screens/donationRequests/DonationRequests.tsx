@@ -36,7 +36,6 @@ export default function DonationRequests() {
       }),
     );
   };
-  console.log("donation",donations)
   return (
     <ScrollView>
       <View style={requesStyles.container}>

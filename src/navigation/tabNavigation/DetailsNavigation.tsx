@@ -5,12 +5,14 @@ import Search from '../../screens/search/Search';
 import Details from '../../screens/details/Details';
 import Favourite from '../../screens/favourite/Favourite';
 import Home from '../../screens/home/Home';
+import Profile from '../../screens/profile/Profile';
 
 export type RootStackParamsDetailsList = {
   search: undefined;
   details: undefined;
   favourite: undefined;
   home: undefined;
+  user:undefined
 };
 
 const Stack = createStackNavigator<RootStackParamsDetailsList>();
@@ -59,6 +61,11 @@ export const HomeDetailsNavigations = () => {
         options={{headerShown: false}}
         name="details"
         component={Details}
+      />
+      <Stack.Screen
+        options={{headerShown: false}}
+        name="user"
+        component={Profile}
       />
     </Stack.Navigator>
   );

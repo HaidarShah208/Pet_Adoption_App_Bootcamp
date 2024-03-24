@@ -97,5 +97,8 @@ export const styles = StyleSheet.create({
     marginTop:15,
     width: 321,
     height: 74,
-  },
+  },textArea:{
+    textAlignVertical: 'top',
+    height: 154,
+  }
 });

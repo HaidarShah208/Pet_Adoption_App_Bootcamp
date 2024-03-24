@@ -193,8 +193,10 @@ export default function DonateScreen({navigation}: donateScreenProps) {
         />
         <Text style={styles.mail}>Description</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input,styles.textArea]}
           value={state.description}
+          multiline
+          numberOfLines={4}
           onChangeText={text => handleChange('description', text)}
         />
         <Text style={styles.heading}>Image</Text>

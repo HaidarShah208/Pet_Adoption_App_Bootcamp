@@ -19,11 +19,13 @@ import {DetialsStyle} from './DetailsStyle';
 interface DetailsProps {
   navigation: StackNavigationProp<RootStackParamsDetailsList, 'details'>;
   route: RouteProp<RootStackParamsDetailsList, 'details'>;
+  isMyDonation: boolean;
 }
 export default function Details({navigation, route}: DetailsProps) {
-  const {userData, donationData, handleAdoptNow, isFavorite} = useDetails({
+  const {userData, donationData, handleAdoptNow, isFavorite,handleDeleteClick} = useDetails({
     route,
   });
+  const isMyDonation = route.params?.isMyDonation;
 
   return (
     <ScrollView>
@@ -54,16 +56,18 @@ export default function Details({navigation, route}: DetailsProps) {
               }}
             />
           )}
-          <FAVOURITE.Delete
-           style={{
-            position: 'absolute',
-            top: 30,
-            width: 125,
-            height: 23,
-            left: 330,
-          }}
-          />
-
+          {isMyDonation && (
+            <FAVOURITE.Delete
+              style={{
+                position: 'absolute',
+                top: 30,
+                width: 25,
+                height: 23,
+                left: 330,
+              }}
+              onPress={() => handleDeleteClick(donationData)}
+            />
+          )}
         </View>
         <View style={DetialsStyle.InfoContainer}>
           <View style={DetialsStyle.InfoHeading}>

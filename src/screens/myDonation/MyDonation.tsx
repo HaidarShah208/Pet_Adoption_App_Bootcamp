@@ -23,9 +23,8 @@ const MyDonation: React.FC<DonationScreenProps> = ({
   navigation,
 }: DonationScreenProps) => {
   const handleMainContainerClick = (donationItem: YourState) => {
-    navigation.navigate('details', {donationData: donationItem} as any);
+    navigation.navigate('details', {donationData: donationItem,isMyDonation: true} as any);
   };
-
   const {handleDeleteClick, donationData, loading} = useMyDonation();
   return (
     <View style={searchSt.container}>
